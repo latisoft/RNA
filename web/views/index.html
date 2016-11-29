@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
+    <title>Node</title>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <h1>Express</h1>
+    <p>Welcome to Express</p>
     <div id="app"></div>
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
@@ -13,6 +13,15 @@
 
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="/javascripts/bundle.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+      socket.on('server event', function(data) {
+        console.log(data);
+        socket.emit('client event', {socket: 'io'});
+      });
+    </script>
 
   </body>
 </html>

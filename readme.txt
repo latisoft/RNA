@@ -1,10 +1,16 @@
+==== 
 -- $sudo npm install -g express
 -- $sudo npm install -g express-generator
--- $express -e web
--- $cd web; npm i; 
-(web/web/bin/www/process.env.PORT 8000, 140.113.29.228:8000)
--- $mkdir addon build; cd ..
-(addon for c/c++ module, build c/c++ binary)
+-- $mkdir addon   (c++/js module)
+-- $mkdir build   (c++ external)
+-- $mkdir public  (img/css/js/react bundle.js)
+-- $mkdir views   (index.html)
+
+// App directory
+app.use('/', express.static('public'));
+app.get('/',function(req,res){
+  res.sendFile(path.join(__dirname+'/views/index.html'));
+});
 
 ==== react project ====
 (rebuild)

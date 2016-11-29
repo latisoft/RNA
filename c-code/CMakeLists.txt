@@ -42,7 +42,7 @@ if( Boost_FOUND AND Threads_FOUND AND ZLIB_FOUND )
 
     link_directories( ${CMAKE_SOURCE_DIR}/lib ${CMAKE_SOURCE_DIR}/lib/* )
 #    set( EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin )
-    set( EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../web/bin )
+    set( EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../web/build )
     set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib/ )
     execute_process( COMMAND ln -sf ../bin )
     execute_process( COMMAND ln -sf ../src )

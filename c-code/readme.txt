@@ -9,8 +9,8 @@ $ln -s ../src META
 
 (compile)
 $cmake .  (generate Makefile)
-$make     (generate ../web/bin/meta)
-$../web/bin/meta 
+$make     (generate ../web/build/meta)
+$../web/build/meta 
 
 
 ==== In directory web: ====
