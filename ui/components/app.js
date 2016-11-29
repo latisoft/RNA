@@ -1,33 +1,50 @@
 
-import React 	from 'react';
+import React  from 'react';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import './app.scss';
+import io from 'socket.io-client';
+let socket = io('http://localhost:8000');
+
 
 export class App extends React.Component {
-
   constructor(props) {
     super(props);
+
+
+    socket.on('server event', function(data) {
+      console.log(data);
+    });
+
   }
-  tryGet(e) {
-    console.log("Try Get");
+  componentDidMount() {
+
   }
-  tryPost(e) {
-    console.log("Try Post");
+  componentWillUnmount() {
+
+  }
+
+  f1(e) {
+    console.log("Try f1");
+    socket.emit('client event', {socket: 'io1'});
+  }
+  f2(e) {
+    console.log("Try f2");
+    socket.emit('client event', {socket: 'io2'});
   }
   render() {
-    let hGet = this.tryGet.bind(this);
-    let hPost= this.tryPost.bind(this);
+    let cmd1 = this.f1.bind(this);
+    let cmd2 = this.f2.bind(this);
 
     const buttonsInstance = (
       <ButtonToolbar>
         <Button>Default</Button>
-        <Button bsStyle="primary" onClick={hGet }>Get</Button>
-        <Button bsStyle="success" onClick={hPost}>Post</Button>
+        <Button bsStyle="primary" onClick={cmd1}>CMD 1</Button>
+        <Button bsStyle="success" onClick={cmd2}>CMD 2</Button>
       </ButtonToolbar>
     );
-  	return (
-  		<div id="app-framework">
-  			Webapp Framework: Xample
+    return (
+      <div id="app-framework">
+        Webapp Framework: Xample
         <div className="row">
           <div className="col-md-4">Get</div>
           <div className="col-md-4">
@@ -35,7 +52,7 @@ export class App extends React.Component {
           </div>
           <div className="col-md-4">Display</div>
         </div>
-  		</div>
+      </div>
     );
   }
 }
