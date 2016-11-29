@@ -6,8 +6,10 @@
   <body>
     <h1>Express</h1>
     <p>Welcome to Express</p>
-    <div id="app"></div>
-    
+    <div id="app"><img id="trans" src="/images/waiting.gif" /></div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap-theme.min.css">
 
@@ -16,10 +18,9 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-      var socket = io();
-      socket.on('server event', function(data) {
-        console.log(data);
-        socket.emit('client event', {socket: 'io'});
+      $(document).ready(function() {
+        $('div#app img#trans').remove();
+        console.log("index.html: document ready!");
       });
     </script>
 

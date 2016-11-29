@@ -34,4 +34,9 @@ io.on('connection', function(socket) {
   socket.on('client event', function(data) {
     console.log(data);
   });
+  socket.on('client event', function(data) {
+    console.log("==== evt ====");
+    console.log(data);
+  });
+
 });

@@ -35,3 +35,24 @@ app.get('/',function(req,res){
 ==== c++ external ====
 RNA/web/build/addon.node (js.exe)
 RNA/web/build/meta (c.exe)
+
+==== socket.io ====
+Socket.IO allows you to emit and receive custom events.
+
+<body>
+  <button onclick="test()">Test</button>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+    function test() {
+      this.socket.emit('client event', {socket: 'io'});
+      console.log("client emitting ...");
+    }
+    socket.on('server event', function(data) {
+      console.log(data);
+      // socket.emit('client event', {socket: 'io'});
+    });
+  </script>
+</body>
+
+
