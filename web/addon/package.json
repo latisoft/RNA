@@ -1,0 +1,18 @@
+{
+  "name": "addon",
+  "version": "1.0.0",
+  "description": "CPT: Node.js Addon modules.",
+  "scripts": {
+    "install": "node-gyp rebuild",
+    "start": "node test.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "gypfile": true,
+  "dependencies": {
+    "bindings": "^1.2.1",
+    "nan": "^2.4.0"
+  }
+}
+
