@@ -3,15 +3,16 @@ import React  from 'react';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import './app.scss';
 import io from 'socket.io-client';
-let socket = io('http://localhost:8000');
+let socket = io();
 
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
 
-
+    console.log("App start");
     socket.on('server event', function(data) {
+      console.log("socket on");
       console.log(data);
     });
 

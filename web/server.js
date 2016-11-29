@@ -1,8 +1,10 @@
 
 
 const execFile = require('child_process').execFile;
+// var app = require('express')();
 var express = require('express');
 var app = express();
+
 
 var path= require("path");
 
@@ -24,19 +26,26 @@ app.get('/run/:username', function pipeline(req, res) {
   });
 });
 
+
+/*
+var server = app.createServer();
 var server = app.listen(8000, function() {
   console.log('Server running at http://localhost:8000');
-});
-
+}); */
+var server = require('http').Server(app);
 var io = require('socket.io')(server);
+server.listen(8000)
+
 io.on('connection', function(socket) {
+  
+  console.log("connection");
   socket.emit('server event', { foo: 'bar' });
-  socket.on('client event', function(data) {
-    console.log(data);
-  });
+
   socket.on('client event', function(data) {
     console.log("==== evt ====");
     console.log(data);
   });
+
+
 
 });
