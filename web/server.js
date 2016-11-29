@@ -1,18 +1,17 @@
 
 
 const execFile = require('child_process').execFile;
-// var app = require('express')();
 var express = require('express');
 var app = express();
 
 
-var path= require("path");
-
 // App directory
+var path= require("path");
 app.use('/', express.static('public'));
 app.get('/',function(req,res){
   res.sendFile(path.join(__dirname+'/views/index.html'));
 });
+
 // App operation
 app.get('/run/:username', function pipeline(req, res) {
 
