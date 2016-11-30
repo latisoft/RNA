@@ -26,11 +26,6 @@ app.get('/run/:username', function pipeline(req, res) {
 });
 
 
-/*
-var server = app.createServer();
-var server = app.listen(8000, function() {
-  console.log('Server running at http://localhost:8000');
-}); */
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 server.listen(8000)
