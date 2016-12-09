@@ -25,21 +25,40 @@ app.get('/run/:username', function pipeline(req, res) {
   });
 });
 
+const addon = require('bindings')('addon.node')
+console.log('This should be eight:', addon.add(3, 5))
 
+
+var ffi = require('ffi');
+var api = ffi.Library('./build/api', {
+  'factorial': [ 'uint64_t', [ 'int' ] ]
+});
+var output = api.factorial(4);
+console.log('Your output: ' + output);
+
+
+/*
+var server = app.createServer();
+var server = app.listen(8000, function() {
+  console.log('Server running at http://localhost:8000');
+}); */
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-server.listen(8000)
-
 io.on('connection', function(socket) {
   
   console.log("connection");
   socket.emit('server event', { foo: 'bar' });
 
-  socket.on('client event', function(data) {
+  socket.on('client event', function(from, msg) {
     console.log("==== evt ====");
-    console.log(data);
+    console.log('I received a private message by ', from, ' saying ', msg);
+    socket.emit("server event", { my: 'data'});
+  });
+  socket.on('disconnect', function() {
+    console.log("==== disconnect ====");
   });
 
-
-
+});
+server.listen(8000, ()=>{
+  console.log("Server is running. (8000)");
 });

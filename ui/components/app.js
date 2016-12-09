@@ -12,7 +12,6 @@ export class App extends React.Component {
 
     console.log("App start");
     socket.on('server event', function(data) {
-      console.log("socket on");
       console.log(data);
     });
 
