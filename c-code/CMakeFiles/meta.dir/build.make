@@ -84,16 +84,6 @@ meta_EXTERNAL_OBJECTS =
 
 /home/allen/project/RNA/web/build/meta: CMakeFiles/meta.dir/src/main.cpp.o
 /home/allen/project/RNA/web/build/meta: CMakeFiles/meta.dir/build.make
-/home/allen/project/RNA/web/build/meta: /usr/local/lib/libboost_date_time.so
-/home/allen/project/RNA/web/build/meta: /usr/local/lib/libboost_program_options.so
-/home/allen/project/RNA/web/build/meta: /usr/local/lib/libboost_filesystem.so
-/home/allen/project/RNA/web/build/meta: /usr/local/lib/libboost_system.so
-/home/allen/project/RNA/web/build/meta: /usr/local/lib/libboost_serialization.so
-/home/allen/project/RNA/web/build/meta: /usr/local/lib/libboost_regex.so
-/home/allen/project/RNA/web/build/meta: /usr/local/lib/libboost_thread.so
-/home/allen/project/RNA/web/build/meta: /usr/local/lib/libboost_iostreams.so
-/home/allen/project/RNA/web/build/meta: /usr/lib/x86_64-linux-gnu/libpthread.so
-/home/allen/project/RNA/web/build/meta: /usr/lib/x86_64-linux-gnu/libcurl.so
 /home/allen/project/RNA/web/build/meta: CMakeFiles/meta.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable /home/allen/project/RNA/web/build/meta"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/meta.dir/link.txt --verbose=$(VERBOSE)

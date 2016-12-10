@@ -44,7 +44,7 @@ export class App extends React.Component {
     );
     return (
       <div id="app-framework">
-        Webapp Framework: Xample
+        Webapp Framework: Xample ^_^>
         <div className="row">
           <div className="col-md-4">Get</div>
           <div className="col-md-4">

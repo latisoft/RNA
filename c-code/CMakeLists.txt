@@ -40,12 +40,18 @@ if( Boost_FOUND AND Threads_FOUND AND ZLIB_FOUND )
     include_directories( ${CMAKE_SOURCE_DIR}/include )
     include_directories( ${GTEST_INCLUDE_DIRS} )
 
-    link_directories( ${CMAKE_SOURCE_DIR}/lib ${CMAKE_SOURCE_DIR}/lib/* )
+    link_directories( ${CMAKE_SOURCE_DIR}/lib )
 #    set( EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin )
-    set( EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../web/build )
-    set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib/ )
+    set( EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/../web/build/ )
+#    set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib/ )
+    set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../web/build/ )
 
     add_executable( meta src/main.cpp )
-    target_link_libraries( meta ${Boost_LIBRARIES} ${CURL_LIBRARIES} ) 
+    target_link_libraries( meta ) 
+
+    add_library( mylib SHARED  ${CMAKE_SOURCE_DIR}/src/myapi.cc  ${CMAKE_SOURCE_DIR}/src/myclass.cc)
+    add_executable( mytest src/mytest.cc )
+    target_link_libraries( mytest ${Boost_LIBRARIES} ${CURL_LIBRARIES} mylib) 
+
 
 endif()

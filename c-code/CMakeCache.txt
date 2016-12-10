@@ -264,6 +264,15 @@ ZLIB_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libz.so
 //Dependencies for the target
 api_LIB_DEPENDS:STATIC=general;/usr/local/lib/libboost_date_time.so;general;/usr/local/lib/libboost_program_options.so;general;/usr/local/lib/libboost_filesystem.so;general;/usr/local/lib/libboost_system.so;general;/usr/local/lib/libboost_serialization.so;general;/usr/local/lib/libboost_regex.so;general;/usr/local/lib/libboost_thread.so;general;/usr/local/lib/libboost_iostreams.so;general;/usr/lib/x86_64-linux-gnu/libpthread.so;general;/usr/lib/x86_64-linux-gnu/libcurl.so;
 
+//Dependencies for target
+daemonlib_LIB_DEPENDS:STATIC=
+
+//Dependencies for target
+mydll_LIB_DEPENDS:STATIC=
+
+//Dependencies for target
+mylib_LIB_DEPENDS:STATIC=
+
 
 ########################
 # INTERNAL cache entries

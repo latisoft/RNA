@@ -29,19 +29,10 @@ const addon = require('bindings')('addon.node')
 console.log('This should be eight:', addon.add(3, 5))
 
 
-var ffi = require('ffi');
-var api = ffi.Library('./build/api', {
-  'factorial': [ 'uint64_t', [ 'int' ] ]
-});
-var output = api.factorial(4);
-console.log('Your output: ' + output);
 
 
-/*
-var server = app.createServer();
-var server = app.listen(8000, function() {
-  console.log('Server running at http://localhost:8000');
-}); */
+
+
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 io.on('connection', function(socket) {
@@ -62,3 +53,15 @@ io.on('connection', function(socket) {
 server.listen(8000, ()=>{
   console.log("Server is running. (8000)");
 });
+
+
+
+
+var cp = require('child_process');
+var monitor = cp.fork(__dirname + '/daemon.js');
+monitor.on('message', function(m) {
+  console.log('Server got message:', m.value);
+});
+
+monitor.send({hello: 'world'});
+

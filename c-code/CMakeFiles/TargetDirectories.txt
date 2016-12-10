@@ -1,1 +1,3 @@
 /home/allen/project/RNA/c-code/CMakeFiles/meta.dir
+/home/allen/project/RNA/c-code/CMakeFiles/mytest.dir
+/home/allen/project/RNA/c-code/CMakeFiles/mylib.dir

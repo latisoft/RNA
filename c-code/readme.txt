@@ -7,13 +7,14 @@ $ln -s ../src META
 - create your cpp & hpp in src/
 - single cpp single bin
 
-(compile meta)
+(compile)
 $cmake .  (generate Makefile)
-$make     (generate ../web/build/meta)
-$../web/build/meta
+$make     (generate ../web/build/meta lib my.so)
 
-(compile api.so)
-$ gcc -shared -fpic src/api.cpp -o api.so
+(execute)
+$../web/build/meta => external binary
+$../web/build/mytest => call libmylib.so
+
 
 
 ==== In directory web: ====

@@ -117,6 +117,32 @@ meta/fast:
 	$(MAKE) -f CMakeFiles/meta.dir/build.make CMakeFiles/meta.dir/build
 .PHONY : meta/fast
 
+#=============================================================================
+# Target rules for targets named mylib
+
+# Build rule for target.
+mylib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 mylib
+.PHONY : mylib
+
+# fast build rule for target.
+mylib/fast:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/build
+.PHONY : mylib/fast
+
+#=============================================================================
+# Target rules for targets named mytest
+
+# Build rule for target.
+mytest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 mytest
+.PHONY : mytest
+
+# fast build rule for target.
+mytest/fast:
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/build
+.PHONY : mytest/fast
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -141,6 +167,78 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/meta.dir/build.make CMakeFiles/meta.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/myapi.o: src/myapi.cc.o
+.PHONY : src/myapi.o
+
+# target to build an object file
+src/myapi.cc.o:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myapi.cc.o
+.PHONY : src/myapi.cc.o
+
+src/myapi.i: src/myapi.cc.i
+.PHONY : src/myapi.i
+
+# target to preprocess a source file
+src/myapi.cc.i:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myapi.cc.i
+.PHONY : src/myapi.cc.i
+
+src/myapi.s: src/myapi.cc.s
+.PHONY : src/myapi.s
+
+# target to generate assembly for a file
+src/myapi.cc.s:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myapi.cc.s
+.PHONY : src/myapi.cc.s
+
+src/myclass.o: src/myclass.cc.o
+.PHONY : src/myclass.o
+
+# target to build an object file
+src/myclass.cc.o:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myclass.cc.o
+.PHONY : src/myclass.cc.o
+
+src/myclass.i: src/myclass.cc.i
+.PHONY : src/myclass.i
+
+# target to preprocess a source file
+src/myclass.cc.i:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myclass.cc.i
+.PHONY : src/myclass.cc.i
+
+src/myclass.s: src/myclass.cc.s
+.PHONY : src/myclass.s
+
+# target to generate assembly for a file
+src/myclass.cc.s:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myclass.cc.s
+.PHONY : src/myclass.cc.s
+
+src/mytest.o: src/mytest.cc.o
+.PHONY : src/mytest.o
+
+# target to build an object file
+src/mytest.cc.o:
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/mytest.cc.o
+.PHONY : src/mytest.cc.o
+
+src/mytest.i: src/mytest.cc.i
+.PHONY : src/mytest.i
+
+# target to preprocess a source file
+src/mytest.cc.i:
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/mytest.cc.i
+.PHONY : src/mytest.cc.i
+
+src/mytest.s: src/mytest.cc.s
+.PHONY : src/mytest.s
+
+# target to generate assembly for a file
+src/mytest.cc.s:
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/mytest.cc.s
+.PHONY : src/mytest.cc.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -150,9 +248,20 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... meta"
+	@echo "... mytest"
+	@echo "... mylib"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/myapi.o"
+	@echo "... src/myapi.i"
+	@echo "... src/myapi.s"
+	@echo "... src/myclass.o"
+	@echo "... src/myclass.i"
+	@echo "... src/myclass.s"
+	@echo "... src/mytest.o"
+	@echo "... src/mytest.i"
+	@echo "... src/mytest.s"
 .PHONY : help
 
 

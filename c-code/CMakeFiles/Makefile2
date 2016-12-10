@@ -91,6 +91,76 @@ clean: CMakeFiles/meta.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/mylib.dir
+
+# All Build rule for target.
+CMakeFiles/mylib.dir/all:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/depend
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/allen/project/RNA/c-code/CMakeFiles  2 3
+	@echo "Built target mylib"
+.PHONY : CMakeFiles/mylib.dir/all
+
+# Include target in all.
+all: CMakeFiles/mylib.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/mylib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/mylib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/CMakeFiles 0
+.PHONY : CMakeFiles/mylib.dir/rule
+
+# Convenience name for target.
+mylib: CMakeFiles/mylib.dir/rule
+.PHONY : mylib
+
+# clean rule for target.
+CMakeFiles/mylib.dir/clean:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/clean
+.PHONY : CMakeFiles/mylib.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/mylib.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/mytest.dir
+
+# All Build rule for target.
+CMakeFiles/mytest.dir/all: CMakeFiles/mylib.dir/all
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/depend
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/allen/project/RNA/c-code/CMakeFiles  4
+	@echo "Built target mytest"
+.PHONY : CMakeFiles/mytest.dir/all
+
+# Include target in all.
+all: CMakeFiles/mytest.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/mytest.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/mytest.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/CMakeFiles 0
+.PHONY : CMakeFiles/mytest.dir/rule
+
+# Convenience name for target.
+mytest: CMakeFiles/mytest.dir/rule
+.PHONY : mytest
+
+# clean rule for target.
+CMakeFiles/mytest.dir/clean:
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/clean
+.PHONY : CMakeFiles/mytest.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/mytest.dir/clean
+.PHONY : clean
+
+#=============================================================================
 # Special targets to cleanup operation of make.
 
 # Special rule to run CMake to check the build system integrity.

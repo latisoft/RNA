@@ -1,3 +1,4 @@
+
 #include <stdint.h>
 
 #if defined(WIN32) || defined(_WIN32)
@@ -6,7 +7,7 @@
 #define EXPORT
 #endif
 
-EXPORT long factorial(int max) {
+extern "C" EXPORT long factorial(int max) {
   int i = max;
   long result = 1;
 
