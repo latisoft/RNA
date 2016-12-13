@@ -143,6 +143,32 @@ mytest/fast:
 	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/build
 .PHONY : mytest/fast
 
+#=============================================================================
+# Target rules for targets named zclient
+
+# Build rule for target.
+zclient: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 zclient
+.PHONY : zclient
+
+# fast build rule for target.
+zclient/fast:
+	$(MAKE) -f CMakeFiles/zclient.dir/build.make CMakeFiles/zclient.dir/build
+.PHONY : zclient/fast
+
+#=============================================================================
+# Target rules for targets named zserver
+
+# Build rule for target.
+zserver: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 zserver
+.PHONY : zserver
+
+# fast build rule for target.
+zserver/fast:
+	$(MAKE) -f CMakeFiles/zserver.dir/build.make CMakeFiles/zserver.dir/build
+.PHONY : zserver/fast
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -167,77 +193,125 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/meta.dir/build.make CMakeFiles/meta.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/myapi.o: src/myapi.cc.o
-.PHONY : src/myapi.o
+src/so/myapi.o: src/so/myapi.cc.o
+.PHONY : src/so/myapi.o
 
 # target to build an object file
-src/myapi.cc.o:
-	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myapi.cc.o
-.PHONY : src/myapi.cc.o
+src/so/myapi.cc.o:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/so/myapi.cc.o
+.PHONY : src/so/myapi.cc.o
 
-src/myapi.i: src/myapi.cc.i
-.PHONY : src/myapi.i
+src/so/myapi.i: src/so/myapi.cc.i
+.PHONY : src/so/myapi.i
 
 # target to preprocess a source file
-src/myapi.cc.i:
-	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myapi.cc.i
-.PHONY : src/myapi.cc.i
+src/so/myapi.cc.i:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/so/myapi.cc.i
+.PHONY : src/so/myapi.cc.i
 
-src/myapi.s: src/myapi.cc.s
-.PHONY : src/myapi.s
+src/so/myapi.s: src/so/myapi.cc.s
+.PHONY : src/so/myapi.s
 
 # target to generate assembly for a file
-src/myapi.cc.s:
-	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myapi.cc.s
-.PHONY : src/myapi.cc.s
+src/so/myapi.cc.s:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/so/myapi.cc.s
+.PHONY : src/so/myapi.cc.s
 
-src/myclass.o: src/myclass.cc.o
-.PHONY : src/myclass.o
+src/so/myclass.o: src/so/myclass.cc.o
+.PHONY : src/so/myclass.o
 
 # target to build an object file
-src/myclass.cc.o:
-	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myclass.cc.o
-.PHONY : src/myclass.cc.o
+src/so/myclass.cc.o:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/so/myclass.cc.o
+.PHONY : src/so/myclass.cc.o
 
-src/myclass.i: src/myclass.cc.i
-.PHONY : src/myclass.i
+src/so/myclass.i: src/so/myclass.cc.i
+.PHONY : src/so/myclass.i
 
 # target to preprocess a source file
-src/myclass.cc.i:
-	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myclass.cc.i
-.PHONY : src/myclass.cc.i
+src/so/myclass.cc.i:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/so/myclass.cc.i
+.PHONY : src/so/myclass.cc.i
 
-src/myclass.s: src/myclass.cc.s
-.PHONY : src/myclass.s
+src/so/myclass.s: src/so/myclass.cc.s
+.PHONY : src/so/myclass.s
 
 # target to generate assembly for a file
-src/myclass.cc.s:
-	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myclass.cc.s
-.PHONY : src/myclass.cc.s
+src/so/myclass.cc.s:
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/so/myclass.cc.s
+.PHONY : src/so/myclass.cc.s
 
-src/mytest.o: src/mytest.cc.o
-.PHONY : src/mytest.o
+src/so/mytest.o: src/so/mytest.cc.o
+.PHONY : src/so/mytest.o
 
 # target to build an object file
-src/mytest.cc.o:
-	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/mytest.cc.o
-.PHONY : src/mytest.cc.o
+src/so/mytest.cc.o:
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/so/mytest.cc.o
+.PHONY : src/so/mytest.cc.o
 
-src/mytest.i: src/mytest.cc.i
-.PHONY : src/mytest.i
+src/so/mytest.i: src/so/mytest.cc.i
+.PHONY : src/so/mytest.i
 
 # target to preprocess a source file
-src/mytest.cc.i:
-	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/mytest.cc.i
-.PHONY : src/mytest.cc.i
+src/so/mytest.cc.i:
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/so/mytest.cc.i
+.PHONY : src/so/mytest.cc.i
 
-src/mytest.s: src/mytest.cc.s
-.PHONY : src/mytest.s
+src/so/mytest.s: src/so/mytest.cc.s
+.PHONY : src/so/mytest.s
 
 # target to generate assembly for a file
-src/mytest.cc.s:
-	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/mytest.cc.s
-.PHONY : src/mytest.cc.s
+src/so/mytest.cc.s:
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/so/mytest.cc.s
+.PHONY : src/so/mytest.cc.s
+
+src/zmq/zclient.o: src/zmq/zclient.cc.o
+.PHONY : src/zmq/zclient.o
+
+# target to build an object file
+src/zmq/zclient.cc.o:
+	$(MAKE) -f CMakeFiles/zclient.dir/build.make CMakeFiles/zclient.dir/src/zmq/zclient.cc.o
+.PHONY : src/zmq/zclient.cc.o
+
+src/zmq/zclient.i: src/zmq/zclient.cc.i
+.PHONY : src/zmq/zclient.i
+
+# target to preprocess a source file
+src/zmq/zclient.cc.i:
+	$(MAKE) -f CMakeFiles/zclient.dir/build.make CMakeFiles/zclient.dir/src/zmq/zclient.cc.i
+.PHONY : src/zmq/zclient.cc.i
+
+src/zmq/zclient.s: src/zmq/zclient.cc.s
+.PHONY : src/zmq/zclient.s
+
+# target to generate assembly for a file
+src/zmq/zclient.cc.s:
+	$(MAKE) -f CMakeFiles/zclient.dir/build.make CMakeFiles/zclient.dir/src/zmq/zclient.cc.s
+.PHONY : src/zmq/zclient.cc.s
+
+src/zmq/zserver.o: src/zmq/zserver.cc.o
+.PHONY : src/zmq/zserver.o
+
+# target to build an object file
+src/zmq/zserver.cc.o:
+	$(MAKE) -f CMakeFiles/zserver.dir/build.make CMakeFiles/zserver.dir/src/zmq/zserver.cc.o
+.PHONY : src/zmq/zserver.cc.o
+
+src/zmq/zserver.i: src/zmq/zserver.cc.i
+.PHONY : src/zmq/zserver.i
+
+# target to preprocess a source file
+src/zmq/zserver.cc.i:
+	$(MAKE) -f CMakeFiles/zserver.dir/build.make CMakeFiles/zserver.dir/src/zmq/zserver.cc.i
+.PHONY : src/zmq/zserver.cc.i
+
+src/zmq/zserver.s: src/zmq/zserver.cc.s
+.PHONY : src/zmq/zserver.s
+
+# target to generate assembly for a file
+src/zmq/zserver.cc.s:
+	$(MAKE) -f CMakeFiles/zserver.dir/build.make CMakeFiles/zserver.dir/src/zmq/zserver.cc.s
+.PHONY : src/zmq/zserver.cc.s
 
 # Help Target
 help:
@@ -248,20 +322,28 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... meta"
+	@echo "... zclient"
+	@echo "... zserver"
 	@echo "... mytest"
 	@echo "... mylib"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
-	@echo "... src/myapi.o"
-	@echo "... src/myapi.i"
-	@echo "... src/myapi.s"
-	@echo "... src/myclass.o"
-	@echo "... src/myclass.i"
-	@echo "... src/myclass.s"
-	@echo "... src/mytest.o"
-	@echo "... src/mytest.i"
-	@echo "... src/mytest.s"
+	@echo "... src/so/myapi.o"
+	@echo "... src/so/myapi.i"
+	@echo "... src/so/myapi.s"
+	@echo "... src/so/myclass.o"
+	@echo "... src/so/myclass.i"
+	@echo "... src/so/myclass.s"
+	@echo "... src/so/mytest.o"
+	@echo "... src/so/mytest.i"
+	@echo "... src/so/mytest.s"
+	@echo "... src/zmq/zclient.o"
+	@echo "... src/zmq/zclient.i"
+	@echo "... src/zmq/zclient.s"
+	@echo "... src/zmq/zserver.o"
+	@echo "... src/zmq/zserver.i"
+	@echo "... src/zmq/zserver.s"
 .PHONY : help
 
 

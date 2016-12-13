@@ -31,6 +31,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.2/Modules/FindPackageMessage.cmake"
   "/usr/share/cmake-3.2/Modules/FindThreads.cmake"
   "/usr/share/cmake-3.2/Modules/FindZLIB.cmake"
+  "/usr/share/cmake-3.2/Modules/FindZMQ.cmake"
   "/usr/share/cmake-3.2/Modules/Platform/Linux-GNU-C.cmake"
   "/usr/share/cmake-3.2/Modules/Platform/Linux-GNU-CXX.cmake"
   "/usr/share/cmake-3.2/Modules/Platform/Linux-GNU.cmake"
@@ -52,6 +53,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/meta.dir/DependInfo.cmake"
+  "CMakeFiles/zclient.dir/DependInfo.cmake"
+  "CMakeFiles/zserver.dir/DependInfo.cmake"
   "CMakeFiles/mytest.dir/DependInfo.cmake"
   "CMakeFiles/mylib.dir/DependInfo.cmake"
   )

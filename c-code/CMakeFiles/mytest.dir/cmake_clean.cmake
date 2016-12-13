@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/mytest.dir/src/mytest.cc.o"
+  "CMakeFiles/mytest.dir/src/so/mytest.cc.o"
   "/home/allen/project/RNA/web/build/mytest.pdb"
   "/home/allen/project/RNA/web/build/mytest"
 )

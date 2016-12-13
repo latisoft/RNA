@@ -161,6 +161,76 @@ clean: CMakeFiles/mytest.dir/clean
 .PHONY : clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/zclient.dir
+
+# All Build rule for target.
+CMakeFiles/zclient.dir/all:
+	$(MAKE) -f CMakeFiles/zclient.dir/build.make CMakeFiles/zclient.dir/depend
+	$(MAKE) -f CMakeFiles/zclient.dir/build.make CMakeFiles/zclient.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/allen/project/RNA/c-code/CMakeFiles  5
+	@echo "Built target zclient"
+.PHONY : CMakeFiles/zclient.dir/all
+
+# Include target in all.
+all: CMakeFiles/zclient.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/zclient.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/zclient.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/CMakeFiles 0
+.PHONY : CMakeFiles/zclient.dir/rule
+
+# Convenience name for target.
+zclient: CMakeFiles/zclient.dir/rule
+.PHONY : zclient
+
+# clean rule for target.
+CMakeFiles/zclient.dir/clean:
+	$(MAKE) -f CMakeFiles/zclient.dir/build.make CMakeFiles/zclient.dir/clean
+.PHONY : CMakeFiles/zclient.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/zclient.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/zserver.dir
+
+# All Build rule for target.
+CMakeFiles/zserver.dir/all:
+	$(MAKE) -f CMakeFiles/zserver.dir/build.make CMakeFiles/zserver.dir/depend
+	$(MAKE) -f CMakeFiles/zserver.dir/build.make CMakeFiles/zserver.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/allen/project/RNA/c-code/CMakeFiles  6
+	@echo "Built target zserver"
+.PHONY : CMakeFiles/zserver.dir/all
+
+# Include target in all.
+all: CMakeFiles/zserver.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/zserver.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/zserver.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/CMakeFiles 0
+.PHONY : CMakeFiles/zserver.dir/rule
+
+# Convenience name for target.
+zserver: CMakeFiles/zserver.dir/rule
+.PHONY : zserver
+
+# clean rule for target.
+CMakeFiles/zserver.dir/clean:
+	$(MAKE) -f CMakeFiles/zserver.dir/build.make CMakeFiles/zserver.dir/clean
+.PHONY : CMakeFiles/zserver.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/zserver.dir/clean
+.PHONY : clean
+
+#=============================================================================
 # Special targets to cleanup operation of make.
 
 # Special rule to run CMake to check the build system integrity.

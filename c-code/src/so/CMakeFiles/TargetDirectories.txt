@@ -1,0 +1,2 @@
+/home/allen/project/RNA/c-code/src/so/CMakeFiles/mylib.dir
+/home/allen/project/RNA/c-code/src/so/CMakeFiles/test.dir

@@ -52,62 +52,62 @@ include CMakeFiles/mylib.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/mylib.dir/flags.make
 
-CMakeFiles/mylib.dir/src/myapi.cc.o: CMakeFiles/mylib.dir/flags.make
-CMakeFiles/mylib.dir/src/myapi.cc.o: src/myapi.cc
+CMakeFiles/mylib.dir/src/so/myapi.cc.o: CMakeFiles/mylib.dir/flags.make
+CMakeFiles/mylib.dir/src/so/myapi.cc.o: src/so/myapi.cc
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/allen/project/RNA/c-code/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mylib.dir/src/myapi.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/mylib.dir/src/myapi.cc.o -c /home/allen/project/RNA/c-code/src/myapi.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mylib.dir/src/so/myapi.cc.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/mylib.dir/src/so/myapi.cc.o -c /home/allen/project/RNA/c-code/src/so/myapi.cc
 
-CMakeFiles/mylib.dir/src/myapi.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mylib.dir/src/myapi.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/allen/project/RNA/c-code/src/myapi.cc > CMakeFiles/mylib.dir/src/myapi.cc.i
+CMakeFiles/mylib.dir/src/so/myapi.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mylib.dir/src/so/myapi.cc.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/allen/project/RNA/c-code/src/so/myapi.cc > CMakeFiles/mylib.dir/src/so/myapi.cc.i
 
-CMakeFiles/mylib.dir/src/myapi.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mylib.dir/src/myapi.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/allen/project/RNA/c-code/src/myapi.cc -o CMakeFiles/mylib.dir/src/myapi.cc.s
+CMakeFiles/mylib.dir/src/so/myapi.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mylib.dir/src/so/myapi.cc.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/allen/project/RNA/c-code/src/so/myapi.cc -o CMakeFiles/mylib.dir/src/so/myapi.cc.s
 
-CMakeFiles/mylib.dir/src/myapi.cc.o.requires:
-.PHONY : CMakeFiles/mylib.dir/src/myapi.cc.o.requires
+CMakeFiles/mylib.dir/src/so/myapi.cc.o.requires:
+.PHONY : CMakeFiles/mylib.dir/src/so/myapi.cc.o.requires
 
-CMakeFiles/mylib.dir/src/myapi.cc.o.provides: CMakeFiles/mylib.dir/src/myapi.cc.o.requires
-	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myapi.cc.o.provides.build
-.PHONY : CMakeFiles/mylib.dir/src/myapi.cc.o.provides
+CMakeFiles/mylib.dir/src/so/myapi.cc.o.provides: CMakeFiles/mylib.dir/src/so/myapi.cc.o.requires
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/so/myapi.cc.o.provides.build
+.PHONY : CMakeFiles/mylib.dir/src/so/myapi.cc.o.provides
 
-CMakeFiles/mylib.dir/src/myapi.cc.o.provides.build: CMakeFiles/mylib.dir/src/myapi.cc.o
+CMakeFiles/mylib.dir/src/so/myapi.cc.o.provides.build: CMakeFiles/mylib.dir/src/so/myapi.cc.o
 
-CMakeFiles/mylib.dir/src/myclass.cc.o: CMakeFiles/mylib.dir/flags.make
-CMakeFiles/mylib.dir/src/myclass.cc.o: src/myclass.cc
+CMakeFiles/mylib.dir/src/so/myclass.cc.o: CMakeFiles/mylib.dir/flags.make
+CMakeFiles/mylib.dir/src/so/myclass.cc.o: src/so/myclass.cc
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/allen/project/RNA/c-code/CMakeFiles $(CMAKE_PROGRESS_2)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mylib.dir/src/myclass.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/mylib.dir/src/myclass.cc.o -c /home/allen/project/RNA/c-code/src/myclass.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mylib.dir/src/so/myclass.cc.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/mylib.dir/src/so/myclass.cc.o -c /home/allen/project/RNA/c-code/src/so/myclass.cc
 
-CMakeFiles/mylib.dir/src/myclass.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mylib.dir/src/myclass.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/allen/project/RNA/c-code/src/myclass.cc > CMakeFiles/mylib.dir/src/myclass.cc.i
+CMakeFiles/mylib.dir/src/so/myclass.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mylib.dir/src/so/myclass.cc.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/allen/project/RNA/c-code/src/so/myclass.cc > CMakeFiles/mylib.dir/src/so/myclass.cc.i
 
-CMakeFiles/mylib.dir/src/myclass.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mylib.dir/src/myclass.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/allen/project/RNA/c-code/src/myclass.cc -o CMakeFiles/mylib.dir/src/myclass.cc.s
+CMakeFiles/mylib.dir/src/so/myclass.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mylib.dir/src/so/myclass.cc.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/allen/project/RNA/c-code/src/so/myclass.cc -o CMakeFiles/mylib.dir/src/so/myclass.cc.s
 
-CMakeFiles/mylib.dir/src/myclass.cc.o.requires:
-.PHONY : CMakeFiles/mylib.dir/src/myclass.cc.o.requires
+CMakeFiles/mylib.dir/src/so/myclass.cc.o.requires:
+.PHONY : CMakeFiles/mylib.dir/src/so/myclass.cc.o.requires
 
-CMakeFiles/mylib.dir/src/myclass.cc.o.provides: CMakeFiles/mylib.dir/src/myclass.cc.o.requires
-	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/myclass.cc.o.provides.build
-.PHONY : CMakeFiles/mylib.dir/src/myclass.cc.o.provides
+CMakeFiles/mylib.dir/src/so/myclass.cc.o.provides: CMakeFiles/mylib.dir/src/so/myclass.cc.o.requires
+	$(MAKE) -f CMakeFiles/mylib.dir/build.make CMakeFiles/mylib.dir/src/so/myclass.cc.o.provides.build
+.PHONY : CMakeFiles/mylib.dir/src/so/myclass.cc.o.provides
 
-CMakeFiles/mylib.dir/src/myclass.cc.o.provides.build: CMakeFiles/mylib.dir/src/myclass.cc.o
+CMakeFiles/mylib.dir/src/so/myclass.cc.o.provides.build: CMakeFiles/mylib.dir/src/so/myclass.cc.o
 
 # Object files for target mylib
 mylib_OBJECTS = \
-"CMakeFiles/mylib.dir/src/myapi.cc.o" \
-"CMakeFiles/mylib.dir/src/myclass.cc.o"
+"CMakeFiles/mylib.dir/src/so/myapi.cc.o" \
+"CMakeFiles/mylib.dir/src/so/myclass.cc.o"
 
 # External object files for target mylib
 mylib_EXTERNAL_OBJECTS =
 
-/home/allen/project/RNA/web/build/libmylib.so: CMakeFiles/mylib.dir/src/myapi.cc.o
-/home/allen/project/RNA/web/build/libmylib.so: CMakeFiles/mylib.dir/src/myclass.cc.o
+/home/allen/project/RNA/web/build/libmylib.so: CMakeFiles/mylib.dir/src/so/myapi.cc.o
+/home/allen/project/RNA/web/build/libmylib.so: CMakeFiles/mylib.dir/src/so/myclass.cc.o
 /home/allen/project/RNA/web/build/libmylib.so: CMakeFiles/mylib.dir/build.make
 /home/allen/project/RNA/web/build/libmylib.so: CMakeFiles/mylib.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX shared library /home/allen/project/RNA/web/build/libmylib.so"
@@ -117,8 +117,8 @@ mylib_EXTERNAL_OBJECTS =
 CMakeFiles/mylib.dir/build: /home/allen/project/RNA/web/build/libmylib.so
 .PHONY : CMakeFiles/mylib.dir/build
 
-CMakeFiles/mylib.dir/requires: CMakeFiles/mylib.dir/src/myapi.cc.o.requires
-CMakeFiles/mylib.dir/requires: CMakeFiles/mylib.dir/src/myclass.cc.o.requires
+CMakeFiles/mylib.dir/requires: CMakeFiles/mylib.dir/src/so/myapi.cc.o.requires
+CMakeFiles/mylib.dir/requires: CMakeFiles/mylib.dir/src/so/myclass.cc.o.requires
 .PHONY : CMakeFiles/mylib.dir/requires
 
 CMakeFiles/mylib.dir/clean:

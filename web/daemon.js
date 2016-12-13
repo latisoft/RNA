@@ -1,22 +1,8 @@
 
-var ffi = require('ffi');
-var HAL = ffi.Library('./build/libmylib.so', {
-  'factorial': [ 'long', [ 'int' ] ]
+process.on('command', function(cmd) {
+  console.log('Daemon got command:', cmd.hello);
+
 });
+process.send({status: 'ok', value: sts});
 
-
-
-var SystemInfo = {
-  "MicorarrayNo": 0,
-  "x": 100,
-  "y": 200
-};
-
-process.on('message', function(cmd) {
-  console.log('CHILD got message:', cmd.hello);
-});
-
-var output = HAL.factorial(4);
-//console.log('Your output: ' + output);
-process.send({status: 'finished',
-value: output});
+console.log('Daemon Server (ms): ', interval);

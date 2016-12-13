@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/allen/project/RNA/c-code/src/myapi.cc" "/home/allen/project/RNA/c-code/CMakeFiles/mylib.dir/src/myapi.cc.o"
-  "/home/allen/project/RNA/c-code/src/myclass.cc" "/home/allen/project/RNA/c-code/CMakeFiles/mylib.dir/src/myclass.cc.o"
+  "/home/allen/project/RNA/c-code/src/so/myapi.cc" "/home/allen/project/RNA/c-code/CMakeFiles/mylib.dir/src/so/myapi.cc.o"
+  "/home/allen/project/RNA/c-code/src/so/myclass.cc" "/home/allen/project/RNA/c-code/CMakeFiles/mylib.dir/src/so/myclass.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

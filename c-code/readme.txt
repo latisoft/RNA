@@ -1,5 +1,9 @@
 
 ==== In directory c-code: ====
+(example)
+so/  => call dynamic lib
+zmg/ => ipc by zmg (zserver/zclient)
+
 (init)
 $mkdir bin lib src include unit_test
 $cd include
@@ -9,13 +13,14 @@ $ln -s ../src META
 
 (compile)
 $cmake .  (generate Makefile)
-$make     (generate ../web/build/meta lib my.so)
+$make     (generate ../web/build/meta zserver zclient)
 
-(execute)
+(execute meta)
 $../web/build/meta => external binary
-$../web/build/mytest => call libmylib.so
 
-
+(execute zmg)
+$../web/build/zserver
+$../web/build/zclient
 
 ==== In directory web: ====
 -- $cd ../web
@@ -28,3 +33,7 @@ const child = execFile('build/meta', ['--version'], (error, stdout, stderr) => {
   }
   console.log(stdout);
 })
+
+==== Install ZeroMQ ====
+sudo apt-get install libtool pkg-config build-essential autoconf automake
+sudo apt-get install libzmq-dev

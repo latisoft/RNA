@@ -34,6 +34,7 @@ find_package( Threads )
 find_package( ZLIB )
 find_package( CURL )
 find_package( GTest REQUIRED )
+find_package( ZMQ )
 
 if( Boost_FOUND AND Threads_FOUND AND ZLIB_FOUND )
 
@@ -46,12 +47,13 @@ if( Boost_FOUND AND Threads_FOUND AND ZLIB_FOUND )
 #    set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib/ )
     set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../web/build/ )
 
+
     add_executable( meta src/main.cpp )
-    target_link_libraries( meta ) 
+    target_link_libraries( meta )
 
-    add_library( mylib SHARED  ${CMAKE_SOURCE_DIR}/src/myapi.cc  ${CMAKE_SOURCE_DIR}/src/myclass.cc)
-    add_executable( mytest src/mytest.cc )
-    target_link_libraries( mytest ${Boost_LIBRARIES} ${CURL_LIBRARIES} mylib) 
-
+    add_executable( zserver src/zmq/zserver.cc )
+    target_link_libraries( zserver ${ZMQ_LIBRARIES} )
+    add_executable( zclient src/zmq/zclient.cc )
+    target_link_libraries( zclient ${ZMQ_LIBRARIES} )
 
 endif()

@@ -1,5 +1,3 @@
-
-
 const execFile = require('child_process').execFile;
 var express = require('express');
 var app = express();
@@ -29,10 +27,6 @@ const addon = require('bindings')('addon.node')
 console.log('This should be eight:', addon.add(3, 5))
 
 
-
-
-
-
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 io.on('connection', function(socket) {
@@ -55,13 +49,34 @@ server.listen(8000, ()=>{
 });
 
 
+console.log("===== zmq =====");
+// Hello World client
+// Connects REQ socket to tcp://localhost:5555
+// Sends "Hello" to server.
 
+var zmq = require('zmq');
 
-var cp = require('child_process');
-var monitor = cp.fork(__dirname + '/daemon.js');
-monitor.on('message', function(m) {
-  console.log('Server got message:', m.value);
+// socket to talk to server
+console.log("Connecting to hello world server…");
+var requester = zmq.socket('req');
+
+var x = 0;
+requester.on("message", function(reply) {
+  console.log("Received reply", x, ": [", reply.toString(), ']');
+  x += 1;
+  if (x === 10) {
+    requester.close();
+    process.exit(0);
+  }
 });
 
-monitor.send({hello: 'world'});
+requester.connect("tcp://localhost:5555");
 
+for (var i = 0; i < 10; i++) {
+  console.log("Sending request", i, '…');
+  requester.send("Hello");
+}
+
+process.on('SIGINT', function() {
+  requester.close();
+});

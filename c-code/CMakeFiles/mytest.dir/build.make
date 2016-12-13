@@ -52,37 +52,37 @@ include CMakeFiles/mytest.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/mytest.dir/flags.make
 
-CMakeFiles/mytest.dir/src/mytest.cc.o: CMakeFiles/mytest.dir/flags.make
-CMakeFiles/mytest.dir/src/mytest.cc.o: src/mytest.cc
+CMakeFiles/mytest.dir/src/so/mytest.cc.o: CMakeFiles/mytest.dir/flags.make
+CMakeFiles/mytest.dir/src/so/mytest.cc.o: src/so/mytest.cc
 	$(CMAKE_COMMAND) -E cmake_progress_report /home/allen/project/RNA/c-code/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mytest.dir/src/mytest.cc.o"
-	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/mytest.dir/src/mytest.cc.o -c /home/allen/project/RNA/c-code/src/mytest.cc
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object CMakeFiles/mytest.dir/src/so/mytest.cc.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/mytest.dir/src/so/mytest.cc.o -c /home/allen/project/RNA/c-code/src/so/mytest.cc
 
-CMakeFiles/mytest.dir/src/mytest.cc.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mytest.dir/src/mytest.cc.i"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/allen/project/RNA/c-code/src/mytest.cc > CMakeFiles/mytest.dir/src/mytest.cc.i
+CMakeFiles/mytest.dir/src/so/mytest.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mytest.dir/src/so/mytest.cc.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/allen/project/RNA/c-code/src/so/mytest.cc > CMakeFiles/mytest.dir/src/so/mytest.cc.i
 
-CMakeFiles/mytest.dir/src/mytest.cc.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mytest.dir/src/mytest.cc.s"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/allen/project/RNA/c-code/src/mytest.cc -o CMakeFiles/mytest.dir/src/mytest.cc.s
+CMakeFiles/mytest.dir/src/so/mytest.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mytest.dir/src/so/mytest.cc.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/allen/project/RNA/c-code/src/so/mytest.cc -o CMakeFiles/mytest.dir/src/so/mytest.cc.s
 
-CMakeFiles/mytest.dir/src/mytest.cc.o.requires:
-.PHONY : CMakeFiles/mytest.dir/src/mytest.cc.o.requires
+CMakeFiles/mytest.dir/src/so/mytest.cc.o.requires:
+.PHONY : CMakeFiles/mytest.dir/src/so/mytest.cc.o.requires
 
-CMakeFiles/mytest.dir/src/mytest.cc.o.provides: CMakeFiles/mytest.dir/src/mytest.cc.o.requires
-	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/mytest.cc.o.provides.build
-.PHONY : CMakeFiles/mytest.dir/src/mytest.cc.o.provides
+CMakeFiles/mytest.dir/src/so/mytest.cc.o.provides: CMakeFiles/mytest.dir/src/so/mytest.cc.o.requires
+	$(MAKE) -f CMakeFiles/mytest.dir/build.make CMakeFiles/mytest.dir/src/so/mytest.cc.o.provides.build
+.PHONY : CMakeFiles/mytest.dir/src/so/mytest.cc.o.provides
 
-CMakeFiles/mytest.dir/src/mytest.cc.o.provides.build: CMakeFiles/mytest.dir/src/mytest.cc.o
+CMakeFiles/mytest.dir/src/so/mytest.cc.o.provides.build: CMakeFiles/mytest.dir/src/so/mytest.cc.o
 
 # Object files for target mytest
 mytest_OBJECTS = \
-"CMakeFiles/mytest.dir/src/mytest.cc.o"
+"CMakeFiles/mytest.dir/src/so/mytest.cc.o"
 
 # External object files for target mytest
 mytest_EXTERNAL_OBJECTS =
 
-/home/allen/project/RNA/web/build/mytest: CMakeFiles/mytest.dir/src/mytest.cc.o
+/home/allen/project/RNA/web/build/mytest: CMakeFiles/mytest.dir/src/so/mytest.cc.o
 /home/allen/project/RNA/web/build/mytest: CMakeFiles/mytest.dir/build.make
 /home/allen/project/RNA/web/build/mytest: /usr/local/lib/libboost_date_time.so
 /home/allen/project/RNA/web/build/mytest: /usr/local/lib/libboost_program_options.so
@@ -103,7 +103,7 @@ mytest_EXTERNAL_OBJECTS =
 CMakeFiles/mytest.dir/build: /home/allen/project/RNA/web/build/mytest
 .PHONY : CMakeFiles/mytest.dir/build
 
-CMakeFiles/mytest.dir/requires: CMakeFiles/mytest.dir/src/mytest.cc.o.requires
+CMakeFiles/mytest.dir/requires: CMakeFiles/mytest.dir/src/so/mytest.cc.o.requires
 .PHONY : CMakeFiles/mytest.dir/requires
 
 CMakeFiles/mytest.dir/clean:

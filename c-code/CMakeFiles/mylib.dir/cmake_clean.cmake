@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/mylib.dir/src/myapi.cc.o"
-  "CMakeFiles/mylib.dir/src/myclass.cc.o"
+  "CMakeFiles/mylib.dir/src/so/myapi.cc.o"
+  "CMakeFiles/mylib.dir/src/so/myclass.cc.o"
   "/home/allen/project/RNA/web/build/libmylib.pdb"
   "/home/allen/project/RNA/web/build/libmylib.so"
 )
