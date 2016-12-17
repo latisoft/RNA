@@ -37,6 +37,9 @@ io.on('connection', function(socket) {
   socket.on('client event', function(from, msg) {
     console.log("==== evt ====");
     console.log('I received a private message by ', from, ' saying ', msg);
+
+
+    
     socket.emit("server event", { my: 'data'});
   });
   socket.on('disconnect', function() {

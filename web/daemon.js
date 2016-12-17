@@ -4,5 +4,4 @@ process.on('command', function(cmd) {
 
 });
 process.send({status: 'ok', value: sts});
-
 console.log('Daemon Server (ms): ', interval);
