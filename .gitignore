@@ -4,6 +4,12 @@ logs
 *.log
 npm-debug.log*
 
+# Compiled java scripts (React.js + Webpack)
+web/public/javascripts/bundle.js*
+
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+build/Release
+
 # Runtime data
 pids
 *.pid
@@ -23,9 +29,6 @@ coverage
 
 # node-waf configuration
 .lock-wscript
-
-# Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
 
 # Dependency directories
 node_modules
