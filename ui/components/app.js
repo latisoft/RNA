@@ -1,58 +1,71 @@
 
+
 import React  from 'react';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import './app.scss';
-import io from 'socket.io-client';
-let socket = io();
 
-
+const Pane = (props) => {
+  return <div>{props.children}</div>;
+}
+/*
+Pane.propTypes = {
+    label: React.PropTypes.string.isRequired,
+    children: React.PropTypes.element.isRequired
+}
+*/
+class Tabs extends React.Component {
+  constructor(props) {
+    super(props);  
+    this.state = { selected: this.props.selected };
+  }
+  _renderTitles() {
+    function labels(child, idx) {
+      let activeClass = (this.state.selected === idx ? 'is-active' : '');
+      return (
+        <li role="tab" key={idx} aria-controls={`panel${idx}`}>
+          <a className={activeClass}  onClick={this.onClick.bind(this, idx)} href="#">
+            {child.props.label}
+          </a>
+        </li>
+      );
+    }
+   return (
+      <ul className="tabs__labels" role="tablist">
+        {this.props.children.map(labels.bind(this))}
+      </ul>
+    );
+  }
+  onClick(index, event) {
+    event.preventDefault();
+    this.setState({
+      selected: index
+    });
+  }
+  render() {
+    return (
+      <div className="tabs">
+        {this._renderTitles()}
+        
+        <div className="tabs__content">
+          {this.props.children[this.state.selected]}
+        </div>
+      </div>);
+  }
+}
 export class App extends React.Component {
   constructor(props) {
     super(props);
 
     console.log("App start");
-    socket.on('server event', function(data) {
-      console.log(data);
-    });
-
-  }
-  componentDidMount() {
-
-  }
-  componentWillUnmount() {
-
-  }
-
-  f1(e) {
-    console.log("Try f1");
-    socket.emit('client event', {socket: 'io1'});
-  }
-  f2(e) {
-    console.log("Try f2");
-    socket.emit('client event', {socket: 'io2'});
   }
   render() {
-    let cmd1 = this.f1.bind(this);
-    let cmd2 = this.f2.bind(this);
-
-    const buttonsInstance = (
-      <ButtonToolbar>
-        <Button>Default</Button>
-        <Button bsStyle="primary" onClick={cmd1}>CMD 1</Button>
-        <Button bsStyle="success" onClick={cmd2}>CMD 2</Button>
-      </ButtonToolbar>
-    );
     return (
-      <div id="app-framework">
-        Webapp Framework: Xample ^_^>
-        <div className="row">
-          <div className="col-md-4">Get</div>
-          <div className="col-md-4">
-            {buttonsInstance}
-          </div>
-          <div className="col-md-4">Display</div>
-        </div>
-      </div>
+      <Tabs selected={this.props.firstSelect || 0}>
+      { 
+        this.props.tabs.map(tab =>
+          <Pane label={tab.name} key={tab.toString()} >{tab.content}</Pane>)
+      }
+      </Tabs>
     );
   }
 }
