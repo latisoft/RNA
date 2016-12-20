@@ -1,0 +1,35 @@
+
+.vtab-btn {
+  display:          block;
+  position:         relative;
+  cursor:           pointer;
+
+  margin:           0px;
+  border:           1px solid #f9e8c8;
+  border-radius:    4px;
+
+  width:            200px;
+  height:           40px;
+}
+.vtab-btn:hover {
+  border:           2px solid #fb8c00;
+}
+.vtab-btn > img {
+  z-index:          0;
+  position:         absolute;
+  pointer-events:   none;
+
+  left:             0;
+  top:              0;
+}
+.vtab-btn > div {
+  z-index:          1;
+  position:         absolute;
+  pointer-events:   none;
+
+  color:            blue;
+  font-size:        12px;
+  font-weight:      bold;
+  left:             2px;
+  top:              0px;
+}
