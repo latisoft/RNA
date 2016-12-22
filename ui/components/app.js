@@ -23,7 +23,7 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      fIndex: 1
+      fIndex: 0
     }    
   }
   handleSelect(idx, e) {
@@ -49,10 +49,12 @@ export class App extends React.Component {
                 });
     let pane = vTabs[index].elem;
     return ( 
-      <div id="frame">
-        <div> {tabs} </div>
-        <div> {pane} </div>
-      </div>
+        <div id="frame">
+          <div id='banner'>Centrillion Microarray Reader</div>
+          <div> {tabs} </div>
+          <div className='container'> {pane} </div>
+        </div>
+
     );
   }
 }
