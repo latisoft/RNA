@@ -26,10 +26,28 @@ export class App extends React.Component {
       fIndex: 0
     }    
   }
+  componentDidMount() {
+    console.log("Key handle mounted!");
+    window.onkeydown = this.handleKeyDown.bind(this);
+  }
   handleSelect(idx, e) {
     this.setState({fIndex: idx});
     console.log('click vtab index: ', idx);
     let id = e.target.id.toLowerCase();
+  }
+  handleKeyDown(e) {
+    let idx = this.state.fIndex;
+    switch(e.keyCode) // l:37, u:38; r:39, d:40
+    {
+      case 38: // up
+        if(idx>0) idx--;
+        break;
+      case 40: // down
+        if(idx<6) idx++;
+        break;
+      default: return;
+    }
+    this.setState({fIndex: idx});
   }  
   render() {
 
@@ -48,13 +66,12 @@ export class App extends React.Component {
                     </div>);
                 });
     let pane = vTabs[index].elem;
-    return ( 
+    return (
         <div id="frame">
           <div id='banner'>Centrillion Microarray Reader</div>
           <div> {tabs} </div>
           <div className='container'> {pane} </div>
         </div>
-
     );
   }
 }
