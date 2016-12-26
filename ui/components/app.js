@@ -1,12 +1,12 @@
 import React  from 'react';
 
-import Home       from './vtabwindows/home';
-import Settings   from './vtabwindows/settings';
-import Monitor    from './vtabwindows/monitor';
-import Reporter   from './vtabwindows/reporter';
-import Analyzer   from './vtabwindows/analyzer';
-import Visualizer from './vtabwindows/visualizer';
-import Help       from './vtabwindows/help';
+import Home       from './panes/home';
+import Settings   from './panes/settings';
+import Monitor    from './panes/monitor';
+import Reporter   from './panes/reporter';
+import Analyzer   from './panes/analyzer';
+import Visualizer from './panes/visualizer';
+import Help       from './panes/help';
 import './app.scss';
 
 let vTabs = [
