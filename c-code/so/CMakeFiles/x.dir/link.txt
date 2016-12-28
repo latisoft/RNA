@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC -std=c++17 -ftemplate-backtrace-limit=0 -O3 -g -Wno-ignored-attributes -Wno-multichar -Wreturn-type -Wno-terminate   -shared -Wl,-soname,libx.so -o libx.so CMakeFiles/x.dir/xapi.cc.o CMakeFiles/x.dir/xclass.cc.o 

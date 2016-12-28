@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/allen/project/RNA/c-code/so/xclass.h
+
+/home/allen/project/RNA/c-code/so/xmain.cc
+iostream
+-
+xclass.h
+/home/allen/project/RNA/c-code/so/xclass.h
+

@@ -1,1 +1,0 @@
-/usr/bin/c++   -std=c++17 -ftemplate-backtrace-limit=0 -O3 -g -Wno-ignored-attributes -Wno-multichar -Wreturn-type -Wno-terminate    CMakeFiles/zserver.dir/src/zmq/zserver.cc.o  -o /home/allen/project/RNA/web/build/zserver  -L/home/allen/project/RNA/c-code/lib -rdynamic -lzmq -Wl,-rpath,/home/allen/project/RNA/c-code/lib 

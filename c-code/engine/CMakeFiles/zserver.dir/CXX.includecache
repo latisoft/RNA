@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/allen/project/RNA/c-code/src/zmq/zserver.cc
+zmq.hpp
+-
+string
+-
+iostream
+-
+unistd.h
+-
+windows.h
+-
+

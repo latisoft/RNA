@@ -1,1 +1,0 @@
-/usr/bin/c++   -std=c++17 -ftemplate-backtrace-limit=0 -O3 -g -Wno-ignored-attributes -Wno-multichar -Wreturn-type -Wno-terminate    CMakeFiles/test.dir/mytest.cc.o  -o test -rdynamic libmylib.so -Wl,-rpath,/home/allen/project/RNA/c-code/src/so 

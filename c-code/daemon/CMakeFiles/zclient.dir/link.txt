@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++17 -ftemplate-backtrace-limit=0 -O3 -g -Wno-ignored-attributes -Wno-multichar -Wreturn-type -Wno-terminate    CMakeFiles/zclient.dir/src/zclient.cc.o  -o bin/zclient  -L/home/allen/project/RNA/c-code/daemon/lib -rdynamic -lzmq -Wl,-rpath,/home/allen/project/RNA/c-code/daemon/lib 

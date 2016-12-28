@@ -1,0 +1,2 @@
+/home/allen/project/RNA/c-code/daemon/CMakeFiles/zclient.dir
+/home/allen/project/RNA/c-code/daemon/CMakeFiles/zserver.dir

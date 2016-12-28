@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++17 -ftemplate-backtrace-limit=0 -O3 -g -Wno-ignored-attributes -Wno-multichar -Wreturn-type -Wno-terminate    CMakeFiles/meta.dir/src/main.cpp.o  -o bin/meta  -L/home/allen/project/RNA/c-code/lib -rdynamic 

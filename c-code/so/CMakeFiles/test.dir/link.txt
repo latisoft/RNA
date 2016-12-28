@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++17 -ftemplate-backtrace-limit=0 -O3 -g -Wno-ignored-attributes -Wno-multichar -Wreturn-type -Wno-terminate    CMakeFiles/test.dir/xmain.cc.o  -o test -rdynamic libx.so -Wl,-rpath,/home/allen/project/RNA/c-code/so 
