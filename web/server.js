@@ -23,8 +23,8 @@ app.get('/run/:username', function pipeline(req, res) {
   });
 });
 
-const addon = require('bindings')('addon.node')
-console.log('This should be eight:', addon.add(3, 5))
+// const addon = require('bindings')('addon.node')
+// console.log('This should be eight:', addon.add(3, 5))
 
 
 var server = require('http').Server(app);

@@ -41155,17 +41155,17 @@
 	            { className: 'col-md-offset-8 col-md-4 col-sm-12' },
 	            _react2.default.createElement(
 	              'button',
-	              { type: 'submit', className: 'btn btn-primary', onClick: this.onCancel },
+	              { type: 'submit', className: 'btn btn-primary', onclick: this.onCancel },
 	              'Cancel'
 	            ),
 	            _react2.default.createElement(
 	              'button',
-	              { type: 'submit', className: 'btn btn-primary', onClick: this.onReset },
+	              { type: 'submit', className: 'btn btn-primary', onclick: this.onReset },
 	              'Reset'
 	            ),
 	            _react2.default.createElement(
 	              'button',
-	              { type: 'submit', className: 'btn btn-primary', onClick: this.onSave },
+	              { type: 'submit', className: 'btn btn-primary', onclick: this.onSave },
 	              'Save'
 	            )
 	          )

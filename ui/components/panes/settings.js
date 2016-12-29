@@ -99,9 +99,9 @@ export default class Settings extends React.Component {
         </div>
         <div className='row'>
           <div className='col-md-offset-8 col-md-4 col-sm-12'>
-            <button type="submit" className="btn btn-primary" onClick={this.onCancel}>Cancel</button>
-            <button type="submit" className="btn btn-primary" onClick={this.onReset}>Reset</button>
-            <button type="submit" className="btn btn-primary" onClick={this.onSave}>Save</button>
+            <button type="submit" className="btn btn-primary" onclick={this.onCancel}>Cancel</button>
+            <button type="submit" className="btn btn-primary" onclick={this.onReset}>Reset</button>
+            <button type="submit" className="btn btn-primary" onclick={this.onSave}>Save</button>
           </div>
         </div>
       </div>
