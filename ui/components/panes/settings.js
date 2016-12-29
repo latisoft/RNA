@@ -1,4 +1,5 @@
 import React  from 'react';
+import Axios  from 'axios';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import './settings.scss';
 
@@ -7,9 +8,38 @@ export default class Settings extends React.Component {
     super(props);
     this.state = {
       functionFocus: ''
-    }
+    };
+    this.onCancel = this.onCancel.bind(this);
+    this.onReset  = this.onReset.bind(this);
+    this.onSave   = this.onSave.bind(this);
+  }
+  componentDidMount() {
+    console.log("settings pane: did mount");
+    Axios.get('/read/x')
+      .then(function(response){
+        console.log(response.data);
+        console.log(response.status);
+      });
+  }  
+  onCancel() {
+    console.log("onCancel");
+  }
+  onReset() {
+    console.log("onReset");
+  }
+  onSave() {
+    console.log("onSave");
+    axios.post('/write/x', { name: 'Allen', family: 'Ni' })
+      .then(function(response){
+        console.log('saved successfully:', response);
+    });
   }
   render() {
+    var opts = {};
+    if(true) {
+      opts['readOnly'] = 'readOnly';
+    }
+
     return (
       <div>
         <div className='row'>
@@ -19,17 +49,17 @@ export default class Settings extends React.Component {
                 <div className="control-group">
                   <label className="control-label input-label" htmlFor="status">Status</label>
                   <div className="controls">
-                      <input type="text" id="status" name="status" placeholder="Ready" readonly />
+                      <input type="text" id="status" name="status" placeholder="Ready" {...opts} />
                   </div>
                   <label className="control-label input-label" htmlFor="cover">Cover</label>
                   <div className="controls">
-                      <input type="text" id="cover" name="cover" placeholder="Close" readonly />
+                      <input type="text" id="cover" name="cover" placeholder="Close" {...opts} />
                   </div>
                   <hr/>
                   <h4>Thermal</h4>
                   <label className="control-label input-label" htmlFor="nowT">Current Temperature</label>
                   <div className="controls">
-                      <input type="text" id="nowT" name="nowT" placeholder="38'C" readonly />
+                      <input type="text" id="nowT" name="nowT" placeholder="38'C" {...opts} />
                   </div>
                   <label className="control-label input-label" htmlFor="minT">Min Temp.</label>
                   <div className="controls">
@@ -69,9 +99,9 @@ export default class Settings extends React.Component {
         </div>
         <div className='row'>
           <div className='col-md-offset-8 col-md-4 col-sm-12'>
-            <button type="submit" className="btn btn-primary">Cancel</button>
-            <button type="submit" className="btn btn-primary">Reset</button>
-            <button type="submit" className="btn btn-primary">Save</button>
+            <button type="submit" className="btn btn-primary" onClick={this.onCancel}>Cancel</button>
+            <button type="submit" className="btn btn-primary" onClick={this.onReset}>Reset</button>
+            <button type="submit" className="btn btn-primary" onClick={this.onSave}>Save</button>
           </div>
         </div>
       </div>
