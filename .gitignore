@@ -3,9 +3,10 @@
 logs
 *.log
 npm-debug.log*
+core.*
 
 # Compiled java scripts (React.js + Webpack)
-web/public/javascripts/bundle.js*
+web/publics/bundle.js*
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
