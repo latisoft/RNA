@@ -6,7 +6,7 @@ npm-debug.log*
 core.*
 
 # Compiled java scripts (React.js + Webpack)
-web/publics/bundle.js*
+web/public/js/bundle.js*
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
