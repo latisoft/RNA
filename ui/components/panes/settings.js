@@ -15,7 +15,8 @@ export default class Settings extends React.Component {
   }
   componentDidMount() {
     console.log("settings pane: did mount");
-    Axios.get('/read/x')
+
+    Axios.get('/read/settings')
       .then(function(response){
         console.log(response.data);
         console.log(response.status);
@@ -29,7 +30,8 @@ export default class Settings extends React.Component {
   }
   onSave() {
     console.log("onSave");
-    axios.post('/write/x', { name: 'Allen', family: 'Ni' })
+    // var = 
+    Axios.post('/write/settings', { data: 'Allen', status: 1 })
       .then(function(response){
         console.log('saved successfully:', response);
     });
@@ -65,7 +67,7 @@ export default class Settings extends React.Component {
                   <div className="controls">
                       <input type="text" id="minT" name="minT" placeholder="25"/>
                   </div>
-                  <label className="control-label input-label" htmlFor="minT">Max Temp.</label>
+                  <label className="control-label input-label" htmlFor="maxT">Max Temp.</label>
                   <div className="controls">
                       <input type="text" id="maxT" name="maxT" placeholder="45"/>
                   </div>
@@ -99,9 +101,9 @@ export default class Settings extends React.Component {
         </div>
         <div className='row'>
           <div className='col-md-offset-8 col-md-4 col-sm-12'>
-            <button type="submit" className="btn btn-primary" onclick={this.onCancel}>Cancel</button>
-            <button type="submit" className="btn btn-primary" onclick={this.onReset}>Reset</button>
-            <button type="submit" className="btn btn-primary" onclick={this.onSave}>Save</button>
+            <button type="submit" className="btn btn-primary" onClick={this.onCancel}>Cancel</button>
+            <button type="submit" className="btn btn-primary" onClick={this.onReset}>Reset</button>
+            <button type="submit" className="btn btn-primary" onClick={this.onSave}>Save</button>
           </div>
         </div>
       </div>

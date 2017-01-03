@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "bindings": "^1.2.1",
+    "body-parser": "^1.15.2",
     "child_process": "^1.0.2",
     "express": "^4.14.0",
     "ffi": "^2.2.0",
+    "jsonfile": "^2.4.0",
     "path": "^0.12.7",
     "socket.io": "^1.7.1",
     "zmq": "^2.15.3"

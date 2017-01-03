@@ -1,4 +1,10 @@
-r
+/*
+
+// ====
+
+
+
+
 console.log("===== zmq =====");
 // Hello World client
 // Connects REQ socket to tcp://localhost:5555
@@ -32,3 +38,4 @@ process.on('SIGINT', function() {
   process.exit(0);
 });
 
+*/

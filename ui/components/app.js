@@ -8,6 +8,7 @@ import Analyzer   from './panes/analyzer';
 import Visualizer from './panes/visualizer';
 import Help       from './panes/help';
 import './app.scss';
+
 import io from 'socket.io-client';
 let socket = io();
 
@@ -30,9 +31,11 @@ export class App extends React.Component {
       fIndex: 0
     }
     console.log("GUI start");
+    /*
     socket.on('server event', function(data) {
       console.log('server event: ', data);
     });
+    */
   }
   componentDidMount() {
     console.log("Key handle mounted!");

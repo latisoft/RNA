@@ -21548,9 +21548,11 @@
 	      fIndex: 0
 	    };
 	    console.log("GUI start");
-	    socket.on('server event', function (data) {
+	    /*
+	    socket.on('server event', function(data) {
 	      console.log('server event: ', data);
 	    });
+	    */
 	    return _this;
 	  }
 
@@ -40988,7 +40990,8 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      console.log("settings pane: did mount");
-	      _axios2.default.get('/read/x').then(function (response) {
+
+	      _axios2.default.get('/read/settings').then(function (response) {
 	        console.log(response.data);
 	        console.log(response.status);
 	      });
@@ -41007,7 +41010,8 @@
 	    key: 'onSave',
 	    value: function onSave() {
 	      console.log("onSave");
-	      axios.post('/write/x', { name: 'Allen', family: 'Ni' }).then(function (response) {
+	      // var = 
+	      _axios2.default.post('/write/settings', { data: 'Allen', status: 1 }).then(function (response) {
 	        console.log('saved successfully:', response);
 	      });
 	    }
@@ -41089,7 +41093,7 @@
 	                ),
 	                _react2.default.createElement(
 	                  'label',
-	                  { className: 'control-label input-label', htmlFor: 'minT' },
+	                  { className: 'control-label input-label', htmlFor: 'maxT' },
 	                  'Max Temp.'
 	                ),
 	                _react2.default.createElement(
@@ -41165,17 +41169,17 @@
 	            { className: 'col-md-offset-8 col-md-4 col-sm-12' },
 	            _react2.default.createElement(
 	              'button',
-	              { type: 'submit', className: 'btn btn-primary', onclick: this.onCancel },
+	              { type: 'submit', className: 'btn btn-primary', onClick: this.onCancel },
 	              'Cancel'
 	            ),
 	            _react2.default.createElement(
 	              'button',
-	              { type: 'submit', className: 'btn btn-primary', onclick: this.onReset },
+	              { type: 'submit', className: 'btn btn-primary', onClick: this.onReset },
 	              'Reset'
 	            ),
 	            _react2.default.createElement(
 	              'button',
-	              { type: 'submit', className: 'btn btn-primary', onclick: this.onSave },
+	              { type: 'submit', className: 'btn btn-primary', onClick: this.onSave },
 	              'Save'
 	            )
 	          )
