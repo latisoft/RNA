@@ -85,6 +85,16 @@ zserver_EXTERNAL_OBJECTS =
 bin/zserver: CMakeFiles/zserver.dir/src/zserver.cc.o
 bin/zserver: CMakeFiles/zserver.dir/build.make
 bin/zserver: /usr/lib/x86_64-linux-gnu/libzmq.so
+bin/zserver: /usr/local/lib/libboost_date_time.so
+bin/zserver: /usr/local/lib/libboost_program_options.so
+bin/zserver: /usr/local/lib/libboost_filesystem.so
+bin/zserver: /usr/local/lib/libboost_system.so
+bin/zserver: /usr/local/lib/libboost_serialization.so
+bin/zserver: /usr/local/lib/libboost_regex.so
+bin/zserver: /usr/local/lib/libboost_thread.so
+bin/zserver: /usr/local/lib/libboost_iostreams.so
+bin/zserver: /usr/local/lib/libboost_chrono.so
+bin/zserver: /usr/lib/x86_64-linux-gnu/libpthread.so
 bin/zserver: CMakeFiles/zserver.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable bin/zserver"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/zserver.dir/link.txt --verbose=$(VERBOSE)

@@ -25,11 +25,13 @@ set( Boost_USE_STATIC_RUNTIME OFF )
 find_package( Boost COMPONENTS 
     date_time 
     program_options 
-    filesystem system 
+    filesystem 
+    system 
     serialization 
     regex 
     thread 
-    iostreams )
+    iostreams
+    chrono )
 find_package( Threads )
 find_package( ZLIB )
 find_package( CURL )
@@ -45,7 +47,7 @@ if( Boost_FOUND AND Threads_FOUND AND ZLIB_FOUND )
     set( EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin )
 
     add_executable( zserver src/zserver.cc )
-    target_link_libraries( zserver ${ZMQ_LIBRARIES} )
+    target_link_libraries( zserver ${ZMQ_LIBRARIES} ${Boost_LIBRARIES} )
     add_executable( zclient src/zclient.cc )
     target_link_libraries( zclient ${ZMQ_LIBRARIES} )
 endif()

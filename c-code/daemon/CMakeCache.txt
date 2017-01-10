@@ -17,6 +17,12 @@
 //The threading library used by boost-thread
 BOOST_THREAD_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpthread.so
 
+//Boost chrono library (debug)
+Boost_CHRONO_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libboost_chrono.so
+
+//Boost chrono library (release)
+Boost_CHRONO_LIBRARY_RELEASE:FILEPATH=/usr/local/lib/libboost_chrono.so
+
 //Boost date_time library (debug)
 Boost_DATE_TIME_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libboost_date_time.so
 
@@ -50,6 +56,36 @@ Boost_PROGRAM_OPTIONS_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libboost_program_opt
 //Boost program_options library (release)
 Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE:FILEPATH=/usr/local/lib/libboost_program_options.so
 
+//Boost property_tree/json_parser library (debug)
+Boost_PROPERTY_TREE/JSON_PARSER_LIBRARY_DEBUG:FILEPATH=Boost_PROPERTY_TREE/JSON_PARSER_LIBRARY_DEBUG-NOTFOUND
+
+//Boost property_tree/json_parser library (release)
+Boost_PROPERTY_TREE/JSON_PARSER_LIBRARY_RELEASE:FILEPATH=Boost_PROPERTY_TREE/JSON_PARSER_LIBRARY_RELEASE-NOTFOUND
+
+//Boost property_tree/property_tree library (debug)
+Boost_PROPERTY_TREE/PROPERTY_TREE_LIBRARY_DEBUG:FILEPATH=Boost_PROPERTY_TREE/PROPERTY_TREE_LIBRARY_DEBUG-NOTFOUND
+
+//Boost property_tree/property_tree library (release)
+Boost_PROPERTY_TREE/PROPERTY_TREE_LIBRARY_RELEASE:FILEPATH=Boost_PROPERTY_TREE/PROPERTY_TREE_LIBRARY_RELEASE-NOTFOUND
+
+//Boost property_tree/ptree library (debug)
+Boost_PROPERTY_TREE/PTREE_LIBRARY_DEBUG:FILEPATH=Boost_PROPERTY_TREE/PTREE_LIBRARY_DEBUG-NOTFOUND
+
+//Boost property_tree/ptree library (release)
+Boost_PROPERTY_TREE/PTREE_LIBRARY_RELEASE:FILEPATH=Boost_PROPERTY_TREE/PTREE_LIBRARY_RELEASE-NOTFOUND
+
+//Boost property_tree library (debug)
+Boost_PROPERTY_TREE_LIBRARY_DEBUG:FILEPATH=Boost_PROPERTY_TREE_LIBRARY_DEBUG-NOTFOUND
+
+//Boost property_tree library (release)
+Boost_PROPERTY_TREE_LIBRARY_RELEASE:FILEPATH=Boost_PROPERTY_TREE_LIBRARY_RELEASE-NOTFOUND
+
+//Boost ptree library (debug)
+Boost_PTREE_LIBRARY_DEBUG:FILEPATH=Boost_PTREE_LIBRARY_DEBUG-NOTFOUND
+
+//Boost ptree library (release)
+Boost_PTREE_LIBRARY_RELEASE:FILEPATH=Boost_PTREE_LIBRARY_RELEASE-NOTFOUND
+
 //Boost regex library (debug)
 Boost_REGEX_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libboost_regex.so
 
@@ -61,6 +97,12 @@ Boost_SERIALIZATION_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libboost_serialization
 
 //Boost serialization library (release)
 Boost_SERIALIZATION_LIBRARY_RELEASE:FILEPATH=/usr/local/lib/libboost_serialization.so
+
+//Boost sstream library (debug)
+Boost_SSTREAM_LIBRARY_DEBUG:FILEPATH=Boost_SSTREAM_LIBRARY_DEBUG-NOTFOUND
+
+//Boost sstream library (release)
+Boost_SSTREAM_LIBRARY_RELEASE:FILEPATH=Boost_SSTREAM_LIBRARY_RELEASE-NOTFOUND
 
 //Boost system library (debug)
 Boost_SYSTEM_LIBRARY_DEBUG:FILEPATH=/usr/local/lib/libboost_system.so
@@ -245,6 +287,10 @@ daemon_SOURCE_DIR:STATIC=/home/allen/project/RNA/c-code/daemon
 # INTERNAL cache entries
 ########################
 
+//ADVANCED property for variable: Boost_CHRONO_LIBRARY_DEBUG
+Boost_CHRONO_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_CHRONO_LIBRARY_RELEASE
+Boost_CHRONO_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_DATE_TIME_LIBRARY_DEBUG
 Boost_DATE_TIME_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_DATE_TIME_LIBRARY_RELEASE
@@ -267,6 +313,26 @@ Boost_LIBRARY_DIR-ADVANCED:INTERNAL=1
 Boost_PROGRAM_OPTIONS_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE
 Boost_PROGRAM_OPTIONS_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROPERTY_TREE/JSON_PARSER_LIBRARY_DEBUG
+Boost_PROPERTY_TREE/JSON_PARSER_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROPERTY_TREE/JSON_PARSER_LIBRARY_RELEASE
+Boost_PROPERTY_TREE/JSON_PARSER_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROPERTY_TREE/PROPERTY_TREE_LIBRARY_DEBUG
+Boost_PROPERTY_TREE/PROPERTY_TREE_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROPERTY_TREE/PROPERTY_TREE_LIBRARY_RELEASE
+Boost_PROPERTY_TREE/PROPERTY_TREE_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROPERTY_TREE/PTREE_LIBRARY_DEBUG
+Boost_PROPERTY_TREE/PTREE_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROPERTY_TREE/PTREE_LIBRARY_RELEASE
+Boost_PROPERTY_TREE/PTREE_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROPERTY_TREE_LIBRARY_DEBUG
+Boost_PROPERTY_TREE_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PROPERTY_TREE_LIBRARY_RELEASE
+Boost_PROPERTY_TREE_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PTREE_LIBRARY_DEBUG
+Boost_PTREE_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_PTREE_LIBRARY_RELEASE
+Boost_PTREE_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_REGEX_LIBRARY_DEBUG
 Boost_REGEX_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_REGEX_LIBRARY_RELEASE
@@ -275,6 +341,10 @@ Boost_REGEX_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 Boost_SERIALIZATION_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_SERIALIZATION_LIBRARY_RELEASE
 Boost_SERIALIZATION_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SSTREAM_LIBRARY_DEBUG
+Boost_SSTREAM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: Boost_SSTREAM_LIBRARY_RELEASE
+Boost_SSTREAM_LIBRARY_RELEASE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_SYSTEM_LIBRARY_DEBUG
 Boost_SYSTEM_LIBRARY_DEBUG-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: Boost_SYSTEM_LIBRARY_RELEASE
@@ -425,7 +495,7 @@ ZLIB_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: ZLIB_LIBRARY
 ZLIB_LIBRARY-ADVANCED:INTERNAL=1
 //Components requested for this build tree.
-_Boost_COMPONENTS_SEARCHED:INTERNAL=date_time;filesystem;iostreams;program_options;regex;serialization;system;thread
+_Boost_COMPONENTS_SEARCHED:INTERNAL=chrono;date_time;filesystem;iostreams;program_options;property_tree;property_tree/json_parser;property_tree/property_tree;property_tree/ptree;ptree;regex;serialization;sstream;system;thread
 //Last used Boost_INCLUDE_DIR value.
 _Boost_INCLUDE_DIR_LAST:INTERNAL=/usr/local/include
 //Last used Boost_LIBRARY_DIR value.

@@ -31,11 +31,15 @@ export class App extends React.Component {
       fIndex: 0
     }
     console.log("GUI start");
-    /*
-    socket.on('server event', function(data) {
-      console.log('server event: ', data);
+    socket.on('server event', function(evt) {
+      console.log('svr-evt: ', evt);
+    });    
+    socket.on('reader response', function(res) {
+      console.log('reader-res: ', res);
     });
-    */
+    socket.on('engine response', function(res) {
+      console.log('engine-res: ', res);
+    });
   }
   componentDidMount() {
     console.log("Key handle mounted!");

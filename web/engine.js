@@ -1,3 +1,22 @@
+
+const execFile = require('child_process').execFile;
+
+exports.proc = function(msg, response) {
+
+  console.log("engine: ", msg);
+  var cmdString = JSON.stringify(msg);  
+
+  const child = execFile('build/meta', ['--version'], (error, stdout, stderr) => {
+    if (error) {
+      throw error;
+    }
+    response(stdout);
+    console.log(stdout);
+  });
+  response("Engine is launching the pipeline!");
+}
+
+
 /*
 
 // App operation

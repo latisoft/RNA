@@ -5,6 +5,7 @@
 -- $npm install
 -- $webpack (generate bundle.js to web/public/javascripts/)
 -- $chromium-browser index.html
+-- $RNA/web/npm start
 
 (initial)
 -- $npm init -y 

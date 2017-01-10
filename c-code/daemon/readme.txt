@@ -8,6 +8,8 @@ $make
 $ ./zserver &
 $ ./zclient
 
+$ cp ./bin/zserver ../../web/build/ && ../../web/build/zserver
+
 ==== JS communication test ====
 $ node i -S express http zmq
 $ node web.js
