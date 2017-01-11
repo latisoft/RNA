@@ -6,189 +6,177 @@
 #include <zmq.hpp>
 #include <string>
 #include <iostream>
+#include <thread>
+#include <boost/tokenizer.hpp>
+
 #ifndef _WIN32
 #include <unistd.h>
 #else
 #include <windows.h>
-
 #define sleep(n)    Sleep(n)
 #endif
-/*
-int main () {
-    //  Prepare our context and socket
-    zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_REP);
-    socket.bind ("tcp://*:5555");
-
-    while (true) {
-        zmq::message_t request;
-
-        //  Wait for next request from client
-        socket.recv (&request);
-        std::cout << "Received Hello" << std::endl;
-
-        //  Do some 'work'
-        sleep(1);
-
-        //  Send reply back to client
-        zmq::message_t reply (5);
-        memcpy (reply.data (), "World", 5);
-        socket.send (reply);
-    }
-    return 0;
-}
-*/
-
-#include <boost/asio.hpp>
-#include <boost/chrono.hpp>
-#include <boost/tokenizer.hpp>
-
-
-int totalCmd = 0;
-int assayNum = 1; // 1~384 (16*24)
-int percent  = 0; // 0~100 %
 
 inline void setbit(int &num, int x) { num |= 1 << x; }
 inline void clrbit(int &num, int x) { num &= ~(1 << x); }
 inline void xorbit(int &num, int x) { num ^= 1 << x; }
 inline bool chkbit(int &num, int x) { return (num >> x) & 1; }
 
-int status          = 0x00000000; // 32 bits
-const int B0_READY = 0; // 0: reset,  1: ready 
-const int B1_ASSAY = 1; // 0: stop,   1: start
+int totalCmd            = 0;
+int assayNum            = 1; // 1~384 (16*24)
+int progress            = 0; // 0~100 %
+int status              = 0x00000000; // 32 bits
+
+char plateRFID[100]     = "Centrillion SW #ID-6-0000";
+int subdiskCnt          = 6;
+int stepX               = 0;
+int stepY               = 0;
+int stepZ               = 0;
+
+int totaImgsTaken       = 1000;
+int nowT                = 45;
+int maxT                = 53; // temperature record
+int minT                = 28;
+
+const int B00_READY     = 0; // 0:reset, 1:ready 
+const int B01_ASSAY     = 1; // 0:stop, 1:start
+const int B02_MODE      = 2; // 0:automatic next
+const int B03_VERTICAL  = 3; // 0:horizontal first
+const int B04_          = 4; // 0: 
+const int B05_          = 5; // 0: 
+const int B06_          = 6; // 0:
+const int B07_COVER     = 7; // 0:close, 1:open
+const int B08_          = 8; // 0:
+const int B09_          = 9; // 0:
+const int B10_R         =10; // 0:off, 1:on
+const int B11_G         =11; // 0:
+const int B12_B         =12; // 0:
+const int B13_W         =13; // 0:
 
 
-const int EXPIRE_TIME = 500; // ms
-const int RESET_TIME  =   1; // sec
-zmq::socket_t* pSocket;
-
-boost::asio::io_service io;
-boost::asio::deadline_timer timerWatchDog(io);
-boost::chrono::steady_clock::time_point appStart;
-
-void onTimerWatchDog(const boost::system::error_code& error)
+inline void dump(std::string x)
 {
-  assert(!error);
-  /*
-  if ( chkbit(status, B0_READY) )
-  {
-    if ( chkbit(status, B1_ASSAY) )
-    {
-      percent ++;
-      if (percent > 100) {
-          percent = 0;
-          assayNum ++;
-          if (assayNum > 384) {
-              assayNum = 1;
-              clrbit(status, B1_ASSAY);
-          }
-          std::cout << "timer watch dog: " << assayNum << std::endl;
-      }
-    }
+  char buff[100];
+  snprintf(buff, 100, "[#%d sts.%d no.%3d %3d%%]%s",
+    totalCmd, status, assayNum, progress, x.c_str());
+  std::cout << buff << std::endl;
+}
+inline void reset() {
+  totalCmd              = 0;
+  assayNum              = 1;
+  progress              = 0;
+  status                = 0x00000000;
+}
+inline void assay(bool start) {
+  if(start) setbit(status, B01_ASSAY);
+  else    { clrbit(status, B01_ASSAY); progress = 0; }
+}
+
+
+typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
+boost::char_separator<char> sep(",");
+boost::char_separator<char> sep2(":");
+inline void process(std::string cmdString, char *pBuff)
+{
+  // reset,10:0:5
+  tokenizer tok(cmdString, sep);
+  tokenizer::iterator ti = tok.begin(); 
+  std::string cmd = (*ti); 
+  ++ti;
+  std::string payload= (*ti);
+  totalCmd++;
+
+  if (cmd == "reset") { 
+    reset();
+    snprintf(pBuff, 100, "reset,0,0");
+  } else 
+  if (cmd == "start") {
+    assay(true);
+    snprintf(pBuff, 100, "start,0,0");
+  } else 
+  if (cmd == "stop") {
+    assay(false);
+    snprintf(pBuff, 100, "stop,0,0");
+  } else 
+  if (cmd == "update") {
+  // update,status,totalCmd:assayNum:progress
+    snprintf(pBuff, 100, "update,%d,%d:%d:%d",
+      status, totalCmd, assayNum, progress);
+  } else 
+  if (cmd == "plate") {
+  // plate,-,plateRFID:subdiskCnt
+    snprintf(pBuff, 100, "plate,-,%s:%d", plateRFID, subdiskCnt);
+  } else 
+  if (cmd == "position") {
+  // position,-,x:y:z (step)
+    snprintf(pBuff, 100, "position,-,%d:%d:%d", stepX, stepY, stepZ);
+  } else 
+  if (cmd == "camera") {
+  // camera,-,totalN:z:R:G:B:W
+    snprintf(pBuff, 100, "camera,-,%d:%d", totaImgsTaken,stepZ);
+  } else 
+  if (cmd == "temperature") {
+  // temperature,-,nowT:maxT:minT
+    snprintf(pBuff, 100, "temperature,-,%d:%d:%d",
+      nowT, maxT, minT);
+  } else 
+  if (cmd == "system") {
+  // system,status,0
+    snprintf(pBuff, 100, "system,%d,0",status);
   }
-  */
-  std::cout << "Watchdog timer@ " <<
-    boost::chrono::duration_cast<boost::chrono::milliseconds>
-    (boost::chrono::steady_clock::now() - appStart).count() << " (" << status << ") "
-    << "#:" << assayNum << "-" << percent << "% " << std::endl;
-
-  timerWatchDog.expires_from_now(boost::posix_time::millisec(EXPIRE_TIME));
-  timerWatchDog.async_wait(onTimerWatchDog);
-
 /*
   char buff[100];
-  snprintf(buff, 100, "assay,%d,%d%%:0:0",assayNum,percent);
-
-  int n = sizeof(buff) + 1;
-  zmq::message_t buf(n);
-
-  memset (buf.data (), '\0', n);
-  memcpy (buf.data (), buff, n);
-  pSocket->send (buf);
-*/
+  snprintf(buff, 100, "....=> [cmd:%s, payload:%s]",
+    cmd.c_str(), payload.c_str());
+  std::cout << buff << std::endl;
+  */
+  std::cout << "...[cmd:" + cmd + ", payload:" + payload + "]=>" << std::endl;
+  dump("*");
 }
-
-void init()
+void listener(zmq::socket_t &socket)
 {
-  boost::asio::io_service::work work(io);
-  appStart = boost::chrono::steady_clock::now();
-  timerWatchDog.expires_from_now(boost::posix_time::millisec(EXPIRE_TIME));
-  timerWatchDog.async_wait(onTimerWatchDog);
-  io.run();
-  std::cout << "Initialze timer: " << EXPIRE_TIME << std::endl;
+  // "reset,10:0:5"
+  while (true)
+  {
+    // receive and process command
+    zmq::message_t request;
+    socket.recv (&request);
+
+    char retBuff[100];
+    process( (char*) request.data(), retBuff);
+
+    // response result: "update,1,0:0:0"
+    int n = strlen(retBuff);
+    zmq::message_t msg(n);
+    memset (msg.data (), '\0', n);
+    memcpy (msg.data (), retBuff, n);
+    socket.send (msg);
+  }
 }
-inline int reset() {
-  status    = 0x00000000;
-  assayNum  = 1;
-  sleep(RESET_TIME);
-  setbit(status, B0_READY);
-  std::cout << "Reset " << "(" << status << "): " 
-            << "no." << assayNum << " = " << percent << "%" << std::endl;
-  return status;
-}
-inline int assay(bool start) {
-  if(start) setbit(status, B1_ASSAY);
-  else      clrbit(status, B1_ASSAY);
-
-  std::cout << "Assay-" << start << "(" << status << "): " 
-            << "no." << assayNum << " = " << percent << "%" << std::endl;
-  return status;
-}
-
-int main () {
-
-  typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
-  // reset,10:0:5
-  // {cmd:"reset", result:0, data:"" }
-  boost::char_separator<char> sep(",");
-  boost::char_separator<char> sep2(":");
-
-  //  Prepare our context and socket
+int main () 
+{
   zmq::context_t context (1);
   zmq::socket_t socket (context, ZMQ_REP);
   socket.bind ("tcp://*:5555");
-  pSocket = &socket;
-  std::cout << "Hello, It is reader daemon 5555!" << std::endl;
+  std::cout << "== Reader daemon bind socket@tcp://*:5555 ==" << std::endl;
+  auto mThread = std::thread(listener, std::ref(socket));
 
-  // init();
-  int ret; //, i=0;
-
-  while (true)
+  while(true)
   {
-    zmq::message_t request;
-    socket.recv (&request);
-    
-    std::string cmdString ((char*) request.data());
-    
-    tokenizer tok(cmdString, sep);
-    tokenizer::iterator ti = tok.begin(); 
-    std::string cmd = (*ti);
-    ++ti;
-    std::string data= (*ti);
-    
-
-    std::cout << std::endl << "Receive[#" << totalCmd++ << "]: " << cmdString << " => ";
-
-    std::string retString = "error!!!";
-    if (cmd == "reset") {
-      ret = reset();
-    } else if (cmd == "start") {
-      ret = assay(true);
-    } else if (cmd == "stop") {
-      ret = assay(false);
+    usleep(50000);
+    if(chkbit(status, B01_ASSAY))
+    {
+      if (++progress>100) // percentage
+      {
+          usleep(500000);
+          progress = 0;
+          if (++assayNum>384) // =16*24 chips
+          {
+              assayNum = 0;
+              clrbit(status, B01_ASSAY); // auto stop
+          }
+      }
+      dump("-");
     }
-    retString = cmd + ","+\
-                std::to_string(ret) + ","+\
-                "0:0:0" + ",";
-
-    int n = retString.length() + 1;
-    zmq::message_t buf(n);
-
-    memset (buf.data (), '\0', n);
-    memcpy (buf.data (), retString.c_str(), n);
-    std::cout << "data=" << (char*)buf.data() 
-              << ", n=" << n << std::endl;
-    socket.send (buf);
   }
   return 0;
 }

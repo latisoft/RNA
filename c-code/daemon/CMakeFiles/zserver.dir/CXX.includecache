@@ -13,14 +13,12 @@ string
 -
 iostream
 -
+thread
+-
+boost/tokenizer.hpp
+-
 unistd.h
 -
 windows.h
--
-boost/asio.hpp
--
-boost/chrono.hpp
--
-boost/tokenizer.hpp
 -
 

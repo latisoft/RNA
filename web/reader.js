@@ -40,18 +40,18 @@ var zmq       = require('zmq');
 
 var requester = zmq.socket('req');
 requester.connect("tcp://localhost:5555");
-console.log("== ZMQ socket:5555 with reader. ==");
+console.log("== zmq-requestere@5555 ==");
 
 var total     = 0;
 requester.on("message", function(buf) {
 
-  var ss= buf.toString().split(",");
-  require('./server.js').push("reader response", 
-            { cmd:    ss[0],
+  var ss  = buf.toString().split(",");
+  var obj = { cmd:    ss[0],
               result: ss[1],
               data:   ss[2],
-              no:     total++ });
-  console.log("ss: ", ss);
+              no:     total++ };
+  console.log("reader reply => ", obj);
+  require('./server.js').push("reader response", obj);
 });
 
 var processMsg = (msg, response) => {
