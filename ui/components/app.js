@@ -13,11 +13,10 @@ import io from 'socket.io-client';
 let socket = io();
 
 
-
 let vTabs = [
   { name: 'Home',       elem: (<Home />) },
   { name: 'Settings',   elem: (<Settings />) },
-  { name: 'Monitor',    elem: (<Monitor />) },
+  { name: 'Monitor',    elem: (<Monitor/>) },
   { name: 'Reporter',   elem: (<Reporter />) },
   { name: 'Analyzer',   elem: (<Analyzer />) },
   { name: 'Visualizer', elem: (<Visualizer />) },
@@ -30,19 +29,21 @@ export class App extends React.Component {
     this.state = {
       fIndex: 0
     }
+    this.onReaderResponse = (res) => {
+      console.log('reader-res: ', res);
+      let name = vTabs[this.state.fIndex].name;
+      this.refs[name].refresh(res); 
+    }
     console.log("GUI start");
+  }
+  componentDidMount() {
     socket.on('server event', function(evt) {
       console.log('svr-evt: ', evt);
     });    
-    socket.on('reader response', function(res) {
-      console.log('reader-res: ', res);
-    });
+    socket.on('reader response', this.onReaderResponse);
     socket.on('engine response', function(res) {
       console.log('engine-res: ', res);
     });
-  }
-  componentDidMount() {
-    console.log("Key handle mounted!");
     window.onkeydown = this.handleKeyDown.bind(this);
   }
   handleSelect(idx, e) {
@@ -71,6 +72,7 @@ export class App extends React.Component {
 
     let tabs  = vTabs.map(function(vTab, idx) {
                   let src = ('.\\img\\vtab-' + vTab.name + '.png').toLowerCase();
+                  
                   return (
                     <div  onClick   = {the.handleSelect.bind(the, idx)}
                           className = {idx==index? 'vtab-btn-focus':'vtab-btn'}
@@ -80,12 +82,20 @@ export class App extends React.Component {
                       <span>{vTab.name}</span>
                     </div>);
                 });
-    let pane = vTabs[index].elem;
+    let panes = [ <Home       ref="Home"      />,
+                  <Settings   ref="Settings"  />,
+                  <Monitor    ref="Monitor"   />,
+                  <Reporter   ref="Reporter"  />,
+                  <Analyzer   ref="Analyzer"  />,
+                  <Visualizer ref="Visualizer"/>,
+                  <Help       ref="Help"      /> ];
+    let pane = panes[index];
+    
     return (
         <div id="frame">
           <div id='banner'>Centrillion Microarray Reader</div>
-          <div> {tabs} </div>
-          <div className='container'> {pane} </div>
+          <div>{tabs}</div>
+          <div className='container'>{pane}</div>
         </div>
     );
   }

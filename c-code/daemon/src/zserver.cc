@@ -27,7 +27,7 @@ int progress            = 0; // 0~100 %
 int status              = 0x00000000; // 32 bits
 
 char plateRFID[100]     = "Centrillion SW #ID-6-0000";
-int subdiskCnt          = 6;
+int subtrayCnt          = 6;
 int stepX               = 0;
 int stepY               = 0;
 int stepZ               = 0;
@@ -36,6 +36,23 @@ int totaImgsTaken       = 1000;
 int nowT                = 45;
 int maxT                = 53; // temperature record
 int minT                = 28;
+
+unsigned int subtrayDone[6] = { // has 8*8*6 = 384 chips
+  0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 
+};
+bool ifDone(unsigned int n, int x) {
+  return (subtrayDone[n] >> x) & 1;;
+}
+void setDone(unsigned int n, int x) {
+  subtrayDone[n] |= 1 << x;
+}
+void clrDone(unsigned int n, int x) {
+  subtrayDone[n] &= ~(1<<x);
+}
+void clrDone() {
+  for(int i=0; i<6; i++)
+    subtrayDone[i] = 0x00000000;
+}
 
 const int B00_READY     = 0; // 0:reset, 1:ready 
 const int B01_ASSAY     = 1; // 0:stop, 1:start
@@ -99,12 +116,18 @@ inline void process(std::string cmdString, char *pBuff)
   } else 
   if (cmd == "update") {
   // update,status,totalCmd:assayNum:progress
-    snprintf(pBuff, 100, "update,%d,%d:%d:%d",
-      status, totalCmd, assayNum, progress);
+    snprintf(pBuff, 100, "update,%d,#%d:%d:%d:%d",
+      status, totalCmd, assayNum, progress, assayNum+1);
   } else 
+  if (cmd == "done") {
+  // done,subtrayCnt,0000:0000:0000:0000:0000:0000
+    snprintf(pBuff, 100, "done,%d,%.4x:%.4x:%.4x:%.4x:%.4x:%.4x", subtrayCnt,
+      subtrayDone[0], subtrayDone[1], subtrayDone[2],
+      subtrayDone[3], subtrayDone[4], subtrayDone[5]);
+  }
   if (cmd == "plate") {
-  // plate,-,plateRFID:subdiskCnt
-    snprintf(pBuff, 100, "plate,-,%s:%d", plateRFID, subdiskCnt);
+  // plate,status,plateRFID:subtrayCnt
+    snprintf(pBuff, 100, "plate,%d,%s:%d",status, plateRFID, subtrayCnt);
   } else 
   if (cmd == "position") {
   // position,-,x:y:z (step)
@@ -121,7 +144,7 @@ inline void process(std::string cmdString, char *pBuff)
   } else 
   if (cmd == "system") {
   // system,status,0
-    snprintf(pBuff, 100, "system,%d,0",status);
+    snprintf(pBuff, 100, "system,%d,0:0:0",status);
   }
 /*
   char buff[100];
@@ -147,7 +170,6 @@ void listener(zmq::socket_t &socket)
     // response result: "update,1,0:0:0"
     int n = strlen(retBuff);
     zmq::message_t msg(n);
-    memset (msg.data (), '\0', n);
     memcpy (msg.data (), retBuff, n);
     socket.send (msg);
   }
@@ -167,11 +189,13 @@ int main ()
     {
       if (++progress>100) // percentage
       {
+          setDone((assayNum-1)/64, assayNum%6-1);
           usleep(500000);
           progress = 0;
           if (++assayNum>384) // =16*24 chips
           {
               assayNum = 0;
+              clrDone();
               clrbit(status, B01_ASSAY); // auto stop
           }
       }

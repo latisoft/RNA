@@ -21547,23 +21547,25 @@
 	    _this.state = {
 	      fIndex: 0
 	    };
-	    console.log("GUI start");
-	    socket.on('server event', function (evt) {
-	      console.log('svr-evt: ', evt);
-	    });
-	    socket.on('reader response', function (res) {
+	    _this.onReaderResponse = function (res) {
 	      console.log('reader-res: ', res);
-	    });
-	    socket.on('engine response', function (res) {
-	      console.log('engine-res: ', res);
-	    });
+	      var name = vTabs[_this.state.fIndex].name;
+	      _this.refs[name].refresh(res);
+	    };
+	    console.log("GUI start");
 	    return _this;
 	  }
 
 	  _createClass(App, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      console.log("Key handle mounted!");
+	      socket.on('server event', function (evt) {
+	        console.log('svr-evt: ', evt);
+	      });
+	      socket.on('reader response', this.onReaderResponse);
+	      socket.on('engine response', function (res) {
+	        console.log('engine-res: ', res);
+	      });
 	      window.onkeydown = this.handleKeyDown.bind(this);
 	    }
 	  }, {
@@ -21600,6 +21602,7 @@
 
 	      var tabs = vTabs.map(function (vTab, idx) {
 	        var src = ('.\\img\\vtab-' + vTab.name + '.png').toLowerCase();
+
 	        return _react2.default.createElement(
 	          'div',
 	          { onClick: the.handleSelect.bind(the, idx),
@@ -21614,7 +21617,9 @@
 	          )
 	        );
 	      });
-	      var pane = vTabs[index].elem;
+	      var panes = [_react2.default.createElement(_home2.default, { ref: 'Home' }), _react2.default.createElement(_settings2.default, { ref: 'Settings' }), _react2.default.createElement(_monitor2.default, { ref: 'Monitor' }), _react2.default.createElement(_reporter2.default, { ref: 'Reporter' }), _react2.default.createElement(_analyzer2.default, { ref: 'Analyzer' }), _react2.default.createElement(_visualizer2.default, { ref: 'Visualizer' }), _react2.default.createElement(_help2.default, { ref: 'Help' })];
+	      var pane = panes[index];
+
 	      return _react2.default.createElement(
 	        'div',
 	        { id: 'frame' },
@@ -21626,16 +21631,12 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          ' ',
-	          tabs,
-	          ' '
+	          tabs
 	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'container' },
-	          ' ',
-	          pane,
-	          ' '
+	          pane
 	        )
 	      );
 	    }
@@ -42771,7 +42772,16 @@
 	    _this.state = {
 	      functionFocus: '',
 	      isResetting: false,
-	      isAssay: false
+	      isAssay: false,
+	      assayNumber: 1,
+	      progress: 0,
+	      status: 0,
+	      plateRFID: 'Waiting ...',
+	      stepX: 0,
+	      stepY: 0,
+	      stepZ: 0,
+	      done: '----:----:----:----:----:----',
+	      subtray: []
 	    };
 	    _this.onRset = _this.onReset.bind(_this);
 	    _this.onAssay = _this.onAssay.bind(_this);
@@ -42797,14 +42807,36 @@
 	      socket.emit('toReader', { cmd: cmd, no: 0, auto: 'all' });
 	    }
 	  }, {
+	    key: 'refresh',
+	    value: function refresh(res) {
+	      var disp = res.payload.split(':');
+	      switch (res.cmd) {
+	        case "update":
+	          this.setState({
+	            assayNumber: disp[1],
+	            progress: disp[2]
+	          });
+	          break;
+	        case "done":
+	          this.setState({
+	            done: dispres.payload
+	          });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 
-	      // let cmd1 = this.onAssay.bind(this);
-	      //let cmd2 = this.onReset.bind(this);
 	      var show = this.state.isAssay ? "STOP" : "START";
+	      var id = this.state.plateRFID;
+	      var no = this.state.assayNumber;
+	      var pgs = this.state.progress;
+	      var x = this.state.stepX;
+	      var y = this.state.stepY;
+	      var z = this.state.stepZ;
+	      var done = this.state.done;
 
-	      var buttonsInstance = _react2.default.createElement(
+	      var buttonsBar = _react2.default.createElement(
 	        _reactBootstrap.ButtonToolbar,
 	        null,
 	        _react2.default.createElement(
@@ -42823,23 +42855,128 @@
 	          show
 	        )
 	      );
-
+	      var plateInfo = _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-6 col-sm-12' },
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Plate Information'
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Plate RFID ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'label label-default' },
+	            id
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Current Microarray ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'label label-default' },
+	            no
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Next Microarray ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'label label-default' },
+	            'Next'
+	          )
+	        )
+	      );
+	      var assayStatus = _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-6 col-sm-12' },
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Assay Status'
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Position ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'label label-default' },
+	            x,
+	            ':',
+	            y,
+	            ':',
+	            z
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Progress ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'label label-default' },
+	            pgs
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Done ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'label label-default' },
+	            done
+	          )
+	        )
+	      );
+	      var microarrayDisplay = [1, 2, 3, 4, 5, 6].map(function (n, idx) {
+	        return _react2.default.createElement(
+	          'div',
+	          { key: idx,
+	            className: 'col-md-2 col-sm-6 hidden-xs' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'subtray' },
+	            'Disk ',
+	            n
+	          )
+	        );
+	      });
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        _react2.default.createElement(
 	          'h4',
 	          null,
-	          'Analyzer'
+	          'Monitor'
 	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-md-offset-8 col-md-4 col-sm-12' },
-	            buttonsInstance
+	            { className: 'col-md-offset-6 col-md-6 col-sm-offset-2 col-sm-8' },
+	            buttonsBar
 	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          plateInfo,
+	          assayStatus
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          microarrayDisplay
 	        )
 	      );
 	    }
@@ -42885,7 +43022,7 @@
 
 
 	// module
-	exports.push([module.id, "", ""]);
+	exports.push([module.id, ".subtray {\n  padding: 2px;\n  margin: 2px;\n  border: 1px solid #eee; }\n", ""]);
 
 	// exports
 
