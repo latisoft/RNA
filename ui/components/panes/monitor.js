@@ -21,8 +21,8 @@ export default class Monitor extends React.Component {
       done:           '----:----:----:----:----:----',
       subtray:        []
     };
-    this.onRset = this.onReset.bind(this);
-    this.onAssay= this.onAssay.bind(this);
+    this.onReset = this.onReset.bind(this);
+    this.onAssay = this.onAssay.bind(this);
   }
   onReset() {
     console.log("onReset");
@@ -57,11 +57,12 @@ export default class Monitor extends React.Component {
     let show  = (this.state.isAssay)? "STOP" : "START";
     let id    = this.state.plateRFID;
     let no    = this.state.assayNumber;
-    let pgs   = this.state.progress;
+    let w     = this.state.progress;
     let x     = this.state.stepX;
     let y     = this.state.stepY;
     let z     = this.state.stepZ;
     let done  = this.state.done;
+
 
     let buttonsBar = (
       <ButtonToolbar>
@@ -76,11 +77,19 @@ export default class Monitor extends React.Component {
           <h4>Current Microarray <span className="label label-default">{no}</span></h4>
           <h4>Next Microarray <span className="label label-default">Next</span></h4>
       </div>);
+
+    let wStyle= {width:w+"%"};
     let assayStatus       = (
       <div className='col-md-6 col-sm-12'>
         <h2>Assay Status</h2>
           <h4>Position <span className="label label-default">{x}:{y}:{z}</span></h4>
-          <h4>Progress <span className="label label-default">{pgs}</span></h4>
+          <h4>Progress <span className="label label-default">{w}</span></h4>
+          <div className="progress">
+            <div className="progress-bar progress-bar-striped active" role="progressbar"
+              aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={wStyle}>
+              {w}%
+            </div>
+          </div>
           <h4>Done <span className="label label-default">{done}</span></h4>
       </div>);
     let microarrayDisplay = [1,2,3,4,5,6].map( (n,idx)=>{

@@ -34,3 +34,7 @@ Socket.IO allows you to emit and receive custom events.
 </body>
 
 
+==== exe ====
+1. launch daemon: ~/RNA/web$ ./build/zserver &
+2. launch server: ~/RNA/web$ npm start
+3. open-UI: browser[ 192.168.1.12:49400 ]

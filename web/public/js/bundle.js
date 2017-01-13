@@ -21534,7 +21534,7 @@
 
 	var socket = (0, _socket2.default)();
 
-	var vTabs = [{ name: 'Home', elem: _react2.default.createElement(_home2.default, null) }, { name: 'Settings', elem: _react2.default.createElement(_settings2.default, null) }, { name: 'Monitor', elem: _react2.default.createElement(_monitor2.default, null) }, { name: 'Reporter', elem: _react2.default.createElement(_reporter2.default, null) }, { name: 'Analyzer', elem: _react2.default.createElement(_analyzer2.default, null) }, { name: 'Visualizer', elem: _react2.default.createElement(_visualizer2.default, null) }, { name: 'Help', elem: _react2.default.createElement(_help2.default, null) }];
+	var vTabs = ['Home', 'Settings', 'Monitor', 'Reporter', 'Analyzer', 'Visualizer', 'Help'];
 
 	var App = exports.App = function (_React$Component) {
 	  _inherits(App, _React$Component);
@@ -21549,9 +21549,19 @@
 	    };
 	    _this.onReaderResponse = function (res) {
 	      console.log('reader-res: ', res);
-	      var name = vTabs[_this.state.fIndex].name;
+	      var fIndex = _this.state.fIndex;
+	      var name = vTabs[fIndex];
+	      // Reader Response Processing
 	      _this.refs[name].refresh(res);
 	    };
+	    _this.onEngineResponse = function (res) {
+	      console.log('engine-res: ', res);
+	      var fIndex = _this.state.fIndex;
+	      var name = vTabs[fIndex];
+	      // Engine Response Processing
+	      _this.refs[name].refresh(res);
+	    };
+
 	    console.log("GUI start");
 	    return _this;
 	  }
@@ -21563,9 +21573,7 @@
 	        console.log('svr-evt: ', evt);
 	      });
 	      socket.on('reader response', this.onReaderResponse);
-	      socket.on('engine response', function (res) {
-	        console.log('engine-res: ', res);
-	      });
+	      socket.on('engine response', this.onEngineResponse);
 	      window.onkeydown = this.handleKeyDown.bind(this);
 	    }
 	  }, {
@@ -21601,19 +21609,19 @@
 	      var the = this;
 
 	      var tabs = vTabs.map(function (vTab, idx) {
-	        var src = ('.\\img\\vtab-' + vTab.name + '.png').toLowerCase();
+	        var src = ('.\\img\\vtab-' + vTab + '.png').toLowerCase();
 
 	        return _react2.default.createElement(
 	          'div',
 	          { onClick: the.handleSelect.bind(the, idx),
 	            className: idx == index ? 'vtab-btn-focus' : 'vtab-btn',
 	            key: idx,
-	            id: vTab.name },
+	            id: vTab },
 	          _react2.default.createElement('img', { src: src }),
 	          _react2.default.createElement(
 	            'span',
 	            null,
-	            vTab.name
+	            vTab
 	          )
 	        );
 	      });
@@ -21690,6 +21698,23 @@
 	  }
 
 	  _createClass(Home, [{
+	    key: 'refresh',
+	    value: function refresh(res) {
+	      var disp = res.payload.split(':');
+	      switch (res.cmd) {
+	        case "-":
+	          this.setState({
+	            xx: disp[0],
+	            yy: disp[1]
+	          });
+	          break;
+	        case "=":
+	          this.setState({
+	            zz: dispres.payload
+	          });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var info = ["\n\nThis is home pane!! ^o^>\n\n", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."];
@@ -41021,6 +41046,23 @@
 	      });
 	    }
 	  }, {
+	    key: 'refresh',
+	    value: function refresh(res) {
+	      var disp = res.payload.split(':');
+	      switch (res.cmd) {
+	        case "-":
+	          this.setState({
+	            xx: disp[0],
+	            yy: disp[1]
+	          });
+	          break;
+	        case "=":
+	          this.setState({
+	            zz: dispres.payload
+	          });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _React$createElement, _React$createElement2;
@@ -42783,7 +42825,7 @@
 	      done: '----:----:----:----:----:----',
 	      subtray: []
 	    };
-	    _this.onRset = _this.onReset.bind(_this);
+	    _this.onReset = _this.onReset.bind(_this);
 	    _this.onAssay = _this.onAssay.bind(_this);
 	    return _this;
 	  }
@@ -42830,7 +42872,7 @@
 	      var show = this.state.isAssay ? "STOP" : "START";
 	      var id = this.state.plateRFID;
 	      var no = this.state.assayNumber;
-	      var pgs = this.state.progress;
+	      var w = this.state.progress;
 	      var x = this.state.stepX;
 	      var y = this.state.stepY;
 	      var z = this.state.stepZ;
@@ -42894,6 +42936,8 @@
 	          )
 	        )
 	      );
+
+	      var wStyle = { width: w + "%" };
 	      var assayStatus = _react2.default.createElement(
 	        'div',
 	        { className: 'col-md-6 col-sm-12' },
@@ -42923,7 +42967,18 @@
 	          _react2.default.createElement(
 	            'span',
 	            { className: 'label label-default' },
-	            pgs
+	            w
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'progress' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'progress-bar progress-bar-striped active', role: 'progressbar',
+	              'aria-valuenow': '40', 'aria-valuemin': '0', 'aria-valuemax': '100', style: wStyle },
+	            w,
+	            '%'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -51422,6 +51477,23 @@
 	  }
 
 	  _createClass(Reporter, [{
+	    key: 'refresh',
+	    value: function refresh(res) {
+	      var disp = res.payload.split(':');
+	      switch (res.cmd) {
+	        case "-":
+	          this.setState({
+	            xx: disp[0],
+	            yy: disp[1]
+	          });
+	          break;
+	        case "=":
+	          this.setState({
+	            zz: dispres.payload
+	          });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -51661,7 +51733,9 @@
 	    var _this = _possibleConstructorReturn(this, (Analyzer.__proto__ || Object.getPrototypeOf(Analyzer)).call(this, props));
 
 	    _this.state = {
-	      functionFocus: ''
+	      functionFocus: '',
+	      status: 0,
+	      output: 'Are you ready?'
 	    };
 	    _this.onRun = _this.onRun.bind(_this);
 	    return _this;
@@ -51673,17 +51747,42 @@
 	      console.log("onRun");
 	      socket.emit('toEngine', {
 	        func: 'pipeline',
-	        desc: {
-	          algorithms: [{
-	            name: 'A'
+	        para: {
+	          desc: 'bioinfomatics',
+	          para: [{
+	            name: 'A', type: 'pre-processing'
 	          }, {
-	            name: 'B'
+	            name: 'B', type: 'normalization'
 	          }, {
-	            name: 'C'
+	            name: 'C', type: 'summarization'
 	          }, {
-	            name: 'D'
+	            name: 'D', type: 'geno-typing'
 	          }]
-	        } });
+	        },
+	        global: {
+	          prefix: "demo_",
+	          fCAD: { detail: 'Select microarray', path: './axiom_snp.cad' },
+	          fCEN: { detail: 'CENtrillion sample file', list: ["xxxx-sn000000-m001", "xxxx-sn000000-m086"] },
+	          fPBS: { detail: 'ProBe Set', list: ["canser", "uuu-disease", "oxoxo"] }
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'refresh',
+	    value: function refresh(res) {
+	      switch (res.cmd) {
+	        case "imgprocess":
+	          this.setState({
+	            status: res.status,
+	            output: res.output
+	          });
+	          break;
+	        case "pipeline":
+	          this.setState({
+	            status: res.status,
+	            output: res.output
+	          });
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -51698,7 +51797,7 @@
 	          'Run'
 	        )
 	      );
-
+	      var output = this.state.output;
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -51712,8 +51811,17 @@
 	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-md-offset-8 col-md-4 col-sm-12' },
+	            { className: 'col-md-offset-6 col-md-6 col-sm-offset-2 col-sm-8' },
 	            buttonsInstance
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-6 col-sm-12' },
+	            output
 	          )
 	        )
 	      );
@@ -51806,6 +51914,23 @@
 	  }
 
 	  _createClass(Visualizer, [{
+	    key: 'refresh',
+	    value: function refresh(res) {
+	      var disp = res.payload.split(':');
+	      switch (res.cmd) {
+	        case "-":
+	          this.setState({
+	            xx: disp[0],
+	            yy: disp[1]
+	          });
+	          break;
+	        case "=":
+	          this.setState({
+	            zz: dispres.payload
+	          });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -51904,6 +52029,23 @@
 	  }
 
 	  _createClass(Help, [{
+	    key: 'refresh',
+	    value: function refresh(res) {
+	      var disp = res.payload.split(':');
+	      switch (res.cmd) {
+	        case "-":
+	          this.setState({
+	            xx: disp[0],
+	            yy: disp[1]
+	          });
+	          break;
+	        case "=":
+	          this.setState({
+	            zz: dispres.payload
+	          });
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var info = ["\n\nThis is help pane!! ^_^>\n\n", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."];

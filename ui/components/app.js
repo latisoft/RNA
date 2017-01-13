@@ -14,13 +14,7 @@ let socket = io();
 
 
 let vTabs = [
-  { name: 'Home',       elem: (<Home />) },
-  { name: 'Settings',   elem: (<Settings />) },
-  { name: 'Monitor',    elem: (<Monitor/>) },
-  { name: 'Reporter',   elem: (<Reporter />) },
-  { name: 'Analyzer',   elem: (<Analyzer />) },
-  { name: 'Visualizer', elem: (<Visualizer />) },
-  { name: 'Help',       elem: (<Help />) }
+  'Home', 'Settings', 'Monitor', 'Reporter', 'Analyzer', 'Visualizer', 'Help'
 ];
 
 export class App extends React.Component {
@@ -31,9 +25,21 @@ export class App extends React.Component {
     }
     this.onReaderResponse = (res) => {
       console.log('reader-res: ', res);
-      let name = vTabs[this.state.fIndex].name;
-      this.refs[name].refresh(res); 
+      let fIndex  = this.state.fIndex;
+      let name    = vTabs[fIndex];
+      // Reader Response Processing
+      if(vTabs[fIndex]=="Monitor")
+        this.refs[name].refresh(res);
     }
+    this.onEngineResponse = (res) => {
+      console.log('engine-res: ', res);
+      let fIndex  = this.state.fIndex;
+      let name    = vTabs[fIndex];
+      // Engine Response Processing
+      if(vTabs[fIndex]=="Analyzer")
+        this.refs[name].refresh(res);
+    }
+
     console.log("GUI start");
   }
   componentDidMount() {
@@ -41,9 +47,7 @@ export class App extends React.Component {
       console.log('svr-evt: ', evt);
     });    
     socket.on('reader response', this.onReaderResponse);
-    socket.on('engine response', function(res) {
-      console.log('engine-res: ', res);
-    });
+    socket.on('engine response', this.onEngineResponse);
     window.onkeydown = this.handleKeyDown.bind(this);
   }
   handleSelect(idx, e) {
@@ -71,15 +75,15 @@ export class App extends React.Component {
     let the   = this;
 
     let tabs  = vTabs.map(function(vTab, idx) {
-                  let src = ('.\\img\\vtab-' + vTab.name + '.png').toLowerCase();
+                  let src = ('.\\img\\vtab-' + vTab + '.png').toLowerCase();
                   
                   return (
                     <div  onClick   = {the.handleSelect.bind(the, idx)}
                           className = {idx==index? 'vtab-btn-focus':'vtab-btn'}
                           key       = {idx}
-                          id        = {vTab.name}>
+                          id        = {vTab}>
                       <img src = {src} />
-                      <span>{vTab.name}</span>
+                      <span>{vTab}</span>
                     </div>);
                 });
     let panes = [ <Home       ref="Home"      />,

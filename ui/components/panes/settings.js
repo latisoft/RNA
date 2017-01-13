@@ -36,6 +36,23 @@ export default class Settings extends React.Component {
         console.log('saved successfully:', response);
     });
   }
+
+  refresh(res) {
+    let disp = res.payload.split(':');
+    switch(res.cmd)
+    {
+      case "-":
+        this.setState({ 
+            xx:           disp[0],
+            yy:           disp[1]
+        });
+        break;
+      case "=":
+        this.setState({
+            zz:           dispres.payload
+        });
+    }
+  }
   render() {
     var opts = {};
     if(true) {

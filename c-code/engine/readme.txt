@@ -1,8 +1,5 @@
 
 ==== In directory c-code: ====
-(example)
-so/  => call dynamic lib
-zmg/ => ipc by zmg (zserver/zclient)
 
 (init)
 $mkdir bin lib src include unit_test
@@ -11,16 +8,6 @@ $ln -s ../src META
 - create your cpp & hpp in src/
 - single cpp single bin
 
-(compile)
-$cmake .  (generate Makefile)
-$make     (generate ../web/build/meta zserver zclient)
-
-(execute meta)
-$../web/build/meta => external binary
-
-(execute zmg)
-$../web/build/zserver
-$../web/build/zclient
 
 ==== In directory web: ====
 -- $cd ../web
@@ -34,6 +21,11 @@ const child = execFile('build/meta', ['--version'], (error, stdout, stderr) => {
   console.log(stdout);
 })
 
-==== Install ZeroMQ ====
-sudo apt-get install libtool pkg-config build-essential autoconf automake
-sudo apt-get install libzmq-dev
+
+==== Compile Engine ====
+// generate meta to directory /engine/bin
+$cmake .  (generate Makefile)
+$make     (generate ../web/build/meta) => external binary
+
+
+~/RNA/c-code/engine$ cp ./bin/meta ../../web/build/ && ../../web/build/meta

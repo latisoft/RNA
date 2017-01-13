@@ -10,6 +10,23 @@ export default class Home extends React.Component {
       functionFocus: ''
     }
   }
+  
+  refresh(res) {
+    let disp = res.payload.split(':');
+    switch(res.cmd)
+    {
+      case "-":
+        this.setState({ 
+            xx:           disp[0],
+            yy:           disp[1]
+        });
+        break;
+      case "=":
+        this.setState({
+            zz:           dispres.payload
+        });
+    }
+  }
   render() {
     const info = ["\n\nThis is home pane!! ^o^>\n\n",
                   "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",

@@ -56,9 +56,9 @@ void clrDone() {
 
 const int B00_READY     = 0; // 0:reset, 1:ready 
 const int B01_ASSAY     = 1; // 0:stop, 1:start
-const int B02_MODE      = 2; // 0:automatic next
-const int B03_VERTICAL  = 3; // 0:horizontal first
-const int B04_          = 4; // 0: 
+const int B02_DONE      = 2; // 0:in assaying, 1:finished
+const int B03_MODE      = 3; // 0:automatic next
+const int B04_VERTICAL  = 4; // 0:horizontal first
 const int B05_          = 5; // 0: 
 const int B06_          = 6; // 0:
 const int B07_COVER     = 7; // 0:close, 1:open
@@ -68,6 +68,8 @@ const int B10_R         =10; // 0:off, 1:on
 const int B11_G         =11; // 0:
 const int B12_B         =12; // 0:
 const int B13_W         =13; // 0:
+const int B14_          =14; // 0:
+const int B15_          =15; // 0:
 
 
 inline void dump(std::string x)
@@ -104,6 +106,7 @@ inline void process(std::string cmdString, char *pBuff)
 
   if (cmd == "reset") { 
     reset();
+    clrDone();  // clear done-table
     snprintf(pBuff, 100, "reset,0,0");
   } else 
   if (cmd == "start") {
@@ -187,12 +190,14 @@ int main ()
     usleep(50000);
     if(chkbit(status, B01_ASSAY))
     {
-      if (++progress>100) // percentage
+      if (++progress>=100) // percentage
       {
-          setDone((assayNum-1)/64, assayNum%6-1);
-          usleep(500000);
           progress = 0;
-          if (++assayNum>384) // =16*24 chips
+          setbit(status, B02_DONE);
+          setDone((assayNum-1)/64, assayNum%6-1);
+          usleep(800000);
+          clrbit(status, B02_DONE);
+          if (++assayNum>=384) // =16*24 chips
           {
               assayNum = 0;
               clrDone();

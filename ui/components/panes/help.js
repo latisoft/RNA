@@ -10,6 +10,22 @@ export default class Help extends React.Component {
       functionFocus: ''
     }
   }
+  refresh(res) {
+    let disp = res.payload.split(':');
+    switch(res.cmd)
+    {
+      case "-":
+        this.setState({ 
+            xx:           disp[0],
+            yy:           disp[1]
+        });
+        break;
+      case "=":
+        this.setState({
+            zz:           dispres.payload
+        });
+    }
+  }  
   render() {
     const info = ["\n\nThis is help pane!! ^_^>\n\n",
                   "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",

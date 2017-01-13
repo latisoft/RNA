@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
-
+#include <unistd.h>
 #include <META/func.hpp>
 
 template<int N>
@@ -83,10 +83,8 @@ public:
 int a[10] = {1,2,3,4,5,6,7,8,9,10};
 int main()
 {
-  std::cout << "Hello World!\n";
-  std::cout << Factorial<4>::value << "\n";
+  std::cout << "Factorial<4>::value = " << Factorial<4>::value << "\n";
 
-  std::cout << "----Homework 7\n";
   std::cout << "RevPrinter<int, 10, 10, a>::print(); ";
   RevPrinter<int, 10, 10, a>::print(); 
   std::cout << "QuePrinter<int, 10, 10, a>::print(); "; 
@@ -102,5 +100,10 @@ int main()
   back_inserter<std::vector, int> vi;
   std::cout << "\n";  
 
+  for(int i=0; i<100; i++)
+  {
+    usleep(20*10000);
+    std::cout << "stage #" << i << std::endl;
+  }
   return 0;
 }

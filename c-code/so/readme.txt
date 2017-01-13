@@ -1,4 +1,6 @@
 
+==== In directory c-code: ====
+// generate dynamic library (*.so) to directory /so
 
 $cmake .        // generate test and libx.so
 $make
