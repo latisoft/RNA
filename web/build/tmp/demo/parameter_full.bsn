@@ -1,14 +1,6 @@
-import React  from 'react';
-
-import { ButtonToolbar, Button } from 'react-bootstrap';
-import './analyzer.scss';
-import io from 'socket.io-client';
-let socket = io();
-
-var test_para =
 {
     "context" : {
-        "output_dir": "./tmp/0",
+        "output_dir": "./tmp/demo",
         "chip_layout": [
           "/home/alex/data/array/Axiom_GW_Hu-CHB_SNP_r2_1/Axiom_GW_Hu-CHB_SNP.r2.cdf"
         ],
@@ -23,7 +15,7 @@ var test_para =
           "/home/john/workdir/CPT/birdseed/pr/model/pr_all_eu_32.mdl"
         ],
         "quantile_norm_target_sketch": "./sketch.txt",
-        "probeset_list" : "./pslist/biallelic.ps"
+        "probeset_list": "./pslist/biallelic.ps"
     },
     "pipeline" : [
         {
@@ -118,66 +110,4 @@ var test_para =
           }
         }
     ]
-}
-export default class Analyzer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      functionFocus: '',
-      status: 0,
-      output: 'Please prepare annd setup your pipeline.'
-    }
-    this.onRun = this.onRun.bind(this);
-  }
-  onRun() {
-    console.log("onRun");
-
-    socket.emit('toEngine', test_para);
-  }
-  refresh(res) {
-    switch(res.cmd)
-    {
-      case "imgprocess":
-        this.setState({ 
-            status:       res.status,
-            output:       res.output
-        });
-        break;
-      case "pipeline":
-        this.setState({
-            status:       res.status,
-            output:       res.output
-        });
-    }
-  }
-  render() {
-
-    const buttonsInstance = (
-      <ButtonToolbar>
-        <Button bsStyle="primary" onClick={this.onRun}>Run</Button>
-      </ButtonToolbar>
-    );
-    const output = this.state.output;
-    return (
-      <div>
-        <h4>Analyzer</h4>
-        <div className='row'>
-          <div className='col-md-offset-6 col-md-6 col-sm-offset-2 col-sm-8'>
-            {buttonsInstance}
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-md-3 col-sm-3'>
-            {output}
-          </div>
-          <div className='col-md-6 col-sm-8'>
-            <div>name: 'A', type: 'pre-processing'</div>
-            <div>name: 'B', type: 'normalization'</div>
-            <div>name: 'C', type: 'summarization'</div>
-            <div>name: 'D', type: 'geno-typing'</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 }

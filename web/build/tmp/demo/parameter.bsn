@@ -1,0 +1,5 @@
+{
+  'context' : {
+    'output_dir': './tmp/0'
+  }
+}

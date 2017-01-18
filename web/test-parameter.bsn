@@ -1,11 +1,3 @@
-import React  from 'react';
-
-import { ButtonToolbar, Button } from 'react-bootstrap';
-import './analyzer.scss';
-import io from 'socket.io-client';
-let socket = io();
-
-var test_para =
 {
     "context" : {
         "output_dir": "./tmp/0",
@@ -13,6 +5,27 @@ var test_para =
           "/home/alex/data/array/Axiom_GW_Hu-CHB_SNP_r2_1/Axiom_GW_Hu-CHB_SNP.r2.cdf"
         ],
         "sample_files": [
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066943_206-068_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066944_206-071_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066945_301-002_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066946_301-003_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066947_301-004_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066948_301-005_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066949_301-006_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066950_301-007_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066951_301-008_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066952_301-009_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066953_301-013_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066954_301-015_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066955_301-017_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066956_301-021_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066957_301-022_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066958_301-024_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066959_301-030_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066960_301-035_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066961_301-038_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066962_301-039_CHB.CEL",
+          "/home/alex/data/array/GSE78098/raw_data/GSM2066963_301-042_CHB.CEL",
           "/home/alex/data/array/GSE78098/raw_data/GSM2066964_301-044_CHB.CEL",
           "/home/alex/data/array/GSE78098/raw_data/GSM2066965_301-049_CHB.CEL",
           "/home/alex/data/array/GSE78098/raw_data/GSM2066966_301-050_CHB.CEL",
@@ -118,66 +131,4 @@ var test_para =
           }
         }
     ]
-}
-export default class Analyzer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      functionFocus: '',
-      status: 0,
-      output: 'Please prepare annd setup your pipeline.'
-    }
-    this.onRun = this.onRun.bind(this);
-  }
-  onRun() {
-    console.log("onRun");
-
-    socket.emit('toEngine', test_para);
-  }
-  refresh(res) {
-    switch(res.cmd)
-    {
-      case "imgprocess":
-        this.setState({ 
-            status:       res.status,
-            output:       res.output
-        });
-        break;
-      case "pipeline":
-        this.setState({
-            status:       res.status,
-            output:       res.output
-        });
-    }
-  }
-  render() {
-
-    const buttonsInstance = (
-      <ButtonToolbar>
-        <Button bsStyle="primary" onClick={this.onRun}>Run</Button>
-      </ButtonToolbar>
-    );
-    const output = this.state.output;
-    return (
-      <div>
-        <h4>Analyzer</h4>
-        <div className='row'>
-          <div className='col-md-offset-6 col-md-6 col-sm-offset-2 col-sm-8'>
-            {buttonsInstance}
-          </div>
-        </div>
-        <div className='row'>
-          <div className='col-md-3 col-sm-3'>
-            {output}
-          </div>
-          <div className='col-md-6 col-sm-8'>
-            <div>name: 'A', type: 'pre-processing'</div>
-            <div>name: 'B', type: 'normalization'</div>
-            <div>name: 'C', type: 'summarization'</div>
-            <div>name: 'D', type: 'geno-typing'</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 }

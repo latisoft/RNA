@@ -1,6 +1,7 @@
 
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 #include <map>
 #include <unistd.h>
@@ -80,9 +81,26 @@ public:
   }    
 };
 
+template <std::size_t len>
+static int lengthOfArr(const std::string (&array)[len]) { return len; }
+std::string demoArr[] = {
+   " 1 -0.902627   10.5435 2   0.666667    AFFX-SNP-000002 GSM2066969_301-054_CHB",
+   " 2 0.903679    10.6975 0   0.666667    AFFX-SNP-000003 GSM2066969_301-054_CHB",
+   " 3 0.0976733   9.75483 1   0.666667    AFFX-SNP-000004 GSM2066969_301-054_CHB"
+};
 int a[10] = {1,2,3,4,5,6,7,8,9,10};
-int main()
+
+// $./build/meta -i ./tmp/0/parameter.bsn -o ./tmp/0/result.bsn
+int main(int argc, char* argv[])
 {
+  if(argc<2) {
+    std::cout << argv[0] << ": need argument (JSON)." << std::endl;
+
+    std::cout << "toWeb$: cp bin/meta ../../web/build/" << "\n";
+    std::cout << "usage$: ../../web/build/meta -i xx -o yy -n 4" << "\n";
+    std::cout << "exist$: ../../web/build/tmp/4" << "\n";
+    return 1;
+  }
   std::cout << "Factorial<4>::value = " << Factorial<4>::value << "\n";
 
   std::cout << "RevPrinter<int, 10, 10, a>::print(); ";
@@ -98,12 +116,53 @@ int main()
   
   printer("tuple", 1, 2.3, "456");
   back_inserter<std::vector, int> vi;
-  std::cout << "\n";  
+  std::cout << "\n" << "length of array: " << lengthOfArr( demoArr ) << "\n";
 
   for(int i=0; i<100; i++)
   {
-    usleep(20*10000);
+    usleep(10000);
     std::cout << "stage #" << i << std::endl;
   }
+
+
+  
+  time_t rawTime;
+  struct tm * timeInfo;
+  time (&rawTime);
+  timeInfo = localtime(&rawTime);
+
+  char buf[80]; 
+  strftime(buf, 80, "%d%m%Y-%I:%M:%S-allen", timeInfo);
+  std::string tag(buf);
+
+  std::string pathWorking   = "/home/allen/project/RNA/web/build/";
+  std::string fromResult    = pathWorking + "tmp/demo/result.bsn";
+  std::string fromGenotype  = pathWorking + "tmp/demo/genotype.tsv";
+  std::string toResult      = pathWorking + "tmp/" + argv[6] + "/result.bsn";
+  std::string toGenotype    = pathWorking + "tmp/" + argv[6] + "/genotype.tsv";
+
+
+  std::ifstream src0(fromGenotype, std::ios::binary);
+  std::ofstream dst0(toGenotype  , std::ios::binary);
+  dst0 << src0.rdbuf();
+  dst0.close();
+  //std::cout << "== Copy genotype.tsv:   " <<  fromGenotype << " => " << toGenotype  << std::endl;
+
+  std::string src1 
+    = "{\n  \"tag\": \"" + tag + "\",\n" +
+      "  \"output\": {\n" + 
+      "    \"genotype\":[\"/home/allen/project/RNA/web/build/tmp/" + argv[6] + "/genotype.tsv\"]\n" + 
+      "  }\n" + 
+      "}";
+  std::ofstream dst1(toResult  , std::ios::binary);
+  dst1 << src1;
+  dst1.close();
+  //std::cout << "== Build result.bsn:   " <<  src1 << " => " << toResult  << std::endl;
+
+  std::cout << "argv[2] = " << argv[2] << std::endl;
+  std::cout << "argv[4] = " << argv[4] << std::endl;
+  std::cout << "argv[6] = " << argv[6] << std::endl;
+  std::cout << "== Generating toResult:   " << toResult   << std::endl;
+  std::cout << "== Generating toGenotype: " << toGenotype << std::endl;
   return 0;
 }

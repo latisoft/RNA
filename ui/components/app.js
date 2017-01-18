@@ -27,6 +27,7 @@ export class App extends React.Component {
       console.log('reader-res: ', res);
       let fIndex  = this.state.fIndex;
       let name    = vTabs[fIndex];
+
       // Reader Response Processing
       if(vTabs[fIndex]=="Monitor")
         this.refs[name].refresh(res);
@@ -35,6 +36,7 @@ export class App extends React.Component {
       console.log('engine-res: ', res);
       let fIndex  = this.state.fIndex;
       let name    = vTabs[fIndex];
+      
       // Engine Response Processing
       if(vTabs[fIndex]=="Analyzer")
         this.refs[name].refresh(res);

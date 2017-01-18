@@ -1,0 +1,7 @@
+{
+  'output':
+    {
+      'genotype':
+        ["/home/allen/project/web/build/tmp/demo/genotype.tsv"]
+    }
+}

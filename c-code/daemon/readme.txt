@@ -1,4 +1,7 @@
 
+This is C++ binding for 0MQ
+The contribution policy is at: http://rfc.zeromq.org/spec:22
+
 ==== JS communication test ====
 $ node i -S express http zmq
 $ node web.js
@@ -15,6 +18,5 @@ $make
 
 $ ./zserver &
 $ ./zclient
-
 
 ~/RNA/c-code/daemon$ cp ./bin/zserver ../../web/build/ && ../../web/build/zserver

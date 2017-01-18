@@ -28,4 +28,10 @@ $cmake .  (generate Makefile)
 $make     (generate ../web/build/meta) => external binary
 
 
-~/RNA/c-code/engine$ cp ./bin/meta ../../web/build/ && ../../web/build/meta
+==== Execute ====
+// from ./demo/result.bsn 
+// from ./demo/genotype.tsv 
+// to ./4
+
+~/RNA/c-code/engine$ cp bin/meta ../../web/build/
+~/RNA/c-code/engine$ ../../web/build/meta -i xx -o yy -n 4

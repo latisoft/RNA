@@ -21551,15 +21551,17 @@
 	      console.log('reader-res: ', res);
 	      var fIndex = _this.state.fIndex;
 	      var name = vTabs[fIndex];
+
 	      // Reader Response Processing
-	      _this.refs[name].refresh(res);
+	      if (vTabs[fIndex] == "Monitor") _this.refs[name].refresh(res);
 	    };
 	    _this.onEngineResponse = function (res) {
 	      console.log('engine-res: ', res);
 	      var fIndex = _this.state.fIndex;
 	      var name = vTabs[fIndex];
+
 	      // Engine Response Processing
-	      _this.refs[name].refresh(res);
+	      if (vTabs[fIndex] == "Analyzer") _this.refs[name].refresh(res);
 	    };
 
 	    console.log("GUI start");
@@ -51724,6 +51726,101 @@
 
 	var socket = (0, _socket2.default)();
 
+	var test_para = {
+	  "context": {
+	    "output_dir": "./tmp/0",
+	    "chip_layout": ["/home/alex/data/array/Axiom_GW_Hu-CHB_SNP_r2_1/Axiom_GW_Hu-CHB_SNP.r2.cdf"],
+	    "sample_files": ["/home/alex/data/array/GSE78098/raw_data/GSM2066964_301-044_CHB.CEL", "/home/alex/data/array/GSE78098/raw_data/GSM2066965_301-049_CHB.CEL", "/home/alex/data/array/GSE78098/raw_data/GSM2066966_301-050_CHB.CEL", "/home/alex/data/array/GSE78098/raw_data/GSM2066967_301-051_CHB.CEL", "/home/alex/data/array/GSE78098/raw_data/GSM2066968_301-053_CHB.CEL"],
+	    "clustering_models": ["/home/john/workdir/CPT/birdseed/pr/model/pr_all_eu_32.mdl"],
+	    "quantile_norm_target_sketch": "./sketch.txt",
+	    "probeset_list": "./pslist/biallelic.ps"
+	  },
+	  "pipeline": [{
+	    "name": "Input:DataLoader",
+	    "parameter": {
+	      "thread_num": {
+	        "type": "literal",
+	        "content": 16
+	      }
+	    }
+	  }, {
+	    "name": "Train:TargetSketchEstimation",
+	    "parameter": {
+	      "scaling_factor": {
+	        "type": "literal",
+	        "content": 0
+	      }
+	    }
+	  }, {
+	    "name": "Transform:QuantileNormalization",
+	    "parameter": {
+	      "target_sketch": {
+	        "type": "ref",
+	        "content": "quantile_norm_target_sketch"
+	      },
+	      "scaling_factor": {
+	        "type": "literal",
+	        "content": 0
+	      }
+	    }
+	  }, {
+	    "name": "Transform:AlleleSummarization",
+	    "parameter": {
+	      "probeset_list": {
+	        "type": "ref",
+	        "content": "probeset_list"
+	      }
+	    }
+	  }, {
+	    "name": "Train:BirdseedGrandModelProbesetChoice",
+	    "parameter": {
+	      "rnd_nums": {
+	        "type": "literal",
+	        "content": 5000
+	      }
+	    }
+	  }, {
+	    "name": "Transform:LogTransform",
+	    "parameter": {}
+	  }, {
+	    "name": "Train:BirdseedGrandModelTraining",
+	    "parameter": {
+	      "tol": {
+	        "type": "literal",
+	        "content": 1e-05
+	      },
+	      "max_iter": {
+	        "type": "literal",
+	        "content": 500
+	      },
+	      "n_init": {
+	        "type": "literal",
+	        "content": 20
+	      },
+	      "n_components": {
+	        "type": "literal",
+	        "content": 3
+	      }
+	    }
+	  }, {
+	    "name": "Train:BirdseedProbesetTraining",
+	    "parameter": {
+	      "fitting_algo": {
+	        "type": "custom",
+	        "content": {
+	          "name": "PRFittingRT",
+	          "trim_rate": 5,
+	          "subtype": "KMeans"
+	        }
+	      },
+	      "thread_num": {
+	        "type": "literal",
+	        "content": 32
+	      }
+	    }
+	  }]
+	};
+
 	var Analyzer = function (_React$Component) {
 	  _inherits(Analyzer, _React$Component);
 
@@ -51735,7 +51832,7 @@
 	    _this.state = {
 	      functionFocus: '',
 	      status: 0,
-	      output: 'Are you ready?'
+	      output: 'Please prepare annd setup your pipeline.'
 	    };
 	    _this.onRun = _this.onRun.bind(_this);
 	    return _this;
@@ -51745,27 +51842,8 @@
 	    key: 'onRun',
 	    value: function onRun() {
 	      console.log("onRun");
-	      socket.emit('toEngine', {
-	        func: 'pipeline',
-	        para: {
-	          desc: 'bioinfomatics',
-	          para: [{
-	            name: 'A', type: 'pre-processing'
-	          }, {
-	            name: 'B', type: 'normalization'
-	          }, {
-	            name: 'C', type: 'summarization'
-	          }, {
-	            name: 'D', type: 'geno-typing'
-	          }]
-	        },
-	        global: {
-	          prefix: "demo_",
-	          fCAD: { detail: 'Select microarray', path: './axiom_snp.cad' },
-	          fCEN: { detail: 'CENtrillion sample file', list: ["xxxx-sn000000-m001", "xxxx-sn000000-m086"] },
-	          fPBS: { detail: 'ProBe Set', list: ["canser", "uuu-disease", "oxoxo"] }
-	        }
-	      });
+
+	      socket.emit('toEngine', test_para);
 	    }
 	  }, {
 	    key: 'refresh',
@@ -51820,8 +51898,32 @@
 	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-md-6 col-sm-12' },
+	            { className: 'col-md-3 col-sm-3' },
 	            output
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-md-6 col-sm-8' },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'name: \'A\', type: \'pre-processing\''
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'name: \'B\', type: \'normalization\''
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'name: \'C\', type: \'summarization\''
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              'name: \'D\', type: \'geno-typing\''
+	            )
 	          )
 	        )
 	      );
