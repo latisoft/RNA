@@ -1,14 +1,17 @@
 var zmq           = require('zmq');
-
 var requester     = zmq.socket('req');
+
+var pushUI  = (cmd, status, output) => {
+    require('./server.js').push("reader response", {
+      cmd:      cmd,
+      status:   status,
+      output:   output
+    });
+};
 requester.connect("tcp://localhost:5555");
 requester.on("message", function(buf) {
     var ss  = buf.toString().split(",");
-    var obj = { cmd:      ss[0],
-                status:   ss[1],
-                payload:  ss[2] };
-    console.log("reader reply => ", obj);
-    require('./server.js').push("reader response", obj);
+    pushUI(ss[0], ss[1], ss[2]);
 });
 var intervalId    = setInterval(()=>{
     let cmdString = 'update,0,\0';

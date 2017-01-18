@@ -27,99 +27,56 @@ Date.prototype.yyyymmdd = function() {
   return [yyyy, mm, dd, '-', h, m, s].join('');
 };
 
+var pushUI  = (cmd, status, output) => {
+    require('./server.js').push("engine response", {
+      cmd:      cmd,
+      status:   status,
+      output:   output
+    });
+};
+
 var path        = require('path');
 var spawn       = require('child_process').spawn;
 var runNo       = 0;
 var processMsg  = (msg, response) => {
 
     let no      = runNo;
+    let runDir  = __dirname + '/build/tmp/' + no;
+    let argv2   = runDir + '/parameter.bsn';
+    let argv4   = runDir + '/result.bsn';
     runNo       = (runNo+1)%10;
 
-
-    let argv2   = __dirname + '/build/tmp/' + no + '/parameter.bsn';
-    let argv4   = __dirname + '/build/tmp/' + no + '/result.bsn';
-    let argv6   = no;
-
-    msg.context.output_dir = __dirname + 'build/tmp/' + no;
+    msg.context.output_dir = runDir;
     msg.timeTag = (new Date()).yyyymmdd();
-    console.log("=================", msg);
     jsonfile.writeFile(argv2, msg, {spaces: 2}, function(err) {
+      console.log("-i argv2: ", argv2);
       console.error(err);
     });
 
-
-    let command = spawn('build/meta', ['-i', argv2,'-o', argv4, '-n', argv6]);
+    let command = spawn('build/meta', ['-i', argv2,'-o', argv4, '-n', no]);
     command.stdout.on('data', function (data) {
-      let obj = { cmd:      msg.func,
-                  status:   0,
-                  output:   data.toString() };
-      console.log("engine output => ", obj);
-      require('./server.js').push("engine response", obj);
+      pushUI('progress', 0, data.toString());
     });
     command.stderr.on('data', function (data) {
       console.log('stderr: ' + data.toString());
     });
     command.on('exit', function(code) {
-      console.log('child process exited with code ' + code.toString());
-
-      // let fResult = path.join('./build/tmp/', no, '/result.bsn');
-      let fResult = jsonfile.readFileSync(argv4); //, function(err, settings) {
-      let xpath    = fResult.output.genotype[0];
-      console.log("---- argv4: ---- ", argv4);
-      console.log("---- fResult: -- ", fResult);
-      console.log("---- xpath: - ", xpath)
-
-        //if(err)       console.error(err);
-////
-        let lineNo  = 0;
-        var stm     = fs.createReadStream( xpath )
-                      .pipe( es.split() )
-                      .pipe( es.mapSync(function(line) {
-                        // stm.pause();
-                        lineNo += 1;
-                        let obj = { cmd:      "show",
-                                    status:   0,
-                                    output:   line.toString() };
-                        console.log("engine output => ", line);
-                        require('./server.js').push("engine response", obj);
-                      })
-                      .on('error', function() {
-                        console.log('Error while reading file.');
-                      })
-                      .on('end', function() {
-                        console.log('Read entire file.');
-                      }) );
-////
-//      });
+      console.log('child process exited: ' + code.toString());
+      console.log("-o argv4: ", argv4);
+      let fResult = jsonfile.readFileSync(argv4);
+      let lineNo  = 0;
+      var stm     = fs.createReadStream( fResult.output.genotype[0] )
+                    .pipe( es.split() )
+                    .pipe( es.mapSync(function(line) {
+                      pushUI('plot', no+":"+lineNo, line.toString());
+                      lineNo += 1;
+                    })
+                    .on('error', function() {
+                      console.log('Error while reading file!!');
+                    })
+                    .on('end', function() {
+                      console.log('Read entire file, lineNo=', lineNo);
+                    }) );
     });
 }
 exports.proc = processMsg;
-/*
-var processMsg = (msg, response) => {
-    var exeFile= '';
-    var para   = msg.para;
-    switch(msg.func) 
-    {
-      case 'imgprocess' : exeFile= 'build/meta';
-        break;
-      case 'pipeline'   : exeFile= 'build/meta';
-        break;
-    }
-    const child = execFile(exeFile, ['--version'], (error, stdout, stderr) => {
-      if (error) {
-        throw error;
-      }
-      // response(stdout);
-
-      var obj = { cmd:      msg.func,
-                  status:   0,
-                  output:  stdout };
-      console.log("engine output => ", obj);
-      require('./server.js').push("engine response", obj);
-      // console.log(stdout);
-    });
-    // response("Engine is launching the pipeline!");
-
-}
-exports.proc = processMsg;
-*/

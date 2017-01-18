@@ -47,7 +47,7 @@ var uiCommander = (socket)  => {
     reader.proc(msg, null);
   });
   socket.on('toEngine', function(msg) {
-    console.log('toEngine-msg: ', msg);
+    //console.log('toEngine-msg: ', msg);
     engine.proc(msg, null);
   });
   socket.on('disconnect', function() {

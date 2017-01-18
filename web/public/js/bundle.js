@@ -51728,7 +51728,7 @@
 
 	var test_para = {
 	  "context": {
-	    "output_dir": "./tmp/0",
+	    "output_dir": "----",
 	    "chip_layout": ["/home/alex/data/array/Axiom_GW_Hu-CHB_SNP_r2_1/Axiom_GW_Hu-CHB_SNP.r2.cdf"],
 	    "sample_files": ["/home/alex/data/array/GSE78098/raw_data/GSM2066964_301-044_CHB.CEL", "/home/alex/data/array/GSE78098/raw_data/GSM2066965_301-049_CHB.CEL", "/home/alex/data/array/GSE78098/raw_data/GSM2066966_301-050_CHB.CEL", "/home/alex/data/array/GSE78098/raw_data/GSM2066967_301-051_CHB.CEL", "/home/alex/data/array/GSE78098/raw_data/GSM2066968_301-053_CHB.CEL"],
 	    "clustering_models": ["/home/john/workdir/CPT/birdseed/pr/model/pr_all_eu_32.mdl"],
@@ -51832,7 +51832,7 @@
 	    _this.state = {
 	      functionFocus: '',
 	      status: 0,
-	      output: 'Please prepare annd setup your pipeline.'
+	      output: 'Please prepare and setup your pipeline.'
 	    };
 	    _this.onRun = _this.onRun.bind(_this);
 	    return _this;

@@ -6,9 +6,9 @@ import io from 'socket.io-client';
 let socket = io();
 
 var test_para =
-{
+{ 
     "context" : {
-        "output_dir": "./tmp/0",
+        "output_dir": "----",
         "chip_layout": [
           "/home/alex/data/array/Axiom_GW_Hu-CHB_SNP_r2_1/Axiom_GW_Hu-CHB_SNP.r2.cdf"
         ],
@@ -125,7 +125,7 @@ export default class Analyzer extends React.Component {
     this.state = {
       functionFocus: '',
       status: 0,
-      output: 'Please prepare annd setup your pipeline.'
+      output: 'Please prepare and setup your pipeline.'
     }
     this.onRun = this.onRun.bind(this);
   }
