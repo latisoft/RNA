@@ -1,10 +1,64 @@
 import React  from 'react';
 import './reporter.scss';
 
+var Highcharts = require('highcharts');
+class DonutChart extends React.Component {
+  constructor(props) {
+      super(props);
+      this.chart = "";
+    }
+  componentDidMount() {
+    this.chart = Highcharts.chart('chart', {
+      chart: {
+          type: 'pie'
+      },
+      title: 'Browser Market sahre',
+      yAxis: {
+          title: { text: 'Total percent market share' }
+      },
+      plotOptions: {
+          pie: { shadow: false }
+      },
+      tooltip: {
+          formatter: function() {
+              return '<b>'+ this.point.name +'</b>: '+ this.y +' %';
+          }
+      },
+      series: [{
+          name: 'Browsers',
+          data: this.props.data,
+          size: '100%',
+          innerSize: '85%',
+          showInLegend:true,
+          dataLabels: {
+              enabled: true
+          }
+      }]
+    });
+  }
+  componentWillReceiveProps(props) {
+    this.chart.highcharts().series[0].setData(props.data);
+  }
+  render() {
+      return (
+        <div>
+          <h2>This is visualizer.</h2>
+          <div id='chart'></div>
+        </div>
+      )
+  }
+}
+
 export default class Reporter extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
+      pieData:  [ {name: "Firefox", y: 6},
+                  {name: "MSIE",    y: 4},
+                  {name: "Safari",  y: 4},
+                  {name: "Opera",   y: 1},
+                  {name: "Chrome",  y: 7} ],
       functionFocus: ''
     }
   }
@@ -25,53 +79,6 @@ export default class Reporter extends React.Component {
     }
   }
   render() {
-    return (
-      <div>
-        <div className="row">
-          <div className="col-lg-4 col-md-12">
-            <fieldset>
-              <legend><b>Step One: Personal Information</b></legend>
-              Name: <input TYPE="text" SIZE="20"/><br/>
-              Email: <input TYPE="text" SIZE="20"/><br/>
-            </fieldset>
-          </div>
-          <div className="col-lg-4 col-md-12">
-            <fieldset>
-              <legend><b>Step One: Personal Information</b></legend>
-              Name: <input TYPE="text" SIZE="20"/><br/>
-              Email: <input TYPE="text" SIZE="20"/><br/>
-            </fieldset>
-          </div>
-          <div className="col-lg-4 col-md-12">
-            <fieldset>
-              <legend><b>Step One: Personal Information</b></legend>
-              Name: <input TYPE="text" SIZE="20"/><br/>
-              Email: <input TYPE="text" SIZE="20"/><br/>
-            </fieldset>
-          </div>
-          <div className="col-lg-4 col-md-12">
-            <fieldset>
-              <legend><b>Step One: Personal Information</b></legend>
-              Name: <input TYPE="text" SIZE="20"/><br/>
-              Email: <input TYPE="text" SIZE="20"/><br/>
-            </fieldset>
-          </div>
-          <div className="col-lg-4 col-md-12">
-            <fieldset>
-              <legend><b>Step One: Personal Information</b></legend>
-              Name: <input TYPE="text" SIZE="20"/><br/>
-              Email: <input TYPE="text" SIZE="20"/><br/>
-            </fieldset>
-          </div>
-          <div className="col-lg-4 col-md-12">
-            <fieldset>
-              <legend><b>Step One: Personal Information</b></legend>
-              Name: <input TYPE="text" SIZE="20"/><br/>
-              Email: <input TYPE="text" SIZE="20"/><br/>
-            </fieldset>
-          </div>
-        </div>
-      </div>
-    );
+      return <DonutChart data = {this.state.pieData}/>
   }
 }
