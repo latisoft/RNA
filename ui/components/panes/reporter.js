@@ -1,4 +1,6 @@
 import React  from 'react';
+import store  from  '../store';
+
 import './reporter.scss';
 
 var Highcharts = require('highcharts');
@@ -50,35 +52,22 @@ export default class Reporter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      pieData:  [ {name: "Firefox", y: 6},
-                  {name: "MSIE",    y: 4},
-                  {name: "Safari",  y: 4},
-                  {name: "Opera",   y: 1},
-                  {name: "Chrome",  y: 7} ],
-      functionFocus: ''
     }
   }
   refresh(res) {
-    let disp = res.payload.split(':');
-    switch(res.cmd)
-    {
-      case "-":
-        this.setState({ 
-            xx:           disp[0],
-            yy:           disp[1]
-        });
-        break;
-      case "=":
-        this.setState({
-            zz:           dispres.payload
-        });
-    }
+    console.log("reporter refresh: ", res);
+    // res.cmd == intensity
+    // get data from store
+    this.setState({
+        status:       res.status,
+        output:       res.output
+    });
   }
   render() {
     return (
       <div>
         <h2>This is reporter.</h2>
-        <DonutChart data = {this.state.pieData}/>
+        <DonutChart data = {store.pieData}/>
       </div>
     );
   }
