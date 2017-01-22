@@ -90,7 +90,6 @@ inline void assay(bool start) {
   else    { clrbit(status, B01_ASSAY); progress = 0; }
 }
 
-
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 boost::char_separator<char> sep(",");
 boost::char_separator<char> sep2(":");
@@ -101,7 +100,7 @@ inline void process(std::string cmdString, char *pBuff)
   tokenizer::iterator ti = tok.begin(); 
   std::string cmd = (*ti); 
   ++ti;
-  std::string payload= (*ti);
+  std::string data= (*ti);
   totalCmd++;
 
   if (cmd == "reset") { 
@@ -149,13 +148,7 @@ inline void process(std::string cmdString, char *pBuff)
   // system,status,0
     snprintf(pBuff, 100, "system,%d,0:0:0",status);
   }
-/*
-  char buff[100];
-  snprintf(buff, 100, "....=> [cmd:%s, payload:%s]",
-    cmd.c_str(), payload.c_str());
-  std::cout << buff << std::endl;
-  */
-  std::cout << "...[cmd:" + cmd + ", payload:" + payload + "]=>" << std::endl;
+  std::cout << "...[cmd:" + cmd + ", data:" + data + "]=>" << std::endl;
   dump("*");
 }
 void listener(zmq::socket_t &socket)
@@ -179,8 +172,8 @@ void listener(zmq::socket_t &socket)
 }
 int main () 
 {
-  zmq::context_t context (1);
-  zmq::socket_t socket (context, ZMQ_REP);
+  zmq::context_t  context(1);
+  zmq::socket_t   socket(context, ZMQ_REP);
   socket.bind ("tcp://*:5555");
   std::cout << "== Reader daemon bind socket@tcp://*:5555 ==" << std::endl;
   auto mThread = std::thread(listener, std::ref(socket));

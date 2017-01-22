@@ -36,8 +36,9 @@ export default class Monitor extends React.Component {
     let cmd = (this.state.isAssay)? 'assay-stop': 'assay-start';
     socket.emit('toReader', { cmd:cmd, no:0, auto:'all' });
   }
+
   refresh(res) {
-    let disp = res.payload.split(':');
+    let disp = res.output.split(':');
     switch(res.cmd)
     {
       case "update":
@@ -48,7 +49,7 @@ export default class Monitor extends React.Component {
         break;
       case "done":
         this.setState({
-            done:         dispres.payload
+            done:         res.output
         });
     }
   }

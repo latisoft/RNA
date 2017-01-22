@@ -1,20 +1,17 @@
 #home-frame {
-
-  border:           1px solid black;  
-  
-  // width: 100%;
+  padding:          2px;
 }
-#home-banner {
-  margin: 10px auto;
-  border:           1px solid red;
-  height:           200px;
-
-  font-size:        18px;  
+#home-news {
+  margin:           2px auto;
+  padding:          6px;
+  border:           1px solid gray;
+  overflow-y:       scroll;
+  height:           180px;
 }
-
-.x {
-  margin: 10px auto;
-  padding: 10px;
-  border:           1px solid #c74ff1;
-  height:           500px;
+#home-posts {
+  margin:           2px auto;
+  padding:          2px;
+  border:           1px solid gray;
+  overflow-y:       scroll;
+  height:           380px;
 }

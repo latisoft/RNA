@@ -56,25 +56,6 @@ var uiCommander = (socket)  => {
 }
 io.on('connection', uiCommander);
 
-
-/*
-io.on('connection', function(socket) {
-  
-  console.log("==== connection ====");
-  io.emit('server event', { evt: 'Welcome' });
-  socket.on('reader', function(msg) {
-        console.log('reader-msg: ', msg);
-        reader.process(msg, (status)=>{ 
-          io.emit("reader response", {result:status}); 
-        });
-    });
-  // socket.on('engine', engine);
-  socket.on('disconnect', function() {
-    console.log("==== disconnect ====");
-  });
-});
-*/
-
 http.listen(8000, ()=>{
   console.log("listening on *:8000");
 });

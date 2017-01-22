@@ -41,10 +41,7 @@ class DonutChart extends React.Component {
   }
   render() {
       return (
-        <div>
-          <h2>This is visualizer.</h2>
           <div id='chart'></div>
-        </div>
       )
   }
 }
@@ -52,7 +49,6 @@ class DonutChart extends React.Component {
 export default class Reporter extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       pieData:  [ {name: "Firefox", y: 6},
                   {name: "MSIE",    y: 4},
@@ -79,6 +75,11 @@ export default class Reporter extends React.Component {
     }
   }
   render() {
-      return <DonutChart data = {this.state.pieData}/>
+    return (
+      <div>
+        <h2>This is reporter.</h2>
+        <DonutChart data = {this.state.pieData}/>
+      </div>
+    );
   }
 }

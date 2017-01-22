@@ -11,12 +11,15 @@ import './app.scss';
 
 import io from 'socket.io-client';
 let socket = io();
-
-
 let vTabs = [
-  'Home', 'Settings', 'Monitor', 'Reporter', 'Analyzer', 'Visualizer', 'Help'
+  'Home', 
+  'Settings', 
+  'Monitor', 
+  'Reporter', 
+  'Analyzer', 
+  'Visualizer', 
+  'Help'
 ];
-
 export class App extends React.Component {
   constructor(props) {
     super(props);
@@ -29,16 +32,20 @@ export class App extends React.Component {
       let name    = vTabs[fIndex];
 
       // Reader Response Processing
-      if(vTabs[fIndex]=="Monitor")
-        this.refs[name].refresh(res);
+      // and save in store
+      if(vTabs[fIndex]=="Monitor") // && res.cmd == "update" or "done"
+          this.refs[name].refresh(res);
     }
     this.onEngineResponse = (res) => {
       console.log('engine-res: ', res);
       let fIndex  = this.state.fIndex;
       let name    = vTabs[fIndex];
-      
+
       // Engine Response Processing
-      if(vTabs[fIndex]=="Analyzer")
+      if( (vTabs[fIndex]=="Analyzer"  ) && (res.cmd=="pipeline") )
+        this.refs[name].refresh(res);
+
+      if( (vTabs[fIndex]=="Visualizer") && (res.cmd=="plot") )
         this.refs[name].refresh(res);
     }
 
@@ -62,15 +69,16 @@ export class App extends React.Component {
     switch(e.keyCode) // l:37, u:38; r:39, d:40
     {
       case 38: // up
-        if(idx>0) idx--;
-        break;
+        if(idx>0) idx--; break;
       case 40: // down
-        if(idx<6) idx++;
-        break;
-      default: return;
+        if(idx<6) idx++; break;
+      default:
+        if(typeof this.refs[ vTabs[idx] ].handleKeyDown === 'function')
+          this.refs[ vTabs[idx] ].handleKeyDown(e);
+        return;
     }
     this.setState({fIndex: idx});
-  }  
+  }
   render() {
 
     let index = this.state.fIndex;
@@ -88,7 +96,7 @@ export class App extends React.Component {
                       <span>{vTab}</span>
                     </div>);
                 });
-    let panes = [ <Home       ref="Home"      />,
+    var panes = [ <Home       ref="Home"      />,
                   <Settings   ref="Settings"  />,
                   <Monitor    ref="Monitor"   />,
                   <Reporter   ref="Reporter"  />,

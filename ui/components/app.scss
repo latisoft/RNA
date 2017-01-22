@@ -1,7 +1,7 @@
 #frame {
   position:         relative;
-  width:            80%;
-  height:           800px;
+  width:            90%;
+  height:           640px;
   margin:           0 auto;
   border:           2px solid cornsilk;
 }
@@ -11,24 +11,24 @@
 }
 #frame > div:nth-child(1) {
   width:            100%;
-  height:           60px;
-  line-height:      60px;
+  height:           40px;
+  line-height:      40px;
   text-align:       center;
 
-  border:           2px solid yellow;
+  border:           1px solid lightgreen;
   background:       #c7ff91;
-  font-size:        30px;
+  font-size:        22px;
   font-weight:      bold;
 }
 #frame > div:nth-child(2) {
   width:            20%;
-  height:           100%;  
+  height:           600px;
   background:       pink;
-  padding-top:      20px;  
+  padding-top:      20px;
 }
 #frame > div:nth-child(3) {
   width:            80%;
-  height:           100%;  
+  height:           600px;
   background:       white;
 }
 

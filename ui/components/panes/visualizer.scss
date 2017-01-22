@@ -1,0 +1,41 @@
+
+#vis-frame {
+  position:         relative;
+  width:            90%;
+  height:           600px;
+  margin:           0 auto;
+  border:           1px solid gray;
+}
+#vis-navigator {
+  height:           30px;
+  background:       steelblue;
+  padding-top:      10px;
+}
+$htab-color:        #ddeeff;
+#vis-container {
+  padding:           4px;
+  background:       $htab-color;
+}
+
+.htab-btn {
+  display:          inline;
+  position:         relative;
+
+  font-size:        16px;
+  margin:           4px;
+  padding:          2px;
+  border:           1px solid steelblue;
+  border-top-left-radius:   4px;
+  border-top-right-radius:  4px;
+  background:       lightblue;
+}
+.htab-btn-focus {
+  @extend .htab-btn;
+  border-bottom:    1px solid $htab-color;
+  background:       $htab-color;
+}
+.htab-btn:hover {
+  border:           2px solid #8888cc;
+  background:       lavender;
+  color:            indianred;
+}
