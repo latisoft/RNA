@@ -1,6 +1,6 @@
 {
   "context": {
-    "output_dir": "/home/allen/project/RNA/web/build/tmp/2",
+    "output_dir": "/home/allen/project/RNA/web/build/tmp/3",
     "chip_layout": [
       "/home/alex/data/array/Axiom_GW_Hu-CHB_SNP_r2_1/Axiom_GW_Hu-CHB_SNP.r2.cdf"
     ],
@@ -110,5 +110,5 @@
       }
     }
   ],
-  "timeTag": "20170123-013124"
+  "timeTag": "20170123-013130"
 }

@@ -49,7 +49,7 @@ export default class Configuration extends React.Component {
         <h4>Configuration page</h4>
         <div className='row'>
           <div className='col-md-offset-6 col-md-6 col-sm-offset-2 col-sm-8'>
-          xxxx
+            Please setup global variable (CAD,CEN,PS) for pipeline.
           </div>
         </div>
       </div>

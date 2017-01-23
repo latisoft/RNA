@@ -1,6 +1,6 @@
 import React  from 'react';
 import { ButtonToolbar, Button }  from 'react-bootstrap';
-import { ScatterPlotChart }       from './cent-chart';
+import { ScatterPlotChart }       from '../../../helper/cent-chart';
 import './probeset-base.scss';
 
 export default class ProbesetBase extends React.Component {
@@ -30,16 +30,16 @@ export default class ProbesetBase extends React.Component {
       <div>
         <h4>Probeset Base Scatter Plot</h4>
         <div className='row'>
-          <div className='col-md-4 col-sm-4 col-xs-10'>
+          <div className='col-md-2 col-sm-2 hidden-xs'>
             <div>Probeset Files</div>
             <div>Select Data Type</div>
           </div>
-          <div className='col-md-2 col-sm-2 col-xs-2'>
+          <div className='col-md-1 col-sm-1 hidden-xs'>
             {buttonsInstance}
           </div>
-          <div className='col-md-6 col-sm-6 col-xs-12'>
+          <div className='col-md-9 col-sm-9 col-xs-12'>
             {output}
-            {ScatterPlotChart}
+            <ScatterPlotChart data={this.props.data}/>
           </div>
         </div>
       </div>

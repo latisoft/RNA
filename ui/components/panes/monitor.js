@@ -1,4 +1,5 @@
-import React  from 'react';
+import React  from  'react';
+import store  from  '../store';
 import { ButtonToolbar, Button } from 'react-bootstrap';
 import './monitor.scss';
 import io from 'socket.io-client';
@@ -93,6 +94,7 @@ export default class Monitor extends React.Component {
           </div>
           <h4>Done <span className="label label-default">{done}</span></h4>
       </div>);
+    /*
     let microarrayDisplay = [1,2,3,4,5,6].map( (n,idx)=>{
                               return  (
                                 <div  key       = {idx} 
@@ -100,8 +102,26 @@ export default class Monitor extends React.Component {
                                   <div className= "subtray">Disk {n}</div>
                                 </div>);
                             });
-    return (
-      <div>
+    */
+    let microarrayDisplay = store.subtrays.map( (trap, idx)=>{
+      // let chips = idx;
+      
+      let chips = trap.map( (chipValue, chipIdx)=>{
+        let x =(chipIdx%4==0)? <br/>: "-";
+        return (<span key={chipIdx}>{x}{chipValue}</span>);
+      });
+      console.log("chips", chips);
+      return (
+        <div key        = {idx}
+             className  = "col-md-2 hidden-sm hidden-xs">
+          <div className= "subtray">
+            <h6>Disk {idx}</h6>
+            <div>{chips}</div>
+          </div>
+        </div>);
+    });
+    
+    return (<div>
         <h4>Monitor</h4>
         <div className='row'>
           <div className='col-md-offset-6 col-md-6 col-sm-offset-2 col-sm-8'>

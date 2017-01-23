@@ -1,6 +1,6 @@
 import React  from 'react';
 import { ButtonToolbar, Button }  from 'react-bootstrap';
-import { ScatterPlotChart }       from './cent-chart';
+import { ScatterPlotChart }       from '../../../helper/cent-chart';
 import './sample-base.scss';
 
 export default class SampleBase extends React.Component {
@@ -26,21 +26,20 @@ export default class SampleBase extends React.Component {
       </ButtonToolbar>
     );
     let output = this.state.output;
-    let xData  = this.props.data;
     return (
       <div>
         <h4>Sample Base Scatter Plot</h4>
         <div className='row'>
-          <div className='col-md-3 col-sm-3 col-xs-8'>
+          <div className='col-md-2 col-sm-2 hidden-xs'>
             <div>Sample Files</div>
             <div>Select Data Type</div>
           </div>
-          <div className='col-md-2 col-sm-2 col-xs-2'>
+          <div className='col-md-1 col-sm-1 hidden-xs'>
             {buttonsInstance}
           </div>
-          <div className='col-md-6 col-sm-6 col-xs-10'>
+          <div className='col-md-9 col-sm-9 col-xs-12'>
             {output}
-            <ScatterPlotChart data={xData}/>
+            <ScatterPlotChart data={this.props.data}/>
           </div>
         </div>
       </div>

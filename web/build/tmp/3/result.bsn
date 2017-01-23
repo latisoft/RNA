@@ -1,7 +1,6 @@
 {
-  'output':
-    {
-      'genotype':
-        ["/home/allen/project/web/build/tmp/demo/genotype.tsv"]
-    }
+  "tag": "23012017-01:31:31-allen",
+  "output": {
+    "genotype":["/home/allen/project/RNA/web/build/tmp/3/genotype.tsv"]
+  }
 }
