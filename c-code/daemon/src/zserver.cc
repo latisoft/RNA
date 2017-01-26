@@ -22,9 +22,11 @@ inline void xorbit(int &num, int x) { num ^= 1 << x; }
 inline bool chkbit(int &num, int x) { return (num >> x) & 1; }
 
 int totalCmd            = 0;
-int assayNum            = 1; // 1~384 (16*24)
+int assayNum0           = -1;
+int assayNum            = 0; // 0~383 (16*24)
 int progress            = 0; // 0~100 %
 int status              = 0x00000000; // 32 bits
+
 
 char plateRFID[100]     = "Centrillion SW #ID-6-0000";
 int subtrayCnt          = 6;
@@ -37,26 +39,42 @@ int nowT                = 45;
 int maxT                = 53; // temperature record
 int minT                = 28;
 
-unsigned int subtrayDone[6] = { // has 8*8*6 = 384 chips
-  0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 
-};
-bool ifDone(unsigned int n, int x) {
-  return (subtrayDone[n] >> x) & 1;;
+
+const unsigned int  READY       = 0;
+const unsigned int  ASSAYING    = 1;
+const unsigned int  PENDING     = 5;
+const unsigned int  EMPTY       = 6;
+const unsigned int  SKIP        = 7;
+const unsigned int  FINISH      = 8;
+
+
+const int TOTAL_CHIPS = 384; // 6 subtrays * 64
+unsigned int subtrayDone[ TOTAL_CHIPS ];
+
+bool ifDone(unsigned int n) {
+  return (subtrayDone[n] == FINISH);
 }
-void setDone(unsigned int n, int x) {
-  subtrayDone[n] |= 1 << x;
+void setAssay(unsigned int n) {
+  subtrayDone[n] = ASSAYING;
 }
-void clrDone(unsigned int n, int x) {
-  subtrayDone[n] &= ~(1<<x);
+void setPending(unsigned int n) {
+  subtrayDone[n] = PENDING;
+}
+void setDone(unsigned int n) {
+  subtrayDone[n] = FINISH;
+}
+void clrDone(unsigned int n) {
+  subtrayDone[n] = READY;
 }
 void clrDone() {
-  for(int i=0; i<6; i++)
-    subtrayDone[i] = 0x00000000;
+  for(int i=0; i<TOTAL_CHIPS; i++)
+    clrDone(i);
 }
+
 
 const int B00_READY     = 0; // 0:reset, 1:ready 
 const int B01_ASSAY     = 1; // 0:stop, 1:start
-const int B02_DONE      = 2; // 0:in assaying, 1:finished
+const int B02_DONE      = 2; // 1:current chip finished
 const int B03_MODE      = 3; // 0:automatic next
 const int B04_VERTICAL  = 4; // 0:horizontal first
 const int B05_          = 5; // 0: 
@@ -64,12 +82,15 @@ const int B06_          = 6; // 0:
 const int B07_COVER     = 7; // 0:close, 1:open
 const int B08_          = 8; // 0:
 const int B09_          = 9; // 0:
-const int B10_R         =10; // 0:off, 1:on
-const int B11_G         =11; // 0:
-const int B12_B         =12; // 0:
-const int B13_W         =13; // 0:
-const int B14_          =14; // 0:
-const int B15_          =15; // 0:
+const int B10_          =10; // 0:off, 1:on
+const int B11_          =11; // 0:off, 1:on
+const int B12_R         =12; // 0:off, 1:on
+const int B13_G         =13; // 0:
+const int B14_B         =14; // 0:
+const int B15_W         =15; // 0:
+const int B16_          =16; // 0:
+const int B17_          =17; // 1:tray changed.
+const int B1u_          =18; // 0:
 
 
 inline void dump(std::string x)
@@ -81,19 +102,21 @@ inline void dump(std::string x)
 }
 inline void reset() {
   totalCmd              = 0;
-  assayNum              = 1;
+  assayNum              = READY;
   progress              = 0;
   status                = 0x00000000;
+  std::cout << "==reset==" << std::endl;
 }
 inline void assay(bool start) {
   if(start) setbit(status, B01_ASSAY);
   else    { clrbit(status, B01_ASSAY); progress = 0; }
+  std::cout << "==assay(" << status << ")==" << std::endl;  
 }
 
 typedef boost::tokenizer<boost::char_separator<char>> tokenizer;
 boost::char_separator<char> sep(",");
 boost::char_separator<char> sep2(":");
-inline void process(std::string cmdString, char *pBuff)
+inline void process(std::string cmdString, char *pBuff, int maxLen)
 {
   // reset,10:0:5
   tokenizer tok(cmdString, sep);
@@ -103,37 +126,45 @@ inline void process(std::string cmdString, char *pBuff)
   std::string data= (*ti);
   totalCmd++;
 
+
+  if (cmd == "info") {
+    snprintf(pBuff, 100, "info,%d,0:0:0:0",
+      status);
+  } else
+  if (cmd == "done") {
+  // done,status,8,8, ...8,1,0,0 ...
+    int END_CHIP= (TOTAL_CHIPS-1);
+    int offset  = snprintf(pBuff+0, maxLen-0, "done,%d,", status);
+    for ( int i = 0; i < END_CHIP; i++ ) {
+      offset += snprintf(pBuff+offset, maxLen-offset, "%d:", subtrayDone[i]);
+    }
+    snprintf(pBuff+offset, maxLen-offset, "%d", subtrayDone[END_CHIP]);
+  } else
+  if (cmd == "update") {
+  // update,status,totalCmd:assayNum:progress:last:next  
+    snprintf(pBuff, 100, "update,%d,#%d:%d:%d:%d:%d",
+      status, totalCmd, assayNum, progress, assayNum0, assayNum+1);
+  } else 
   if (cmd == "reset") { 
     reset();
     clrDone();  // clear done-table
-    snprintf(pBuff, 100, "reset,0,0");
+    snprintf(pBuff, 100, "reset,%d,0",status);
   } else 
   if (cmd == "start") {
     assay(true);
-    snprintf(pBuff, 100, "start,0,0");
+    snprintf(pBuff, 100, "start,%d,0",status);
   } else 
   if (cmd == "stop") {
     assay(false);
-    snprintf(pBuff, 100, "stop,0,0");
+    snprintf(pBuff, 100, "stop,%d,0",status);
   } else 
-  if (cmd == "update") {
-  // update,status,totalCmd:assayNum:progress
-    snprintf(pBuff, 100, "update,%d,#%d:%d:%d:%d",
-      status, totalCmd, assayNum, progress, assayNum+1);
-  } else 
-  if (cmd == "done") {
-  // done,subtrayCnt,0000:0000:0000:0000:0000:0000
-    snprintf(pBuff, 100, "done,%d,%.4x:%.4x:%.4x:%.4x:%.4x:%.4x", subtrayCnt,
-      subtrayDone[0], subtrayDone[1], subtrayDone[2],
-      subtrayDone[3], subtrayDone[4], subtrayDone[5]);
-  }
   if (cmd == "plate") {
   // plate,status,plateRFID:subtrayCnt
     snprintf(pBuff, 100, "plate,%d,%s:%d",status, plateRFID, subtrayCnt);
   } else 
   if (cmd == "position") {
   // position,-,x:y:z (step)
-    snprintf(pBuff, 100, "position,-,%d:%d:%d", stepX, stepY, stepZ);
+    snprintf(pBuff, 100, "position,%d,%d:%d:%d",status, stepX, stepY, stepZ);
   } else 
   if (cmd == "camera") {
   // camera,-,totalN:z:R:G:B:W
@@ -148,7 +179,7 @@ inline void process(std::string cmdString, char *pBuff)
   // system,status,0
     snprintf(pBuff, 100, "system,%d,0:0:0",status);
   }
-  std::cout << "...[cmd:" + cmd + ", data:" + data + "]=>" << std::endl;
+  //std::cout << "...[cmd:" + cmd + ", data:" + data + "]=>" << std::endl;
   dump("*");
 }
 void listener(zmq::socket_t &socket)
@@ -160,8 +191,8 @@ void listener(zmq::socket_t &socket)
     zmq::message_t request;
     socket.recv (&request);
 
-    char retBuff[100];
-    process( (char*) request.data(), retBuff);
+    char retBuff[800];
+    process( (char*) request.data(), retBuff, 800);
 
     // response result: "update,1,0:0:0"
     int n = strlen(retBuff);
@@ -180,21 +211,29 @@ int main ()
 
   while(true)
   {
-    usleep(50000);
+    usleep(70*1000);
     if(chkbit(status, B01_ASSAY))
     {
-      if (++progress>=100) // percentage
+      // std::cout << "assaying ... ---------------" << progress << std::endl;
+      usleep(70*1000);    // move motor and assaying
+      setAssay(assayNum);
+      if (++progress==100) // percentage
       {
-          progress = 0;
+          setDone(assayNum);
           setbit(status, B02_DONE);
-          setDone((assayNum-1)/64, assayNum%6-1);
-          usleep(800000);
+          
+          // sleep(1);
+          progress  = 0;
+          sleep(1);
+
           clrbit(status, B02_DONE);
-          if (++assayNum>=384) // =16*24 chips
+          assayNum0 = assayNum;
+          if (++assayNum==TOTAL_CHIPS) // =16*24 chips
           {
               assayNum = 0;
               clrDone();
               clrbit(status, B01_ASSAY); // auto stop
+              sleep(8);   // tray change
           }
       }
       dump("-");

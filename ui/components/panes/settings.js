@@ -17,7 +17,7 @@ export default class Settings extends React.Component {
     console.log("settings pane: did mount");
 
     Axios.get('/read/settings')
-      .then(function(response){
+      .then(function(response) {
         console.log(response.data);
         console.log(response.status);
       });

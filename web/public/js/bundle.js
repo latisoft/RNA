@@ -21568,14 +21568,24 @@
 	      fIndex: 0
 	    };
 	    _this.onReaderResponse = function (res) {
-	      console.log('reader-res: ', res);
+	      //console.log('reader-res: ', res);
 	      var fIndex = _this.state.fIndex;
-	      var name = vTabs[fIndex];
-
+	      /*
+	            switch(res.cmd) 
+	            {
+	              case "info":  // get status
+	              break;
+	              case "init":  // get done-table
+	              break;
+	              case "update":
+	              break;
+	            }
+	      */
 	      // Reader Response Processing
-	      // and save in store
-	      if (vTabs[fIndex] == "Monitor") // && res.cmd == "update" or "done"
+	      if (vTabs[fIndex] == "Monitor") {
+	        var name = vTabs[fIndex];
 	        _this.refs[name].refresh(res);
+	      }
 	    };
 	    _this.onEngineResponse = function (res) {
 	      console.log('engine-res: ', res);
@@ -21587,7 +21597,6 @@
 
 	      if (vTabs[fIndex] == "Visualizer" && res.cmd == "plot") _this.refs[name].refresh(res);
 	    };
-
 	    console.log("GUI start");
 	    return _this;
 	  }
@@ -42800,6 +42809,10 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _axios = __webpack_require__(437);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
 	var _store = __webpack_require__(465);
 
 	var _store2 = _interopRequireDefault(_store);
@@ -42841,15 +42854,50 @@
 	      stepX: 0,
 	      stepY: 0,
 	      stepZ: 0,
-	      done: '----:----:----:----:----:----',
+	      cmdSN: 0,
 	      subtray: []
 	    };
 	    _this.onReset = _this.onReset.bind(_this);
 	    _this.onAssay = _this.onAssay.bind(_this);
+	    /*
+	        this.subtrays = [];
+	    for(let i=0; i<6; i++)
+	    {
+	      this.subtrays[i] = new Array(64);
+	      for(let j=0; j<64; j++)
+	        this.subtrays[i][j] = 0; // 64*i+j;
+	    }
+	    */
 	    return _this;
 	  }
 
 	  _createClass(Monitor, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      // socket.emit('toReader', { cmd:'done' }); // get done-table
+	      var the = this;
+	      _axios2.default.get('/read/chips').then(function (response) {
+	        //console.log(response.data);
+	        //console.log(response.status);
+
+
+	        var chips = response.data.split(':');
+	        // console.log("***store.subtrays: ", store.subtrays);
+
+	        for (var x = 0; x < 6; x++) {
+	          for (var y = 0; y < 64; y++) {
+	            _store2.default.subtrays[x][y] = chips[x * 64 + y];
+	          }
+	        }console.log("***store.subtrays: ", _store2.default.subtrays);
+	        console.log("l= ", chips.length);
+	        // console.log("n= ", store.subtrays);
+
+	        the.setState({
+	          status: "init"
+	        });
+	      });
+	    }
+	  }, {
 	    key: 'onReset',
 	    value: function onReset() {
 	      console.log("onReset");
@@ -42870,24 +42918,53 @@
 	  }, {
 	    key: 'refresh',
 	    value: function refresh(res) {
-	      var disp = res.output.split(':');
+	      // console.log("monitor...refresh", res);
+	      var status = res.status;
 	      switch (res.cmd) {
-	        case "update":
+	        case "info":
 	          this.setState({
-	            assayNumber: disp[1],
-	            progress: disp[2]
+	            status: res.status
 	          });
 	          break;
-	        case "done":
+	        /*
+	        case "done": // 8,8,1,0,0...,0 x384 chips
+	         let chips = res.output.split(':');
+	        for(let x=0; x<6; x++)
+	          for(let y=0; y<64; y++) {
+	            store.subtrays[x][y] = chips[x*64+y];
+	          }
+	         console.log("***store.subtrays: ", store.subtrays);
+	        console.log("n= ", store.subtrays.length);
 	          this.setState({
-	            done: res.output
+	            status:       status
+	        }); 
+	        break;
+	        */
+	        case "update":
+	          // #9902:5:65:5:6
+	          console.log("@@@@@@", res.output);
+	          var assayNo = this.state.assayNumber;
+	          var tmp = res.output.split(':');
+	          var newNo = tmp[1];
+	          var progress = tmp[2];
+	          var last = tmp[3];
+	          var next = tmp[4];
+	          var flag = assayNo != newNo ? true : false; // chip changed
+	          if (flag) {
+	            if (0 <= assayNo && assayNo < 384) _store2.default.subtrays[Math.floor(assayNo / 64)][assayNo % 64] = 8;
+	            if (0 <= newNo && newNo < 384) _store2.default.subtrays[Math.floor(newNo / 64)][newNo % 64] = 1;
+	          }
+	          this.setState({
+	            status: status,
+	            assayNumber: newNo,
+	            progress: progress
 	          });
+	          break;
 	      }
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-
 	      var show = this.state.isAssay ? "STOP" : "START";
 	      var id = this.state.plateRFID;
 	      var no = this.state.assayNumber;
@@ -42895,32 +42972,13 @@
 	      var x = this.state.stepX;
 	      var y = this.state.stepY;
 	      var z = this.state.stepZ;
-	      var done = this.state.done;
+	      var status = this.state.status;
 
-	      var buttonsBar = _react2.default.createElement(
-	        _reactBootstrap.ButtonToolbar,
-	        null,
-	        _react2.default.createElement(
-	          _reactBootstrap.Button,
-	          null,
-	          'Default'
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Button,
-	          { bsStyle: 'success', onClick: this.onReset },
-	          'Reset'
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Button,
-	          { bsStyle: 'primary', onClick: this.onAssay },
-	          show
-	        )
-	      );
 	      var plateInfo = _react2.default.createElement(
 	        'div',
-	        { className: 'col-md-6 col-sm-12' },
+	        { className: 'col-md-4 col-sm-12' },
 	        _react2.default.createElement(
-	          'h2',
+	          'h3',
 	          null,
 	          'Plate Information'
 	        ),
@@ -42956,12 +43014,51 @@
 	        )
 	      );
 
+	      var buttonsBar = _react2.default.createElement(
+	        'div',
+	        { className: 'col-md-4 col-sm-12' },
+	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          'Control'
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.ButtonToolbar,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            null,
+	            'Default'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { bsStyle: 'success', onClick: this.onReset },
+	            'Reset'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { bsStyle: 'primary', onClick: this.onAssay },
+	            show
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Status ',
+	          _react2.default.createElement(
+	            'span',
+	            { className: 'label label-default' },
+	            status
+	          )
+	        )
+	      );
+
 	      var wStyle = { width: w + "%" };
 	      var assayStatus = _react2.default.createElement(
 	        'div',
-	        { className: 'col-md-6 col-sm-12' },
+	        { className: 'col-md-4 col-sm-12' },
 	        _react2.default.createElement(
-	          'h2',
+	          'h3',
 	          null,
 	          'Assay Status'
 	        ),
@@ -42986,7 +43083,8 @@
 	          _react2.default.createElement(
 	            'span',
 	            { className: 'label label-default' },
-	            w
+	            w,
+	            '%'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -42999,90 +43097,50 @@
 	            w,
 	            '%'
 	          )
-	        ),
-	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'Done ',
-	          _react2.default.createElement(
-	            'span',
-	            { className: 'label label-default' },
-	            done
-	          )
 	        )
 	      );
-	      /*
-	      let microarrayDisplay = [1,2,3,4,5,6].map( (n,idx)=>{
-	                                return  (
-	                                  <div  key       = {idx} 
-	                                        className = "col-md-2 col-sm-6 hidden-xs">
-	                                    <div className= "subtray">Disk {n}</div>
-	                                  </div>);
-	                              });
-	      */
-	      var microarrayDisplay = _store2.default.subtrays.map(function (trap, idx) {
-	        // let chips = idx;
-
-	        var chips = trap.map(function (chipValue, chipIdx) {
-	          var x = chipIdx % 4 == 0 ? _react2.default.createElement('br', null) : "-";
+	      var microarrayDisplay = _store2.default.subtrays.map(function (tray, idx) {
+	        var chips = tray.map(function (chipValue, k) {
 	          return _react2.default.createElement(
-	            'span',
-	            { key: chipIdx },
-	            x,
+	            'div',
+	            { key: k, className: 'chip' },
 	            chipValue
 	          );
 	        });
-	        console.log("chips", chips);
 	        return _react2.default.createElement(
 	          'div',
-	          { key: idx,
-	            className: 'col-md-2 hidden-sm hidden-xs' },
+	          { key: idx },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'subtray' },
+	            { className: 'hidden-lg hidden-md col-sm-2 col-xs-2' },
 	            _react2.default.createElement(
-	              'h6',
+	              'h4',
 	              null,
-	              'Disk ',
+	              'Tray ',
 	              idx
 	            ),
+	            _react2.default.createElement('div', { className: 'subtray-brief' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-lg-2 col-md-2 hidden-sm hidden-xs' },
 	            _react2.default.createElement(
 	              'div',
-	              null,
+	              { className: 'subtray-lux' },
 	              chips
 	            )
 	          )
 	        );
 	      });
-
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'Monitor'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-md-offset-6 col-md-6 col-sm-offset-2 col-sm-8' },
-	            buttonsBar
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          plateInfo,
-	          assayStatus
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          microarrayDisplay
-	        )
+	        { className: 'row' },
+	        buttonsBar,
+	        ' ',
+	        plateInfo,
+	        ' ',
+	        assayStatus,
+	        microarrayDisplay
 	      );
 	    }
 	  }]);
@@ -43117,8 +43175,16 @@
 	  function Store() {
 	    _classCallCheck(this, Store);
 
+	    this.hostname = location.hostname;
+	    console.log("My location.hostname=== ", this.hostname);
 	    // get data from mongoDB by user@password
-	    this.subtrays = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+	    this.subtrays = [];
+	    for (var i = 0; i < 6; i++) {
+	      this.subtrays[i] = new Array(64);
+	      for (var j = 0; j < 64; j++) {
+	        this.subtrays[i][j] = 0;
+	      } // 64*i+j;
+	    }
 
 	    this.intensityData = "Date, Time, Temperature\n" + "2015-05-30,20,7.0\n" + "2015-05-30,21,6.1\n" + "2015-05-30,22,5.6\n" + "2015-05-30,23,4.5";
 
@@ -43138,19 +43204,7 @@
 
 	  _createClass(Store, [{
 	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      /*
-	      let k = 0;
-	      for(let i=0; i<6; i++)
-	      {
-	        for(let j=0; j<64; j++)
-	        {
-	          this.subtrays[i][j] = 1000*i + j; 
-	        }
-	      }
-	      */
-	      console.log("========== this.subtrays: ", this.subtrays);
-	    }
+	    value: function componentDidMount() {}
 	  }, {
 	    key: 'api',
 	    value: function api() {}
@@ -43161,8 +43215,6 @@
 
 	var store = new Store();
 	module.exports = store;
-
-	console.log("store: ", store);
 
 /***/ },
 /* 466 */
@@ -43655,7 +43707,7 @@
 
 
 	// module
-	exports.push([module.id, ".subtray {\n  padding: 2px;\n  margin: 2px;\n  border: 1px solid #eee; }\n", ""]);
+	exports.push([module.id, ".subtray, .subtray-brief, .subtray-lux {\n  float: left;\n  width: 90%;\n  background: #dfd;\n  border: 1px solid #aff;\n  border-radius: 2px;\n  padding-top: 4px;\n  margin: 0; }\n\n.subtray-brief {\n  width: 90%;\n  height: 100px; }\n\n.subtray-lux {\n  width: 90%;\n  height: 360px; }\n\n.subtray > div, .subtray-brief > div, .subtray-lux > div {\n  float: left;\n  width: 20%;\n  color: #66e;\n  background: #cee;\n  border: 1px solid #bfd;\n  border-radius: 4px;\n  margin-left: 2%;\n  margin-right: 2%;\n  margin-top: 1px;\n  text-align: center; }\n\n.subtray > div:hover, .subtray-brief > div:hover, .subtray-lux > div:hover {\n  color: red;\n  background: #cee;\n  border: 1px solid #baa; }\n", ""]);
 
 	// exports
 

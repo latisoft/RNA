@@ -27,14 +27,24 @@ export class App extends React.Component {
       fIndex: 0
     }
     this.onReaderResponse = (res) => {
-      console.log('reader-res: ', res);
+      //console.log('reader-res: ', res);
       let fIndex  = this.state.fIndex;
-      let name    = vTabs[fIndex];
-
+/*
+      switch(res.cmd) 
+      {
+        case "info":  // get status
+        break;
+        case "init":  // get done-table
+        break;
+        case "update":
+        break;
+      }
+*/
       // Reader Response Processing
-      // and save in store
-      if(vTabs[fIndex]=="Monitor") // && res.cmd == "update" or "done"
+      if(vTabs[fIndex]=="Monitor") {
+          let name    = vTabs[fIndex];
           this.refs[name].refresh(res);
+      }
     }
     this.onEngineResponse = (res) => {
       console.log('engine-res: ', res);
@@ -48,7 +58,6 @@ export class App extends React.Component {
       if( (vTabs[fIndex]=="Visualizer") && (res.cmd=="plot") )
         this.refs[name].refresh(res);
     }
-
     console.log("GUI start");
   }
   componentDidMount() {

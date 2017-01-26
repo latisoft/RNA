@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC -std=c++17 -ftemplate-backtrace-limit=0 -O3 -g -Wno-ignored-attributes -Wno-multichar -Wreturn-type -Wno-terminate   -shared -Wl,-soname,libdaemonlib.so -o /home/allen/project/RNA/web/build/libdaemonlib.so CMakeFiles/daemonlib.dir/src/daemon_api.cc.o CMakeFiles/daemonlib.dir/src/daemon.cc.o  -L/home/allen/project/RNA/c-code/lib 

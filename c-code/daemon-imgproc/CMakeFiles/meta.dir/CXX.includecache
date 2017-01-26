@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/allen/project/RNA/c-code/engine/src/main.cpp
+iostream
+-
+fstream
+-
+vector
+-
+map
+-
+unistd.h
+-
+META/func.hpp
+-
+
+include/META/func.hpp
+

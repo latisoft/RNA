@@ -1,5 +1,37 @@
+
 .subtray {
-  padding:        2px;
-  margin:         2px;
-  border:         1px solid #eee;
+  float:          left;
+  width:          90%;
+  background:     #dfd;
+  border:         1px solid #aff;
+  border-radius:  2px;
+  padding-top:    4px;
+  margin:         0;
+}
+.subtray-brief {
+  @extend .subtray;
+  width:          90%;
+  height:         100px;
+}
+.subtray-lux {
+  @extend .subtray;
+  width:          90%;
+  height:         360px;
+}
+.subtray > div {
+  float:          left;
+  width:          20%;
+  color:          #66e;
+  background:     #cee;
+  border:         1px solid #bfd;
+  border-radius:  4px;
+  margin-left:    2%;
+  margin-right:   2%;
+  margin-top:     1px;
+  text-align:     center;
+}
+.subtray > div:hover {
+  color:          red;
+  background:     #cee;
+  border:         1px solid #baa;
 }

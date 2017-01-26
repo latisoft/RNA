@@ -30,6 +30,18 @@ app.post('/write/settings', function(req, res) {
   console.log('write: ', settings);
 });
 
+// Initialize Tray of Reader
+app.get('/read/chips', function(req, res) {
+  reader.proc({ cmd:'done' }, function(chips) {
+    console.log("res-w",chips);
+    res.send(chips);
+  });
+});
+app.post('/write/chips', function(req, res) {
+  let chips = req.body;
+  console.log('/write/chips: ', chips);
+});
+
 var http  = require('http').Server(app);
 var io    = require('socket.io')(http);
 
