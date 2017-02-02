@@ -18,20 +18,38 @@
   width:          90%;
   height:         360px;
 }
-.subtray > div {
+
+.chip {
   float:          left;
+  height:         18px;
   width:          20%;
-  color:          #66e;
-  background:     #cee;
-  border:         1px solid #bfd;
   border-radius:  4px;
   margin-left:    2%;
   margin-right:   2%;
   margin-top:     1px;
   text-align:     center;
 }
-.subtray > div:hover {
-  color:          red;
+.chip:hover {
+  @extend .chip;
+  color:          #ffe;
   background:     #cee;
   border:         1px solid #baa;
+}
+.chip-finish {
+  @extend .chip;
+  color:          #66e;
+  background:     #cee;
+  border:         1px solid #bfd;
+}
+.chip-assay {
+  @extend .chip;
+  color:          red;
+  background:     #cee;
+  border:         2px solid red;
+}
+.chip-ready {
+  @extend .chip;
+  color:          #aae;
+  background:     #cee;
+  border:         2px solid #bfd;
 }

@@ -89,7 +89,7 @@ const int B13_G         =13; // 0:
 const int B14_B         =14; // 0:
 const int B15_W         =15; // 0:
 const int B16_          =16; // 0:
-const int B17_          =17; // 1:tray changed.
+const int B17_          =17; // 1:tray changed. 
 const int B1u_          =18; // 0:
 
 

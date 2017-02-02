@@ -49,7 +49,13 @@ export default class Monitor extends React.Component {
  
         for(let x=0; x<6; x++)
           for(let y=0; y<64; y++) {
-            store.subtrays[x][y] = chips[x*64+y];
+            switch( chips[x*64+y] )
+            {
+              case '0': store.subtrays[x][y] = 'r'; break;
+              case '1': store.subtrays[x][y] = 'a'; break;
+              case '8': store.subtrays[x][y] = 'f'; break;
+            }
+
           }
 
         console.log("***store.subtrays: ", store.subtrays);
@@ -118,10 +124,10 @@ export default class Monitor extends React.Component {
         let flag    = (assayNo != newNo)? true: false; // chip changed
         if(flag) {
           if(0<=assayNo && assayNo <384 )
-            store.subtrays[Math.floor(assayNo/64)][assayNo%64] = 8;
+            store.subtrays[Math.floor(assayNo/64)][assayNo%64] = 'f'; // finish
           if(0<=  newNo &&   newNo <384 )
-            store.subtrays[Math.floor(  newNo/64)][  newNo%64] = 1;
-        }
+            store.subtrays[Math.floor(  newNo/64)][  newNo%64] = 'a'; // assay
+        } 
         this.setState({ 
             status:       status,
             assayNumber:  newNo,
@@ -159,7 +165,7 @@ export default class Monitor extends React.Component {
         <h4>Status <span className="label label-default">{status}</span></h4>
       </div>);
 
-    let wStyle= {width:w+"%"};
+    let wStyle = {width:w+"%"};
     let assayStatus       = (
       <div className='col-md-4 col-sm-12'>
         <h3>Assay Status</h3>
@@ -174,7 +180,14 @@ export default class Monitor extends React.Component {
       </div>);
     let microarrayDisplay = store.subtrays.map( (tray, idx)=>{
       let chips = tray.map( (chipValue, k)=>{
-        return (<div key={k} className='chip'>{chipValue}</div>);
+        let cStyle = 'chip-ready';
+        switch(chipValue)
+        {
+          case 'a': cStyle = 'chip-assay';  break;
+          case 'f': cStyle = 'chip-finish'; break;
+          default: break;
+        }
+        return (<div key={k} className={cStyle}>{k}</div>);
       });
       return (
         <div key={idx}>

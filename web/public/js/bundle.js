@@ -42886,7 +42886,14 @@
 
 	        for (var x = 0; x < 6; x++) {
 	          for (var y = 0; y < 64; y++) {
-	            _store2.default.subtrays[x][y] = chips[x * 64 + y];
+	            switch (chips[x * 64 + y]) {
+	              case '0':
+	                _store2.default.subtrays[x][y] = 'r';break;
+	              case '1':
+	                _store2.default.subtrays[x][y] = 'a';break;
+	              case '8':
+	                _store2.default.subtrays[x][y] = 'f';break;
+	            }
 	          }
 	        }console.log("***store.subtrays: ", _store2.default.subtrays);
 	        console.log("l= ", chips.length);
@@ -42951,8 +42958,8 @@
 	          var next = tmp[4];
 	          var flag = assayNo != newNo ? true : false; // chip changed
 	          if (flag) {
-	            if (0 <= assayNo && assayNo < 384) _store2.default.subtrays[Math.floor(assayNo / 64)][assayNo % 64] = 8;
-	            if (0 <= newNo && newNo < 384) _store2.default.subtrays[Math.floor(newNo / 64)][newNo % 64] = 1;
+	            if (0 <= assayNo && assayNo < 384) _store2.default.subtrays[Math.floor(assayNo / 64)][assayNo % 64] = 'f'; // finish
+	            if (0 <= newNo && newNo < 384) _store2.default.subtrays[Math.floor(newNo / 64)][newNo % 64] = 'a'; // assay
 	          }
 	          this.setState({
 	            status: status,
@@ -43101,10 +43108,19 @@
 	      );
 	      var microarrayDisplay = _store2.default.subtrays.map(function (tray, idx) {
 	        var chips = tray.map(function (chipValue, k) {
+	          var cStyle = 'chip-ready';
+	          switch (chipValue) {
+	            case 'a':
+	              cStyle = 'chip-assay';break;
+	            case 'f':
+	              cStyle = 'chip-finish';break;
+	            default:
+	              break;
+	          }
 	          return _react2.default.createElement(
 	            'div',
-	            { key: k, className: 'chip' },
-	            chipValue
+	            { key: k, className: cStyle },
+	            k
 	          );
 	        });
 	        return _react2.default.createElement(
@@ -43707,7 +43723,7 @@
 
 
 	// module
-	exports.push([module.id, ".subtray, .subtray-brief, .subtray-lux {\n  float: left;\n  width: 90%;\n  background: #dfd;\n  border: 1px solid #aff;\n  border-radius: 2px;\n  padding-top: 4px;\n  margin: 0; }\n\n.subtray-brief {\n  width: 90%;\n  height: 100px; }\n\n.subtray-lux {\n  width: 90%;\n  height: 360px; }\n\n.subtray > div, .subtray-brief > div, .subtray-lux > div {\n  float: left;\n  width: 20%;\n  color: #66e;\n  background: #cee;\n  border: 1px solid #bfd;\n  border-radius: 4px;\n  margin-left: 2%;\n  margin-right: 2%;\n  margin-top: 1px;\n  text-align: center; }\n\n.subtray > div:hover, .subtray-brief > div:hover, .subtray-lux > div:hover {\n  color: red;\n  background: #cee;\n  border: 1px solid #baa; }\n", ""]);
+	exports.push([module.id, ".subtray, .subtray-brief, .subtray-lux {\n  float: left;\n  width: 90%;\n  background: #dfd;\n  border: 1px solid #aff;\n  border-radius: 2px;\n  padding-top: 4px;\n  margin: 0; }\n\n.subtray-brief {\n  width: 90%;\n  height: 100px; }\n\n.subtray-lux {\n  width: 90%;\n  height: 360px; }\n\n.chip, .chip:hover, .chip-finish, .chip-assay, .chip-ready {\n  float: left;\n  height: 18px;\n  width: 20%;\n  border-radius: 4px;\n  margin-left: 2%;\n  margin-right: 2%;\n  margin-top: 1px;\n  text-align: center; }\n\n.chip:hover, .chip-finish:hover, .chip-assay:hover, .chip-ready:hover {\n  color: #ffe;\n  background: #cee;\n  border: 1px solid #baa; }\n\n.chip-finish {\n  color: #66e;\n  background: #cee;\n  border: 1px solid #bfd; }\n\n.chip-assay {\n  color: red;\n  background: #cee;\n  border: 2px solid red; }\n\n.chip-ready {\n  color: #aae;\n  background: #cee;\n  border: 2px solid #bfd; }\n", ""]);
 
 	// exports
 
