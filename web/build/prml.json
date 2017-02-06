@@ -1,0 +1,72 @@
+{    
+    "input":
+    {
+        "stitching":
+        {
+            "normalization": true
+        }
+      , "verbose":
+        {
+            "image": true 
+        }
+    }
+  , "output":
+    {
+      , "filename" : "sample"
+      , "cen"      : true
+      , "png"      : true
+      , "raw"      : true
+      , "cv"       : true
+    }
+  , "pipeline_options":
+    {
+        "rotation":
+        {
+            "angle": "auto"
+          , "range": [ -5, 5, 1000 ]
+          , "verbose":
+            {
+                "result": true
+              , "hist2d": true
+            }
+        }
+      , "gridding":
+        {
+            "intvl": "auto"
+          , "phase": "auto"
+          , "adaptive": true
+          , "verbose":
+            {
+                "result": true
+              , "fft"   : true
+              , "wav"   : true
+            }
+        }
+      , "segmentation":
+        {
+            "size"   : [ 3, 3 ]
+          , "padding": [ 1, 1, 1, 1 ]
+          , "verbose":
+            {
+                "result": true
+              , "bbox"  : true
+              , "cv"    : true          
+            }
+        }
+      , "roi_detection":
+        {
+            "scaling_factor": 1
+        }
+      , "summarization":
+        {
+            "method": "trimmed_mean"
+          , "range" : [ 0.0, 1.0 ]
+          , "verbose":
+            {
+                "cen_file" : true
+              , "raw_ascii": true
+              , "cv_distr" : true
+            }
+        }
+    }
+}

@@ -45,10 +45,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/allen/project/RNA/c-code/engine
+CMAKE_SOURCE_DIR = /home/allen/project/RNA/c-code/daemon-imgproc
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/allen/project/RNA/c-code/engine
+CMAKE_BINARY_DIR = /home/allen/project/RNA/c-code/daemon-imgproc
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -75,9 +75,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/engine/CMakeFiles /home/allen/project/RNA/c-code/engine/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/daemon-imgproc/CMakeFiles /home/allen/project/RNA/c-code/daemon-imgproc/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/engine/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/daemon-imgproc/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -105,24 +105,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named meta
+# Target rules for targets named prml
 
 # Build rule for target.
-meta: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 meta
-.PHONY : meta
+prml: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 prml
+.PHONY : prml
 
 # fast build rule for target.
-meta/fast:
-	$(MAKE) -f CMakeFiles/meta.dir/build.make CMakeFiles/meta.dir/build
-.PHONY : meta/fast
+prml/fast:
+	$(MAKE) -f CMakeFiles/prml.dir/build.make CMakeFiles/prml.dir/build
+.PHONY : prml/fast
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/meta.dir/build.make CMakeFiles/meta.dir/src/main.cpp.o
+	$(MAKE) -f CMakeFiles/prml.dir/build.make CMakeFiles/prml.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -130,7 +130,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/meta.dir/build.make CMakeFiles/meta.dir/src/main.cpp.i
+	$(MAKE) -f CMakeFiles/prml.dir/build.make CMakeFiles/prml.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -138,7 +138,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/meta.dir/build.make CMakeFiles/meta.dir/src/main.cpp.s
+	$(MAKE) -f CMakeFiles/prml.dir/build.make CMakeFiles/prml.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -149,7 +149,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... meta"
+	@echo "... prml"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

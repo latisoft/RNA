@@ -19,7 +19,7 @@ app.get('/read/settings', function(req, res) {
     if(err) 
       console.error(err);
     res.send(settings);
-    console.log("read: ", settings);
+    console.log('read settings: ', settings);
   });
 });
 app.post('/write/settings', function(req, res) {
@@ -27,20 +27,35 @@ app.post('/write/settings', function(req, res) {
   jsonfile.writeFile('./settings.ini', settings, {spaces: 2}, function(err) {
     console.error(err);
   });
-  console.log('write: ', settings);
+  console.log('write settings: ', settings);
 });
 
-// Initialize Tray of Reader
-app.get('/read/chips', function(req, res) {
+// Get and set the status of chips
+app.get('/done/chips', function(req, res) {
   reader.proc({ cmd:'done' }, function(chips) {
-    console.log("res-w",chips);
+    console.log('done chips: ',chips);
     res.send(chips);
   });
 });
-app.post('/write/chips', function(req, res) {
+app.post('/assay/chips', function(req, res) {
   let chips = req.body;
-  console.log('/write/chips: ', chips);
+  console.log('assay chips: ', chips);
+  // set assay sequence
 });
+
+// Read report of chip#
+app.get('/read/report/:no', function(req, res) {
+  let filepath = './build/assay/output/sn-000000/' + req.param('no') + '/sample.cen';
+  console.log('read report: ', filepath);
+  jsonfile.readFile(filepath, function(err, report) {
+    if(err)
+      console.error(err);
+    res.send(report);
+  });
+});
+
+
+
 
 var http  = require('http').Server(app);
 var io    = require('socket.io')(http);

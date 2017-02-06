@@ -10,25 +10,34 @@ function pad(n, width, z) {
 const _debug_ = false;
 
 
-class Store {
-  constructor() {
+class Store 
+{
+  constructor()
+  {
     this.hostname = location.hostname;
     console.log("My location.hostname=== ", this.hostname);
     // get data from mongoDB by user@password
+
+
     this.subtrays = [];
     for(let i=0; i<6; i++)
     {
       this.subtrays[i] = new Array(64);
       for(let j=0; j<64; j++)
         this.subtrays[i][j] = 0; // 64*i+j;
-    }
+    };
+    this.assayNo = {
+      last: 0, now: 0,  next: 0 };
+      
+    this.probeData =
+      "10,19,8,24,67\n92,58,78,117,48\n35,15,123,64,52\n72,132,114,19,16\n38,5,8,117,115\n88,32,12,6,120\n13,44,88,98,96\n31,1,82,32,30\n85,97,123,64,84\n47,114,31,48,91";
 
     this.intensityData = 
-    "Date, Time, Temperature\n" + 
-    "2015-05-30,20,7.0\n" +
-    "2015-05-30,21,6.1\n" + 
-    "2015-05-30,22,5.6\n" +
-    "2015-05-30,23,4.5";
+      "Date, Time, Temperature\n" + 
+      "2015-05-30,20,7.0\n" +
+      "2015-05-30,21,6.1\n" + 
+      "2015-05-30,22,5.6\n" +
+      "2015-05-30,23,4.5";
 
     this.pieData =[ {name: "Firefox", y: 6},
                     {name: "MSIE",    y: 4},

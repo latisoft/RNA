@@ -50,44 +50,44 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/allen/project/RNA/c-code/engine
+CMAKE_SOURCE_DIR = /home/allen/project/RNA/c-code/daemon-imgproc
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/allen/project/RNA/c-code/engine
+CMAKE_BINARY_DIR = /home/allen/project/RNA/c-code/daemon-imgproc
 
 #=============================================================================
-# Target rules for target CMakeFiles/meta.dir
+# Target rules for target CMakeFiles/prml.dir
 
 # All Build rule for target.
-CMakeFiles/meta.dir/all:
-	$(MAKE) -f CMakeFiles/meta.dir/build.make CMakeFiles/meta.dir/depend
-	$(MAKE) -f CMakeFiles/meta.dir/build.make CMakeFiles/meta.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/allen/project/RNA/c-code/engine/CMakeFiles  1
-	@echo "Built target meta"
-.PHONY : CMakeFiles/meta.dir/all
+CMakeFiles/prml.dir/all:
+	$(MAKE) -f CMakeFiles/prml.dir/build.make CMakeFiles/prml.dir/depend
+	$(MAKE) -f CMakeFiles/prml.dir/build.make CMakeFiles/prml.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/allen/project/RNA/c-code/daemon-imgproc/CMakeFiles  1
+	@echo "Built target prml"
+.PHONY : CMakeFiles/prml.dir/all
 
 # Include target in all.
-all: CMakeFiles/meta.dir/all
+all: CMakeFiles/prml.dir/all
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/meta.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/engine/CMakeFiles 1
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/meta.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/engine/CMakeFiles 0
-.PHONY : CMakeFiles/meta.dir/rule
+CMakeFiles/prml.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/daemon-imgproc/CMakeFiles 1
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/prml.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/allen/project/RNA/c-code/daemon-imgproc/CMakeFiles 0
+.PHONY : CMakeFiles/prml.dir/rule
 
 # Convenience name for target.
-meta: CMakeFiles/meta.dir/rule
-.PHONY : meta
+prml: CMakeFiles/prml.dir/rule
+.PHONY : prml
 
 # clean rule for target.
-CMakeFiles/meta.dir/clean:
-	$(MAKE) -f CMakeFiles/meta.dir/build.make CMakeFiles/meta.dir/clean
-.PHONY : CMakeFiles/meta.dir/clean
+CMakeFiles/prml.dir/clean:
+	$(MAKE) -f CMakeFiles/prml.dir/build.make CMakeFiles/prml.dir/clean
+.PHONY : CMakeFiles/prml.dir/clean
 
 # clean rule for target.
-clean: CMakeFiles/meta.dir/clean
+clean: CMakeFiles/prml.dir/clean
 .PHONY : clean
 
 #=============================================================================

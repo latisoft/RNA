@@ -19,7 +19,7 @@ export default class Reporter extends React.Component {
     });
   }
   render() {
-    let pane = <ImageIntensity ref="ImageIntensity"  data={store.intensityData}/>;
+    let pane = <ImageIntensity ref="ImageIntensity"  data={store.probeData}/>;
     return (
         <div id='rep-frame'>
           <div id='vis-navigator'>Probe intensity of Microarray</div>

@@ -1,4 +1,5 @@
 import React  from 'react';
+import store  from  './store';
 
 import Home       from './panes/home';
 import Settings   from './panes/settings';
@@ -26,25 +27,47 @@ export class App extends React.Component {
     this.state = {
       fIndex: 0
     }
+
+    let monitor = this.refs["Monitor"];
+    console.log("monitor: ", monitor);
+
     this.onReaderResponse = (res) => {
-      //console.log('reader-res: ', res);
+
       let fIndex  = this.state.fIndex;
-/*
+
       switch(res.cmd) 
       {
-        case "info":  // get status
-        break;
-        case "init":  // get done-table
-        break;
-        case "update":
-        break;
+        case "update": // #9902:5:65:5:6
+
+          let tmp     = res.output.split(':');
+          let newNo   = tmp[1];
+          let progress= tmp[2];
+          let last    = tmp[3];
+          let next    = tmp[4];
+
+          if(vTabs[fIndex]=="Monitor") {
+            let monitor = this.refs["Monitor"];
+
+            let assayNo = monitor.state.assayNumber;
+            let flag    = (assayNo != newNo)? true: false; // chip changed
+            if(flag) {
+              store.subtrays[Math.floor(assayNo/64)][assayNo%64] = 'f'; // finish
+              store.subtrays[Math.floor(  newNo/64)][  newNo%64] = 'a'; // assay
+            }
+
+            let name    = vTabs[fIndex];
+            monitor.refresh(res.status, newNo, progress);
+          }
+          break;
+
+        case "probe":
+          console.log("######", res.output);
+          store.probeData = res.output;
+          break;
       }
-*/
+
       // Reader Response Processing
-      if(vTabs[fIndex]=="Monitor") {
-          let name    = vTabs[fIndex];
-          this.refs[name].refresh(res);
-      }
+
     }
     this.onEngineResponse = (res) => {
       console.log('engine-res: ', res);

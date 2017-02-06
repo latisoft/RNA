@@ -1,0 +1,11 @@
+{    
+    "input":
+    {
+        "type" : "centrillion-am2"
+        "directory" : "/home/allen/project/RNA/web/build/assay/output-example/"
+  , }
+  , "output":
+    {
+        "directory" : "/home/allen/project/RNA/web/build/assay/output/sn-000000/001"
+    }
+}

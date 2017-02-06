@@ -1,0 +1,28 @@
+{
+    "array": [
+        {
+            "type" : "am1"
+          , "marker": "./chip-marker/am.mk"
+          , "reading-rows": 2
+          , "reading-cols": 2
+          , "feature-rows" : 180
+          , "feature-cols" : 180
+        }
+      , {
+           "type" : "am2"
+          , "marker": "./chip-marker/am.mk"
+          , "reading-rows": 4
+          , "reading-cols": 4
+          , "feature-rows" : 1000
+          , "feature-cols" : 1000
+        }
+      , {
+            "type" : "redwood"
+          , "marker": "./chip-marker/redwood.mk"
+          , "reading-rows": 4
+          , "reading-cols": 4
+          , "feature-rows" : 1030
+          , "feature-cols" : 1030
+        }
+    ]
+}

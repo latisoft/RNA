@@ -4,7 +4,7 @@
 (init)
 $mkdir bin lib src include unit_test
 $cd include
-$ln -s ../src META
+$ln -s ../src PRML
 - create your cpp & hpp in src/
 - single cpp single bin
 
@@ -14,7 +14,7 @@ $ln -s ../src META
 -- $npm install -S child_process
 
 const execFile = require('child_process').execFile;
-const child = execFile('build/meta', ['--version'], (error, stdout, stderr) => {
+const child = execFile('build/prml', ['--version'], (error, stdout, stderr) => {
   if (error) {
     throw error;
   }
@@ -23,15 +23,21 @@ const child = execFile('build/meta', ['--version'], (error, stdout, stderr) => {
 
 
 ==== Compile Engine ====
-// generate meta to directory /engine/bin
+// generate meta to directory /daemon-imgproc/bin
 $cmake .  (generate Makefile)
-$make     (generate ../web/build/meta) => external binary
+$make     (generate ../web/build/prml) => external binary
 
 
 ==== Execute ====
-// from ./demo/result.bsn 
-// from ./demo/genotype.tsv 
-// to ./4
+// generate ./assay/output/sn-000000/1/result.bsn
+// generate ./assay/output/sn-000000/1/sample.cen
+// generate ./assay/output/sn-000000/1/sample.png
 
-~/RNA/c-code/engine$ cp bin/meta ../../web/build/
-~/RNA/c-code/engine$ ../../web/build/meta -i xx -o yy -n 4
+~/RNA/c-code/engine$ cp bin/prml ../../web/build/
+~/RNA/c-code/engine$ ../../web/build/prml -i xx -o yy -n 1
+xx = ./assay/output/sn-000000/001/parameter.bsn
+yy = ./assay/output/sn-000000/001/result.bsn
+
+
+Just call me by "$prml -i xx -o yy -n 1"
+and check ./assay/output/sn-000000/001/sample.*

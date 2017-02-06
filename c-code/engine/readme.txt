@@ -29,9 +29,9 @@ $make     (generate ../web/build/meta) => external binary
 
 
 ==== Execute ====
-// from ./demo/result.bsn 
-// from ./demo/genotype.tsv 
-// to ./4
+// from ./tmp/demo/result.bsn 
+// from ./tmp/demo/genotype.tsv 
+// to ./tmp/4
 
 ~/RNA/c-code/engine$ cp bin/meta ../../web/build/
 ~/RNA/c-code/engine$ ../../web/build/meta -i xx -o yy -n 4

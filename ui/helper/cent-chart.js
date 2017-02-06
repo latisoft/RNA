@@ -13,62 +13,44 @@ class IntensityChart extends React.Component {
   }
   componentDidMount() {
 
-    //var y = "Date, Time, Temperature\n2015-05-30,20,7.0\n2015-05-30,21,6.1\n2015-05-30,22,5.6\n2015-05-30,23,4.5";
-
     console.log(" intensity: ", this.props.data);
-    Highcharts.chart('chart-container', {
-      data: { csv: this.props.data },
-      chart: {  
+      
+    //"10,19,8,24,67\n92,58,78,117,48\n35,15,123,64,52\n72,132,114,19,16\n38,5,8,117,115\n88,32,12,6,120\n13,44,88,98,96\n31,1,82,32,30\n85,97,123,64,84\n47,114,31,48,91";
+    let source = this.props.data;
+    
+    let tmpData = [];
+    let arr0 = source.split('\n');
+    for( let i=0, iLen=arr0.length; i<iLen; i++) {
+      let arr1 = arr0[i].split(',');
+      for( let j=0, jLen=arr1.length; j<jLen; j++)
+        tmpData.push( [i, j, parseInt(arr1[j])] );
+    }
+
+    console.log("tmpData: ", tmpData);
+
+      Highcharts.chart('chart-container', {
+      chart: {
           type: 'heatmap',
-          inverted: true
+          marginTop: 40,
+          marginBottom: 80,
+          plotBorderWidth: 1
       },
-      title: {  
-          text: 'Highcharts heat map',
-          align: 'left'
-      },
-      subtitle: {
-          text: 'Temperature variation by day and hour through May 2015',
-          align: 'left'
-      },
-      xAxis: {
-          tickPixelInterval: 50,
-          min: Date.UTC(2015, 4, 1),
-          max: Date.UTC(2015, 4, 30)
-      },
-      yAxis: {
-          title: {
-              text: null
-          },
-          labels: {
-              format: '{value}:00'
-          },
-          minPadding: 0,
-          maxPadding: 0,
-          startOnTick: false,
-          endOnTick: false,
-          tickPositions: [0, 6, 12, 18, 24],
-          tickWidth: 1,
-          min: 0,
-          max: 23
+      title: {
+          text: 'Sales per employee per weekday'
       },
       colorAxis: {
-          stops: [
-              [0, '#3060cf'],
-              [0.5, '#fffbbc'],
-              [0.9, '#c4463a']
-          ],
-          min: -5
+          min: 0,
+          minColor: '#FFFFFF',
+          maxColor: Highcharts.getOptions().colors[3]
       },
       series: [{
-          borderWidth: 0,
-          colsize: 24 * 36e5, // one day
-          tooltip: {
-              headerFormat: 'Temperature<br/>',
-              pointFormat: '{point.x:%e %b, %Y} {point.y}:00: <b>{point.value} ℃</b>'
-          }
+          name: 'Sales per employee',
+          borderWidth: 1,
+          data: tmpData
       }]
     });
   }
+  //       data: { csv: this.props.data }
   componentWillReceiveProps(props) {
     this.chart.highcharts().series[0].setData(props.data);
   }

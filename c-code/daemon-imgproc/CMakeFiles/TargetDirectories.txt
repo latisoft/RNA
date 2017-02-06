@@ -1,1 +1,1 @@
-/home/allen/project/RNA/c-code/engine/CMakeFiles/meta.dir
+/home/allen/project/RNA/c-code/daemon-imgproc/CMakeFiles/prml.dir

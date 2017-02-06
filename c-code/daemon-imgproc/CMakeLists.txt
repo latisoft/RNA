@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.8)
-project (META)
+project (PRML)
 
 set( CMAKE_VERBOSE_MAKEFILE ON )
 set( OPTIMIZE -O3 )
@@ -45,7 +45,7 @@ if( Boost_FOUND AND Threads_FOUND AND ZLIB_FOUND )
     set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib )
 
 
-    add_executable( meta src/main.cpp )
-    target_link_libraries( meta )
+    add_executable( prml src/main.cpp )
+    target_link_libraries( prml )
 
 endif()

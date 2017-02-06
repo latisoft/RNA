@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++17 -ftemplate-backtrace-limit=0 -O3 -g -Wno-ignored-attributes -Wno-multichar -Wreturn-type -Wno-terminate    CMakeFiles/prml.dir/src/main.cpp.o  -o bin/prml  -L/home/allen/project/RNA/c-code/daemon-imgproc/lib -rdynamic 

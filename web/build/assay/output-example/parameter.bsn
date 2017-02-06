@@ -1,0 +1,7 @@
+{
+  "comment": "merge 16 images => 1 images(wxh) + values set file",
+  "type"    :   "am1",
+  "input_dir":  "/home/allen/project/RNA/web/build/assay/output-example/",
+  "output_dir": "/home/allen/project/RNA/web/build/assay/output/sn-000000/045",
+  "timeTag": "20170202-160053"
+}

@@ -1,3 +1,23 @@
+// For writing parameter file: parameter.bsn
+var jsonfile= require('jsonfile');
+
+// For reading result file: result.bsn
+var fs      = require('fs')
+    , util  = require('util')
+    , stream= require('stream')
+    , es    = require('event-stream');
+
+
+
+for (let i=1; i<=384; i++) {
+  
+  let str = "" + i, pad = "000";
+  let no  = pad.substring(0, pad.length-str.length) + str;
+  let dir = './build/assay/output/' + trayRFID + '/' + no;
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+}
 
 var zmq           = require('zmq');
 var requester     = zmq.socket('req');
@@ -9,19 +29,17 @@ var pushUI = (cmd, status, output) => {
       output:   output
     });
 }
+
 requester.connect("tcp://localhost:5555");
+requester.send('done,0,0');
 
 // synchronize with daemon
+// clearInterval(pollingId);
 var pollingId     = setInterval(() => {
       requester.send('update,0,0');
     }, 500);
-var pollingTray   = setInterval(() => {
-      requester.send('done,0,0');
-    },2000);
-// clearInterval(pollingId);
 
 // Forwarding UI command to daemon
-//var uiReadChip;
 var processMsg = (msg, response) => {
   switch(msg.cmd) {
     case 'done':
@@ -39,6 +57,62 @@ var processMsg = (msg, response) => {
   }
 }
 exports.proc = processMsg;
+
+
+var spawn       = require('child_process').spawn;
+
+
+var processImg  = (no) => {
+
+    let str = "" + (++no), pad = "000";
+    no = pad.substring(0, pad.length-str.length) + str;
+
+    let runDir  = __dirname + '/build/assay/output/sn-000000/' + no;
+    let argv2   = runDir + '/parameter.bsn';
+    let argv4   = runDir + '/result.bsn';
+
+    let msg = {
+      comment: "merge 16 images => 1 images(2000x2000) + 400M values",
+      output_dir: runDir,
+      timeTag: (new Date()).yyyymmdd()
+    };
+    console.log("argv2: ", argv2);
+    console.log("msg: ", msg);
+
+    jsonfile.writeFile(argv2, msg, {spaces: 2}, function(err) {
+      console.log("-i argv2: ", argv2);
+      console.error(err);
+    });
+
+    let command = spawn('build/prml', ['-i', argv2,'-o', argv4, '-n', no]);
+    command.stdout.on('data', function (data) {
+      pushUI('progress', 0, data.toString());
+    });
+    command.stderr.on('data', function (data) {
+      console.log('stderr: ' + data.toString());
+    });
+    command.on('exit', function(code) {
+      pushUI('probe', status30, no );
+      /*
+      console.log('child process exited: ' + code.toString());
+      console.log("-o argv4: ", argv4);
+      let fResult = jsonfile.readFileSync(argv4);
+      let lineNo  = 0;
+      var stm     = fs.createReadStream( fResult.data )
+                    .pipe( es.split() )
+                    .pipe( es.mapSync(function(line) {
+                      pushUI('probe', 'no:'+lineNo, line.toString());
+                      lineNo += 1;
+                    })
+                    .on('error', function() {
+                      console.log('Error while reading file!!');
+                    })
+                    .on('end', function() {
+                      console.log('CEN file, lineNo=', lineNo);
+                    }) );
+      */
+    });
+}
 
 // Reader Information
 const B00_READY     = 0; // 0:reset, 1:ready 
@@ -62,9 +136,12 @@ const B17_          =17; // 1:tray changed.
 const B1u_          =18; // 0:
 var checkbit = (val, n) => { (val & 1 << n) == 0 }
 
+
 var status30  = 0;
 var assayNo   = 0;
+var trayRFID  = "sn-000000";
 var subtrays  = [];
+
 requester.send('done,0,0');
 requester.on("message", (buf) => {
     // Parsing message responsed from daemon
@@ -73,34 +150,38 @@ requester.on("message", (buf) => {
     let sts = ss[1];
     let out = ss[2];
     switch(cmd) {
-      case 'done':  // 8,8,1,0,0...,0 x384 chips
-        subtrays = out.split(":");
-
-        // uiReadChip(ss);
-        // pushUI(cmd, sts, out);
+      case 'done':  // 8:8:1:0:0...,0 = 384 chips
+        let mapChar = {
+          0: "r",
+          1: "a",
+          8: "f"
+        };
+        subtrays = out.replace(/0|1|8/gi, function(matched) { 
+          return mapChar[matched]; }).split(":");
         break;
+
       case 'update':  // #9902:5:65:5:6
+
+        // update trayRFID if tray change
+        
+        // update assayNo and analyze image if chip change
+
         let tmp     = out.split(':');
         let newNo   = tmp[1];
         let progress= tmp[2];
         let last    = tmp[3];
         let next    = tmp[4];
         let flag    = (assayNo != newNo)? true: false; // chip changed
-        if(0<=assayNo && assayNo <384 )
-          subtrays[assayNo] = 8;
-        if(0<=  newNo &&   newNo <384 )
-          subtrays[  newNo] = 1;
+        if(flag) processImg(assayNo);
+
+        subtrays[assayNo] = 'f';
+        subtrays[  newNo] = 'a';
         assayNo  = newNo;
  
-        // if( checkbit(status30, B01_ASSAY) ) // status30.has(B01_ASSAY) )
-          pushUI(cmd, sts, out);
-        // assayNo = out[1];
+        pushUI(cmd, sts, out);
         break;
     }
 });
-
-
-
 process.on('SIGINT', function() {
   console.log("== ZMQ socket closed. ==");
   requester.close();

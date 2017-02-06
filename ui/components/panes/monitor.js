@@ -25,53 +25,21 @@ export default class Monitor extends React.Component {
     };
     this.onReset = this.onReset.bind(this);
     this.onAssay = this.onAssay.bind(this);
-    /*
-        this.subtrays = [];
-    for(let i=0; i<6; i++)
-    {
-      this.subtrays[i] = new Array(64);
-      for(let j=0; j<64; j++)
-        this.subtrays[i][j] = 0; // 64*i+j;
-    }
-    */
   }
   componentDidMount() {
-    // socket.emit('toReader', { cmd:'done' }); // get done-table
     let the = this;
     Axios.get('/read/chips')
       .then(function(response) {
-        //console.log(response.data);
-        //console.log(response.status);
-
-
         let chips = response.data.split(':');
-        // console.log("***store.subtrays: ", store.subtrays);
- 
+
         for(let x=0; x<6; x++)
           for(let y=0; y<64; y++) {
-            switch( chips[x*64+y] )
-            {
-              case '0': store.subtrays[x][y] = 'r'; break;
-              case '1': store.subtrays[x][y] = 'a'; break;
-              case '8': store.subtrays[x][y] = 'f'; break;
-            }
-
-          }
-
-        console.log("***store.subtrays: ", store.subtrays);
-        console.log("l= ", chips.length); 
-        // console.log("n= ", store.subtrays);
-
+            store.subtrays[x][y] = chips[x*64+y];
+        }
         the.setState({
             status:       "init"
         }); 
-
-
-
-
-
       });
-
   }
   onReset() {
     console.log("onReset");
@@ -86,56 +54,15 @@ export default class Monitor extends React.Component {
     socket.emit('toReader', { cmd:cmd, no:0, auto:'all' });
   }
 
-  refresh(res) {
-    // console.log("monitor...refresh", res);
-    let status = res.status;
-    switch(res.cmd)
-    {
-      case "info": 
-        this.setState({
-            status:       res.status
-        });
-        break;
-        /*
-      case "done": // 8,8,1,0,0...,0 x384 chips
-
-        let chips = res.output.split(':');
-        for(let x=0; x<6; x++)
-          for(let y=0; y<64; y++) {
-            store.subtrays[x][y] = chips[x*64+y];
-          }
-
-        console.log("***store.subtrays: ", store.subtrays);
-        console.log("n= ", store.subtrays.length);
- 
-        this.setState({
-            status:       status
-        }); 
-        break;
-*/
-      case "update": // #9902:5:65:5:6
-        console.log("@@@@@@", res.output);
-        let assayNo = this.state.assayNumber;
-        let tmp     = res.output.split(':');
-        let newNo   = tmp[1];
-        let progress= tmp[2];
-        let last    = tmp[3];
-        let next    = tmp[4];
-        let flag    = (assayNo != newNo)? true: false; // chip changed
-        if(flag) {
-          if(0<=assayNo && assayNo <384 )
-            store.subtrays[Math.floor(assayNo/64)][assayNo%64] = 'f'; // finish
-          if(0<=  newNo &&   newNo <384 )
-            store.subtrays[Math.floor(  newNo/64)][  newNo%64] = 'a'; // assay
-        } 
-        this.setState({ 
-            status:       status,
-            assayNumber:  newNo,
-            progress:     progress
-        }); 
-        break;
-    }
+  refresh(status, newNo, progress) {
+    console.log("monitor: refresh:", progress);
+    this.setState({ 
+        status:       status,
+        assayNumber:  newNo,
+        progress:     progress
+    });
   }
+
   render() {
     let show  = (this.state.isAssay)? "STOP" : "START";
     let id    = this.state.plateRFID;
